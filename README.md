@@ -1,12 +1,14 @@
-# Git Repository Template
+# Flutter Templates
 
-Project repository template to set up all public projects at [Nimble](https://nimblehq.co/)
+All the templates that can be used to kick off a new Flutter application quickly.
 
 ## Usage
 
 Clone the repository
 
-`git clone git@github.com:nimblehq/git-template.git`
+`git clone git@github.com:nimblehq/flutter-templates.git`
+
+TBD: setup.
 
 ## License
 
