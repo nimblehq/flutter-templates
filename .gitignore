@@ -57,6 +57,9 @@
 # is commented out by default.
 .vscode/
 
+# Flutter version manager related
+.fvm/
+
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
