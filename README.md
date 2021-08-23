@@ -14,9 +14,7 @@ Clone the repository
 
 ## Getting Started
 
-- Create the project:
-
-  - `$ fvm flutter create --template=app --platforms=ios,android .`
+TBD
 
 ## License
 
