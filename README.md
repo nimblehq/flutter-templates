@@ -8,7 +8,13 @@ Clone the repository
 
 `git clone git@github.com:nimblehq/flutter_templates.git`
 
-TBD: setup.
+## Prerequisite
+- Flutter 2.2
+- Flutter version manager (recommend): [fvm](https://fvm.app/)
+
+## Getting Started
+
+TBD
 
 ## License
 
