@@ -9,7 +9,7 @@
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
-               title = "Run Script"
+               title = "Set up env file"
                scriptText = "echo &quot;.env.staging&quot; &gt; ${SRCROOT}/.envfile&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
@@ -25,7 +25,7 @@
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
-               title = "Run Script"
+               title = "Generate tmp config"
                scriptText = "${SRCROOT}/.symlinks/plugins/flutter_config/ios/Classes/BuildXCConfig.rb ${SRCROOT}/ ${SRCROOT}/Flutter/tmp.xcconfig&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
