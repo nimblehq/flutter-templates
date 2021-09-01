@@ -26,6 +26,12 @@ Clone the repository
 
   - Production: `$ fvm flutter run --flavor production`
 
+- Run the app with the desire app flavor:
+
+  - Staging: `$ fvm flutter run --flavor staging`
+
+  - Production: `$ fvm flutter run --flavor production`
+
 ## License
 
 This project is Copyright (c) 2014 and onwards. It is free software,
