@@ -14,7 +14,23 @@ Clone the repository
 
 ## Getting Started
 
-TBD
+- Create these env files in the root directory according to the flavors and add the required environment variables into them. The example environment variable is in `.env.sample`.
+
+  - Staging: `.env.staging`
+
+  - Production: `.env`
+
+- Run the app with the desire app flavor:
+
+  - Staging: `$ fvm flutter run --flavor staging`
+
+  - Production: `$ fvm flutter run --flavor production`
+
+- Run the app with the desire app flavor:
+
+  - Staging: `$ fvm flutter run --flavor staging`
+
+  - Production: `$ fvm flutter run --flavor production`
 
 ## License
 

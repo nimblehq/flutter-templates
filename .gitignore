@@ -13,7 +13,8 @@
 /tmp/
 
 # Used by dotenv library to load environment variables.
-# .env
+.env
+.env.staging
 
 ## Documentation cache and generated files:
 /.yardoc/
@@ -63,6 +64,8 @@
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
+**/ios/.envfile
+**/ios/Flutter/tmp.xcconfig
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
