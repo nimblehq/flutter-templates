@@ -30,12 +30,11 @@ void main() {
       when(mockApiService.getProfile()).thenAnswer(
           (_) => Future.error(TimeoutException('There is an exception!')));
 
-      try {
-        await repository.getProfile();
-      } catch (e) {
-        expect(e, isInstanceOf<TimeoutException>());
-        expect((e as TimeoutException).message, 'There is an exception!');
-      }
+      final result = () => repository.getProfile();
+      expect(
+          result,
+          throwsA(predicate<TimeoutException>(
+              (ex) => ex.message == 'There is an exception!')));
     });
   });
 }
