@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 import '../mocks/generate_mocks.mocks.dart';
 
 void main() {
-  group('CredentialRepository', () {
+  group('CredentialRepository - getProfile', () {
     MockApiService mockApiService = MockApiService();
     late CredentialRepository repository;
 
@@ -27,8 +27,8 @@ void main() {
     });
 
     test("When getting profile failed, it throws a negative error", () async {
-      when(mockApiService.getProfile()).thenAnswer(
-          (_) => Future.error(TimeoutException('There is an exception!')));
+      when(mockApiService.getProfile())
+          .thenThrow(TimeoutException('There is an exception!'));
 
       final result = () => repository.getProfile();
       expect(
