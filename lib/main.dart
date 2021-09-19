@@ -14,6 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        fontFamily: 'neuzeitsltstd',
       ),
       home: MyHomePage(),
     );
@@ -34,7 +36,17 @@ class MyHomePage extends StatelessWidget {
             }),
       ),
       body: Center(
-        child: Text(FlutterConfig.get('SECRET')),
+        child: Column(
+          children: [
+            SizedBox(height: 24,),
+            FractionallySizedBox(
+              widthFactor: 0.5,
+              child: Image.asset('assets/images/nimble_logo.png', fit: BoxFit.fitWidth),
+            ),
+            SizedBox(height: 24,),
+            Text(FlutterConfig.get('SECRET'), style: TextStyle(color: Colors.black, fontSize: 24))
+          ],
+        ),
       ),
     );
   }
