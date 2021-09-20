@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         brightness: Brightness.light,
-        fontFamily: Assets.fonts.neuzeitsltstd,
+        fontFamily: Assets.fonts.neuzeit,
       ),
       home: MyHomePage(),
     );

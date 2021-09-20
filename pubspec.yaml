@@ -52,4 +52,4 @@ flutter:
   fonts:
     - family: neuzeitsltstd
       fonts:
-        - asset: assets/fonts/neuzeitsltstd.otf
+        - asset: assets/fonts/neuzeit.otf

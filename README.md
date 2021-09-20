@@ -33,7 +33,7 @@ Clone the repository
   - Production: `$ fvm flutter run --flavor production`
 
 - Generate assets folder
-  - `$ flutter pub get`
+  
   - `$ flutter packages pub run build_runner build`
 
 ## License
