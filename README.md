@@ -34,7 +34,7 @@ Clone the repository
 
 - Generate assets folder
   
-  - `$ flutter packages pub run build_runner build`
+  - `$ fvm flutter packages pub run build_runner build`
 
 ## License
 

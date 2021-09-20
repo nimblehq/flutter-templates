@@ -11,6 +11,7 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+lib/gen/
 
 # Used by dotenv library to load environment variables.
 .env
