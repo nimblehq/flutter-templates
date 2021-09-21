@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_templates/gen/assets.gen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -19,6 +20,8 @@ class MyApp extends StatelessWidget {
         fontFamily: Assets.fonts.neuzeit,
       ),
       home: MyHomePage(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
@@ -45,6 +48,7 @@ class MyHomePage extends StatelessWidget {
               child: Image.asset(Assets.images.nimbleLogo.path, fit: BoxFit.fitWidth),
             ),
             SizedBox(height: 24,),
+            Text(AppLocalizations.of(context)!.hello),
             Text(FlutterConfig.get('SECRET'), style: TextStyle(color: Colors.black, fontSize: 24))
           ],
         ),
