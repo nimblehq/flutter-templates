@@ -26,11 +26,13 @@ Clone the repository
 
   - Production: `$ fvm flutter run --flavor production`
 
-- Run the app with the desire app flavor:
+- Run unit testing:
 
-  - Staging: `$ fvm flutter run --flavor staging`
+  - `$ fvm flutter test .`
 
-  - Production: `$ fvm flutter run --flavor production`
+- Run integration testing:
+
+  - `$ fvm flutter drive --driver=test_driver/integration_test.dart --target=integration_test/{test_file}.dart --flavor staging`
 
 - Generate assets folder
   
