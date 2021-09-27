@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_templates/main.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class TestUtil {
-  static Widget startAppWith(Widget widget) {
+  /// This is useful when we test the whole app with the real configs(styling,
+  /// localization, routes, etc)
+  static Widget pumpWidgetWithRealApp(String initialRoute) {
+    _initDependencies();
+    return MyApp(initialRoute: initialRoute);
+  }
+
+  /// We normally use this function to test a specific [widget] without
+  /// considering much about theming.
+  static Widget pumpWidgetWithShellApp(Widget widget) {
     _initDependencies();
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
