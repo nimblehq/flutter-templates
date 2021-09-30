@@ -11,6 +11,11 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  // TODO: implement Routes then remove `home: MyHomePage()` and use initialRoute instead.
+  final String initialRoute;
+
+  MyApp({this.initialRoute = '/'});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,14 +47,20 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 24,),
+            SizedBox(height: 24),
             FractionallySizedBox(
               widthFactor: 0.5,
-              child: Image.asset(Assets.images.nimbleLogo.path, fit: BoxFit.fitWidth),
+              child: Image.asset(
+                Assets.images.nimbleLogo.path,
+                fit: BoxFit.fitWidth,
+              ),
             ),
-            SizedBox(height: 24,),
+            SizedBox(height: 24),
             Text(AppLocalizations.of(context)!.hello),
-            Text(FlutterConfig.get('SECRET'), style: TextStyle(color: Colors.black, fontSize: 24))
+            Text(
+              FlutterConfig.get('SECRET'),
+              style: TextStyle(color: Colors.black, fontSize: 24),
+            )
           ],
         ),
       ),
