@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_templates/gen/assets.gen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 void main() async {
@@ -9,13 +11,22 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  // TODO: implement Routes then remove `home: MyHomePage()` and use initialRoute instead.
+  final String initialRoute;
+
+  MyApp({this.initialRoute = '/'});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        fontFamily: Assets.fonts.neuzeit,
       ),
       home: MyHomePage(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
@@ -34,7 +45,24 @@ class MyHomePage extends StatelessWidget {
             }),
       ),
       body: Center(
-        child: Text(FlutterConfig.get('SECRET')),
+        child: Column(
+          children: [
+            SizedBox(height: 24),
+            FractionallySizedBox(
+              widthFactor: 0.5,
+              child: Image.asset(
+                Assets.images.nimbleLogo.path,
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            SizedBox(height: 24),
+            Text(AppLocalizations.of(context)!.hello),
+            Text(
+              FlutterConfig.get('SECRET'),
+              style: TextStyle(color: Colors.black, fontSize: 24),
+            )
+          ],
+        ),
       ),
     );
   }
