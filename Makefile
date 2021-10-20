@@ -1,4 +1,4 @@
-.PHONY: help prepare-dev init
+.PHONY: help prepare-dev init test
 
 # Python stuff
 VENV_NAME?=.venv
@@ -16,6 +16,8 @@ help:
 	@echo "        prepare development environment, use only once"
 	@echo "make init PACKAGE_NAME=com.example PROJECT_NAME=new_templates"
 	@echo "        init project with the new package name and project name"
+	@echo "make test"
+	@echo "        run the tests for the setup.py script"
 
 prepare-dev:
 	@if [ -z $(PYTHON3) ]; then \
@@ -27,3 +29,6 @@ prepare-dev:
 
 init: prepare-dev
 	$(PYTHON) ./scripts/setup.py --project_path $(PWD) --package_name $(PACKAGE_NAME) --project_name $(PROJECT_NAME)
+
+test: prepare-dev
+	$(PYTHON) ./scripts/test.py

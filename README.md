@@ -42,6 +42,34 @@ Clone the repository
   
   - `$ fvm flutter packages pub run build_runner build --delete-conflicting-outputs`
 
+## Use the template
+
+### Setup a new project
+
+- To set up a new project from the template, run the command:
+
+  - `$ make init PACKAGE_NAME=${com.example} PROJECT_NAME=${project_name}`
+
+  - Then clean the project: `$ fvm flutter clean`
+
+  - Re-fetch the project: `$ fvm flutter pub get`
+
+- The project uses the package name and the project name of the template if `PACKAGE_NAME` and `PROJECT_NAME` aren't specified.
+
+- For more supporting commands, run:
+
+  - `$ make`
+
+  - Or `$ make help`
+
+### Maintain the template
+
+- While implementing a new feature or fixing an issue, there may be a chance to break the functions of `setup.py` script due to the change in the codebase (update the app name, the package directory, etc.).
+
+- To make sure that the `setup.py` script is still working correctly, run the command:
+
+  - `$ make test`
+
 ## License
 
 This project is Copyright (c) 2014 and onwards. It is free software,

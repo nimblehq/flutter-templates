@@ -25,6 +25,7 @@ class Android:
         build_file = self.initial_folder + os.sep + ANDROID_MODULE + os.sep + "build.gradle"
         f = open(build_file, "r")
         file_text = f.read()
+        f.close()
         for line in file_text.split("\n"):
             if "applicationId" in line.strip():
                 return line.strip().split(" ")[1].strip().replace("\"", "")
@@ -35,6 +36,7 @@ class Android:
             os.sep + "main" + os.sep + "res" + os.sep + "values" + os.sep + "strings.xml"
         f = open(string_res_file, "r")
         file_text = f.read()
+        f.close()
         for line in file_text.split("\n"):
             if "app_name" in line.strip():
                 return line.strip().replace("<string name=\"app_name\">",
@@ -135,6 +137,7 @@ class Ios:
     def get_old_package(self):
         f = open(self.project_file, "r")
         file_text = f.read()
+        f.close()
         for line in file_text.split("\n"):
             if "PRODUCT_BUNDLE_IDENTIFIER" in line.strip():
                 return line.strip().split(" = ")[1].strip().replace(";", "").replace(".staging", "")
@@ -143,6 +146,7 @@ class Ios:
     def get_old_app_name(self):
         f = open(self.project_file, "r")
         file_text = f.read()
+        f.close()
         for line in file_text.split("\n"):
             if "APP_DISPLAY_NAME" in line.strip():
                 return line.strip().split(" = ")[1].strip().replace("\"", "")\
@@ -152,6 +156,7 @@ class Ios:
     def get_old_project_name(self):
         f = open(self.info_file, "r")
         file_text = f.read()
+        f.close()
         for line in file_text.split("\n"):
             if "flutter_templates" in line.strip():
                 return line.strip().replace("<string>", "").replace("</string>", "")
@@ -221,6 +226,7 @@ class Flutter:
         pubspec_file = self.project.project_path + os.sep + "pubspec.yaml"
         f = open(pubspec_file, "r")
         file_text = f.read()
+        f.close()
         for line in file_text.split("\n"):
             if "name:" in line.strip():
                 return line.strip().replace("name:", "").strip()
