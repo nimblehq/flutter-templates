@@ -294,7 +294,7 @@ def handleParameters():
 def validateParameters(project):
     if re.match(r'^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_]$', project.new_package) is None:
         print(
-            f"Invalid Package Name: {project.new_package} (needs to follow standard pattern `com.example.package`)")
+            f"Invalid Package Name: {project.new_package} (needs to follow standard pattern `com.your.package`)")
         sys.exit()
     if re.match(r'^[a-z]*([a-z0-9_]+)*[a-z0-9]$', project.new_project_name) is None:
         print(

@@ -14,7 +14,7 @@ APP_NAME=Flutter Templates
 help:
 	@echo "make prepare-dev"
 	@echo "        prepare development environment, use only once"
-	@echo "make init PACKAGE_NAME=com.example PROJECT_NAME=new_templates"
+	@echo "make init PACKAGE_NAME=com.your.package PROJECT_NAME=your_project_name"
 	@echo "        init project with the new package name and project name"
 	@echo "make test"
 	@echo "        run the tests for the setup.py script"
