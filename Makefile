@@ -14,8 +14,8 @@ APP_NAME=Flutter Templates
 help:
 	@echo "make prepare-dev"
 	@echo "        prepare development environment, use only once"
-	@echo "make init PACKAGE_NAME=com.your.package PROJECT_NAME=your_project_name"
-	@echo "        init project with the new package name and project name"
+	@echo "make init PACKAGE_NAME=com.your.package PROJECT_NAME=your_project_name APP_NAME=\"Your App Name\""
+	@echo "        init project with the new package name, the new project name and the new app name"
 	@echo "make test"
 	@echo "        run the tests for the setup.py script"
 
@@ -28,7 +28,7 @@ prepare-dev:
 	python3 -m venv $(VENV_NAME)
 
 init: prepare-dev
-	$(PYTHON) ./scripts/setup.py --project_path $(PWD) --package_name $(PACKAGE_NAME) --project_name $(PROJECT_NAME)
+	$(PYTHON) ./scripts/setup.py --project_path $(PWD) --package_name $(PACKAGE_NAME) --project_name $(PROJECT_NAME) --app_name "$(APP_NAME)"
 
 test: prepare-dev
 	$(PYTHON) ./scripts/test.py

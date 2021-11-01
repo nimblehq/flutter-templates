@@ -91,11 +91,14 @@ class Android:
 
     def rename_app(self):
         old_app_name = self.get_old_app_name()
-        if old_app_name is not None:
+        if old_app_name is not None and old_app_name != self.project.new_app_name:
             self.update_name(self.initial_folder, old_app_name, self.project.new_app_name)
-            print("Rename Android app successfully!")
-        else:
+            print("✅  Rename Android app successfully!")
+        elif old_app_name is None:
             print("Unable to find the old app name for Android!")
+            sys.exit()
+        else:
+            print("Reusing old app name in Android!")
 
     def replace_text(self, path_file, old_text, new_text):
         f = open(path_file, "r")
@@ -122,8 +125,7 @@ class Android:
                 self.replace_text(path_folder + os.sep + str(f), old_name, new_name)
 
     def run(self):
-        # Uncomment if we want to rename Flutter Templates to other name
-        # self.rename_app()
+        self.rename_app()
         self.repackage()
 
 
@@ -194,11 +196,13 @@ class Ios:
         old_app_name = self.get_old_app_name()
         if old_app_name is not None and old_app_name != self.project.new_app_name:
             self.replace_text_in_file(file_path=self.project_file, contain_text="APP_DISPLAY_NAME",
-                                      old_tet=old_app_name, new_text=self.project.new_app_name)
+                                      old_text=old_app_name, new_text=self.project.new_app_name)
             print("✅  Rename iOS app successully!")
         elif old_app_name is None:
             print("Unable to find the old app name for iOS!")
             sys.exit()
+        else:
+            print("Reusing old app name in iOS!")
 
     def rename_project(self):
         old_project_name = self.get_old_project_name()
@@ -215,8 +219,7 @@ class Ios:
             print("Reusing old project name in iOS!")
 
     def run(self):
-        # Uncomment if we want to rename Flutter Templates to other name
-        # self.rename_app()
+        self.rename_app()
         self.rename_project()
         self.repackage()
 

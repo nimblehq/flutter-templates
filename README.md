@@ -48,13 +48,13 @@ Clone the repository
 
 - To set up a new project from the template, run the command:
 
-  - `$ make init PACKAGE_NAME={com.your.package} PROJECT_NAME={your_project_name}`
+  - `$ make init PACKAGE_NAME={com.your.package} PROJECT_NAME={your_project_name} APP_NAME="{Your App Name}"`
 
   - Then clean the project: `$ fvm flutter clean`
 
   - Re-fetch the project: `$ fvm flutter pub get`
 
-- The project uses the package name and the project name of the template if `PACKAGE_NAME` and `PROJECT_NAME` aren't specified.
+- The project uses the package name, the app name and the project name of the template if `PACKAGE_NAME`, `APP_NAME` and `PROJECT_NAME` aren't specified.
 
 - For more supporting commands, run:
 
