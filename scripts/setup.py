@@ -162,8 +162,8 @@ class Ios:
                 return line.strip().replace("<string>", "").replace("</string>", "")
         return None
 
-    def replace_text(self, contain_text, old_text, new_text):
-        f = open(self.project_file, "r")
+    def replace_text_in_file(self, file_path, contain_text, old_text, new_text):
+        f = open(file_path, "r")
         try:
             file_text = f.read()
             f.close()
@@ -173,7 +173,7 @@ class Ios:
                     new_content += "\n" + line.replace(old_text, new_text)
                 else:
                     new_content += "\n" + line
-            f = open(self.project_file, "w")
+            f = open(file_path, "w")
             f.write(new_content)
             f.close()
         except UnicodeDecodeError:  # This file is not text plain
@@ -182,7 +182,8 @@ class Ios:
     def repackage(self):
         old_package = self.get_old_package()
         if old_package is not None and old_package != self.project.new_package:
-            self.replace_text("PRODUCT_BUNDLE_IDENTIFIER", old_package, self.project.new_package)
+            self.replace_text_in_file(file_path=self.project_file, contain_text="PRODUCT_BUNDLE_IDENTIFIER",
+                                      old_text=old_package, new_text=self.project.new_package)
             print("Update package name for iOS successfully!")
         elif old_package is None:
             print("Bundle identifier not found in Runner.xcodeproj/project.pbxproj!")
@@ -192,7 +193,8 @@ class Ios:
     def rename_app(self):
         old_app_name = self.get_old_app_name()
         if old_app_name is not None and old_app_name != self.project.new_app_name:
-            self.replace_text("APP_DISPLAY_NAME", old_app_name, self.project.new_app_name)
+            self.replace_text_in_file(file_path=self.project_file, contain_text="APP_DISPLAY_NAME",
+                                      old_tet=old_app_name, new_text=self.project.new_app_name)
             print("✅  Rename iOS app successully!")
         elif old_app_name is None:
             print("Unable to find the old app name for iOS!")
@@ -201,7 +203,10 @@ class Ios:
     def rename_project(self):
         old_project_name = self.get_old_project_name()
         if old_project_name is not None and old_project_name != self.project.new_project_name:
-            self.replace_text(old_project_name, old_project_name, self.project.new_project_name)
+            self.replace_text_in_file(file_path=self.project_file, contain_text=old_project_name,
+                                      old_text=old_project_name, new_text=self.project.new_project_name)
+            self.replace_text_in_file(file_path=self.info_file, contain_text=old_project_name,
+                                      old_text=old_project_name, new_text=self.project.new_project_name)
             print(f'✅  Renamed to {self.project.new_project_name} in iOS succesfully!')
         elif old_project_name is None:
             print("Unable to update project name in iOS! Please check again!")
