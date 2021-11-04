@@ -1,4 +1,4 @@
-.PHONY: help prepare-dev init test
+.PHONY: help prepare-dev init test run
 
 # Python stuff
 VENV_NAME?=.venv
@@ -10,8 +10,15 @@ PACKAGE_NAME=co.nimblehq.flutter.template
 PROJECT_NAME=flutter_templates
 APP_NAME=Flutter Templates
 
+# Add the variable to env
+export PACKAGE_NAME
+export PROJECT_NAME
+export APP_NAME
+
 .DEFAULT: help
 help:
+	@echo "make run PACKAGE_NAME=com.your.package PROJECT_NAME=your_project_name APP_NAME=\"Your App Name\""
+	@echo "        init the project then run all the test"
 	@echo "make prepare-dev"
 	@echo "        prepare development environment, use only once"
 	@echo "make init PACKAGE_NAME=com.your.package PROJECT_NAME=your_project_name APP_NAME=\"Your App Name\""
@@ -32,3 +39,5 @@ init: prepare-dev
 
 test: prepare-dev
 	$(PYTHON) ./scripts/test.py
+
+run: init test

@@ -159,9 +159,10 @@ class Ios:
         f = open(self.info_file, "r")
         file_text = f.read()
         f.close()
-        for line in file_text.split("\n"):
-            if "flutter_templates" in line.strip():
-                return line.strip().replace("<string>", "").replace("</string>", "")
+        file_text_list = file_text.split("\n")
+        for index, line in enumerate(file_text_list):
+            if "CFBundleName" in line.strip():
+                return file_text_list[index + 1].strip().replace("<string>", "").replace("</string>", "")
         return None
 
     def replace_text_in_file(self, file_path, contain_text, old_text, new_text):
