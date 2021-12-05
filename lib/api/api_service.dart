@@ -9,5 +9,6 @@ abstract class ApiService {
   factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
 
   // TODO add API endpoint
-  Future<UserResponse> getProfile();
+  @GET('users')
+  Future<List<UserResponse>> getUsers();
 }

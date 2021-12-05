@@ -1,5 +1,5 @@
-import 'dart:async';
 
+import 'package:flutter_templates/api/exception/network_exceptions.dart';
 import 'package:flutter_templates/api/repository/credential_repository.dart';
 import 'package:flutter_templates/model/response/user_response.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 import '../../mocks/generate_mocks.mocks.dart';
 
 void main() {
-  group('CredentialRepository - getProfile', () {
+  group('CredentialRepository', () {
     MockApiService mockApiService = MockApiService();
     late CredentialRepository repository;
 
@@ -16,25 +16,24 @@ void main() {
       repository = CredentialRepositoryImpl(mockApiService);
     });
     test(
-        "When getting profile successfully, it emits corresponding UserResponse",
+        "When getting user list successfully, it emits corresponding user list",
         () async {
-      when(mockApiService.getProfile())
-          .thenAnswer((_) async => UserResponse('test@email.com', 'test_user'));
+      when(mockApiService.getUsers()).thenAnswer((_) async => [
+            UserResponse('test@email.com', 'test_user'),
+          ]);
 
-      final result = await repository.getProfile();
-      expect(result.email, 'test@email.com');
-      expect(result.username, 'test_user');
+      final result = await repository.getUsers();
+      expect(result.length, 1);
+      expect(result[0].email, 'test@email.com');
+      expect(result[0].username, 'test_user');
     });
 
-    test("When getting profile failed, it throws a negative error", () async {
-      when(mockApiService.getProfile())
-          .thenThrow(TimeoutException('There is an exception!'));
+    test("When getting user list failed, it returns NetworkExceptions error",
+        () async {
+      when(mockApiService.getUsers()).thenThrow(MockDioError());
+      final result = () => repository.getUsers();
 
-      final result = () => repository.getProfile();
-      expect(
-          result,
-          throwsA(predicate<TimeoutException>(
-              (ex) => ex.message == 'There is an exception!')));
+      expect(result, throwsA(isA<NetworkExceptions>()));
     });
   });
 }
