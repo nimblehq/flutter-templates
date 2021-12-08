@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_templates/di/interceptor/app_interceptor.dart';
-import 'package:injectable/injectable.dart';
 
 const String HEADER_CONTENT_TYPE = 'Content-Type';
 const String DEFAULT_CONTENT_TYPE = 'application/json; charset=utf-8';
 
-@Singleton()
 class DioProvider {
   Dio? _dio;
 
