@@ -4,8 +4,9 @@
 
 import 'dart:async' as _i4;
 
+import 'package:dio/dio.dart' as _i2;
 import 'package:flutter_templates/api/api_service.dart' as _i3;
-import 'package:flutter_templates/model/response/user_response.dart' as _i2;
+import 'package:flutter_templates/model/response/user_response.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -16,7 +17,7 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
-class _FakeUserResponse_0 extends _i1.Fake implements _i2.UserResponse {}
+class _FakeRequestOptions_0 extends _i1.Fake implements _i2.RequestOptions {}
 
 /// A class which mocks [ApiService].
 ///
@@ -27,10 +28,63 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
   }
 
   @override
-  _i4.Future<_i2.UserResponse> getProfile() => (super.noSuchMethod(
-          Invocation.method(#getProfile, []),
-          returnValue: Future<_i2.UserResponse>.value(_FakeUserResponse_0()))
-      as _i4.Future<_i2.UserResponse>);
+  _i4.Future<List<_i5.UserResponse>> getUsers() =>
+      (super.noSuchMethod(Invocation.method(#getUsers, []),
+              returnValue:
+                  Future<List<_i5.UserResponse>>.value(<_i5.UserResponse>[]))
+          as _i4.Future<List<_i5.UserResponse>>);
+
+  @override
+  String toString() => super.toString();
+}
+
+/// A class which mocks [DioError].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDioError extends _i1.Mock implements _i2.DioError {
+  MockDioError() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.RequestOptions get requestOptions =>
+      (super.noSuchMethod(Invocation.getter(#requestOptions),
+          returnValue: _FakeRequestOptions_0()) as _i2.RequestOptions);
+
+  @override
+  set requestOptions(_i2.RequestOptions? _requestOptions) =>
+      super.noSuchMethod(Invocation.setter(#requestOptions, _requestOptions),
+          returnValueForMissingStub: null);
+
+  @override
+  set response(_i2.Response<dynamic>? _response) =>
+      super.noSuchMethod(Invocation.setter(#response, _response),
+          returnValueForMissingStub: null);
+
+  @override
+  _i2.DioErrorType get type => (super.noSuchMethod(Invocation.getter(#type),
+      returnValue: _i2.DioErrorType.connectTimeout) as _i2.DioErrorType);
+
+  @override
+  set type(_i2.DioErrorType? _type) =>
+      super.noSuchMethod(Invocation.setter(#type, _type),
+          returnValueForMissingStub: null);
+
+  @override
+  set error(dynamic _error) =>
+      super.noSuchMethod(Invocation.setter(#error, _error),
+          returnValueForMissingStub: null);
+
+  @override
+  set stackTrace(StackTrace? stack) =>
+      super.noSuchMethod(Invocation.setter(#stackTrace, stack),
+          returnValueForMissingStub: null);
+
+  @override
+  String get message =>
+      (super.noSuchMethod(Invocation.getter(#message), returnValue: '')
+          as String);
+
   @override
   String toString() => super.toString();
 }
