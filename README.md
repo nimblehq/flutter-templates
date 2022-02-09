@@ -48,13 +48,13 @@ Clone the repository
 
 - To set up a new project from the template, run the command:
 
-  - `$ make run PACKAGE_NAME={com.your.package} PROJECT_NAME={your_project_name} APP_NAME="{Your App Name}"`
+  - `$ make run PACKAGE_NAME={com.your.package} PROJECT_NAME={your_project_name} APP_NAME="{Your App Name}" APP_VERSION={your_app_version} BUILD_NUMBER={your_build_number}`
 
   - Then clean the project: `$ fvm flutter clean`
 
   - Re-fetch the project: `$ fvm flutter pub get`
 
-- The project uses the package name, the app name and the project name of the template if `PACKAGE_NAME`, `APP_NAME` and `PROJECT_NAME` aren't specified.
+- The project uses the package name, the app name, the project name and the project version of the template if `PACKAGE_NAME`, `APP_NAME`, `PROJECT_NAME`, `APP_VERSION` and `BUILD_NUMBER` aren't specified.
 
 - For more supporting commands, run:
 
@@ -65,6 +65,8 @@ Clone the repository
 ### Maintain the template
 
 - While implementing a new feature or fixing an issue, there may be a chance to break the functions of `setup.py` script due to the change in the codebase (update the app name, the package directory, etc.).
+
+- When increasing the app version and build number of the template, `APP_VERSION` and `BUILD_NUMBER` variables should be updated accordingly.
 
 - To make sure that the `setup.py` script is still working correctly, run the command:
 
