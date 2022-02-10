@@ -58,11 +58,11 @@ Clone the repository
 
   | Field name   | Is mandatory | Rationale                                                                       |
   | :----------- | :----------: | :------------------------------------------------------------------------------ |
-  | PACKAGE_NAME |     YES      | The application package name. The naming convention follows `com.your.package`  |
-  | PROJECT_NAME |     YES      | The application project name. The naming convention follows `your_project_name` |
-  | APP_NAME     |     YES      | The application name.                                                           |
-  | APP_VERSION  |      NO      | The app version that is set when initialize the project. Default is `0.1.0`     |
-  | BUILD_NUMBER |      NO      | The build number that is set when initialize the project. Default is `1`        |
+  | PACKAGE_NAME |     Yes      | The application package name. The naming convention follows `com.your.package`  |
+  | PROJECT_NAME |     Yes      | The application project name. The naming convention follows `your_project_name` |
+  | APP_NAME     |     Yes      | The application name.                                                           |
+  | APP_VERSION  |      No      | The app version that is set when initialize the project. Default is `0.1.0`     |
+  | BUILD_NUMBER |      No      | The build number that is set when initialize the project. Default is `1`        |
 
 - For more supporting commands, run:
 
