@@ -6,11 +6,11 @@ PYTHON3 := $(shell command -v python3 2> /dev/null)
 VENV_ACTIVATE=$(VENV_NAME)/bin/activate
 PYTHON=$(VENV_NAME)/bin/python3
 
-PACKAGE_NAME=co.nimblehq.flutter.template
-PROJECT_NAME=flutter_templates
-APP_NAME=Flutter Templates
-APP_VERSION=0.4.0
-BUILD_NUMBER=5
+PACKAGE_NAME=
+PROJECT_NAME=
+APP_NAME=
+APP_VERSION=0.1.0
+BUILD_NUMBER=1
 
 # Add the variable to env
 export PACKAGE_NAME
@@ -21,11 +21,11 @@ export BUILD_NUMBER
 
 .DEFAULT: help
 help:
-	@echo "make run PACKAGE_NAME=com.your.package PROJECT_NAME=your_project_name APP_NAME=\"Your App Name\" APP_VERSION=your_app_version BUILD_NUMBER=your_build_number"
+	@echo "make run PACKAGE_NAME=com.your.package PROJECT_NAME=your_project_name APP_NAME=\"Your App Name\""
 	@echo "        init the project then run all the test"
 	@echo "make prepare-dev"
 	@echo "        prepare development environment, use only once"
-	@echo "make init PACKAGE_NAME=com.your.package PROJECT_NAME=your_project_name APP_NAME=\"Your App Name\" APP_VERSION=your_app_version BUILD_NUMBER=your_build_number"
+	@echo "make init PACKAGE_NAME=com.your.package PROJECT_NAME=your_project_name APP_NAME=\"Your App Name\""
 	@echo "        init project with the new package name, the new project name and the new app name"
 	@echo "make test"
 	@echo "        run the tests for the setup.py script"
@@ -39,7 +39,7 @@ prepare-dev:
 	python3 -m venv $(VENV_NAME)
 
 init: prepare-dev
-	$(PYTHON) ./scripts/setup.py --project_path $(PWD) --package_name $(PACKAGE_NAME) --project_name $(PROJECT_NAME) --app_name "$(APP_NAME)" --app_version $(APP_VERSION) --build_number $(BUILD_NUMBER)
+	$(PYTHON) ./scripts/setup.py --project_path $(PWD) --package_name "$(PACKAGE_NAME)" --project_name "$(PROJECT_NAME)" --app_name "$(APP_NAME)" --app_version "$(APP_VERSION)" --build_number "$(BUILD_NUMBER)"
 
 test: prepare-dev
 	$(PYTHON) ./scripts/test.py

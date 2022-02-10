@@ -51,7 +51,7 @@ class Android:
             print("Original package exists! Updating package...")
         else:
             print(
-                "Original package not found, please write a correct original package!"
+                "❌ Original package not found, please write a correct original package!"
             )
             sys.exit()
 
@@ -84,7 +84,7 @@ class Android:
             self.move_folders(old_package)
             print("✅  Update package name for Android successfully!")
         elif old_package is None:
-            print("applicationId not found in app/build.gradle... Exiting!")
+            print("❌ applicationId not found in app/build.gradle... Exiting!")
             sys.exit()
         else:
             print("Reusing old package name in Android!")
@@ -95,7 +95,7 @@ class Android:
             self.update_name(self.initial_folder, old_app_name, self.project.new_app_name)
             print("✅  Rename Android app successfully!")
         elif old_app_name is None:
-            print("Unable to find the old app name for Android!")
+            print("❌ Unable to find the old app name for Android!")
             sys.exit()
         else:
             print("Reusing old app name in Android!")
@@ -189,7 +189,7 @@ class Ios:
                                       old_text=old_package, new_text=self.project.new_package)
             print("Update package name for iOS successfully!")
         elif old_package is None:
-            print("Bundle identifier not found in Runner.xcodeproj/project.pbxproj!")
+            print("❌ Bundle identifier not found in Runner.xcodeproj/project.pbxproj!")
         else:
             print("Reusing old package name in iOS!")
 
@@ -200,7 +200,7 @@ class Ios:
                                       old_text=old_app_name, new_text=self.project.new_app_name)
             print("✅  Rename iOS app successully!")
         elif old_app_name is None:
-            print("Unable to find the old app name for iOS!")
+            print("❌ Unable to find the old app name for iOS!")
             sys.exit()
         else:
             print("Reusing old app name in iOS!")
@@ -214,7 +214,7 @@ class Ios:
                                       old_text=old_project_name, new_text=self.project.new_project_name)
             print(f'✅  Renamed to {self.project.new_project_name} in iOS succesfully!')
         elif old_project_name is None:
-            print("Unable to update project name in iOS! Please check again!")
+            print("❌ Unable to update project name in iOS! Please check again!")
             sys.exit()
         else:
             print("Reusing old project name in iOS!")
@@ -273,7 +273,7 @@ class Flutter:
                     self.replace_text(path, old_project_name, self.project.new_project_name)
             print(f'✅  Renamed to {self.project.new_project_name} in Flutter succesfully!')
         elif old_project_name is None:
-            print("Unable to update project name in Flutter! Please check again!")
+            print("❌ Unable to update project name in Flutter! Please check again!")
             sys.exit()
         else:
             print("Reusing old project name in Flutter!")
@@ -287,7 +287,7 @@ class Flutter:
             print(
                 f'✅  Updated project version to {new_project_version} in Flutter succesfully!')
         elif current_project_version is None:
-            print("Unable to update project version in Flutter! Please check again!")
+            print("❌ Unable to update project version in Flutter! Please check again!")
             sys.exit()
         else:
             print("Reusing old project version in Flutter!")
@@ -299,7 +299,7 @@ class Flutter:
 
 def handleParameters():
     parser = argparse.ArgumentParser(
-        description='The necessary arguments for renaming package and project.'
+        description='The necessary arguments for initializing the project.'
     )
     parser.add_argument('--project_path',
                         type=str,
@@ -307,15 +307,15 @@ def handleParameters():
                         help='The project path')
     parser.add_argument('--package_name',
                         type=str,
-                        default='co.nimblehq.flutter.template',
+                        default='',
                         help='The new package name')
     parser.add_argument('--app_name',
                         type=str,
-                        default='Flutter Templates',
+                        default='',
                         help='The app name')
     parser.add_argument('--project_name',
                         type=str,
-                        default='flutter_templates',
+                        default='',
                         help='The project name')
     parser.add_argument('--app_version',
                         type=str,
@@ -330,17 +330,22 @@ def handleParameters():
 
 
 def validateParameters(project):
+    # Check the mandatory fields should not be empty
+    if not project.new_package or not project.new_project_name or not project.new_app_name:
+        print("❌ PACKAGE_NAME, PROJECT_NAME and APP_NAME are required. Please fill the missing variables and try again!")
+        sys.exit()
+    # Then validate them
     if re.match(r'^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_]$', project.new_package) is None:
         print(
-            f"Invalid Package Name: {project.new_package} (needs to follow standard pattern `com.your.package`)")
+            f"❌ Invalid Package Name: {project.new_package} (needs to follow standard pattern `com.your.package`)")
         sys.exit()
     if re.match(r'^[a-z]*([a-z0-9_]+)*[a-z0-9]$', project.new_project_name) is None:
         print(
-            f"Invalid Project Name: {project.new_project_name} (needs to follow standard pattern `lowercase_with_underscores`)")
+            f"❌ Invalid Project Name: {project.new_project_name} (needs to follow standard pattern `lowercase_with_underscores`)")
         sys.exit()
     if re.match(r'^[0-9]\d*(\.[0-9]\d*){1,2}\+[0-9]\d*$', f"{project.app_version}+{project.build_number}") is None:
         print(
-            f"Invalid App Version or Build Number: {project.app_version}+{project.build_number} (needs to follow standard pattern `app_version+build_number`. Eg: `1.0+1` or `0.1.0+1`)")
+            f"❌ Invalid App Version or Build Number: {project.app_version}+{project.build_number} (needs to follow standard pattern `app_version+build_number`. Eg: `1.0+1` or `0.1.0+1`)")
         sys.exit()
 
 
