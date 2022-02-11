@@ -82,7 +82,7 @@ class Android:
             self.check_original_route(old_package)
             self.update_name(self.initial_folder, old_package, self.project.new_package)
             self.move_folders(old_package)
-            print("✅  Update package name for Android successfully!")
+            print("✅ Update package name for Android successfully!")
         elif old_package is None:
             print("❌ applicationId not found in app/build.gradle... Exiting!")
             sys.exit()
@@ -93,7 +93,7 @@ class Android:
         old_app_name = self.get_old_app_name()
         if old_app_name is not None and old_app_name != self.project.new_app_name:
             self.update_name(self.initial_folder, old_app_name, self.project.new_app_name)
-            print("✅  Rename Android app successfully!")
+            print("✅ Rename Android app successfully!")
         elif old_app_name is None:
             print("❌ Unable to find the old app name for Android!")
             sys.exit()
@@ -187,7 +187,7 @@ class Ios:
         if old_package is not None and old_package != self.project.new_package:
             self.replace_text_in_file(file_path=self.project_file, contain_text="PRODUCT_BUNDLE_IDENTIFIER",
                                       old_text=old_package, new_text=self.project.new_package)
-            print("Update package name for iOS successfully!")
+            print("✅ Update package name for iOS successfully!")
         elif old_package is None:
             print("❌ Bundle identifier not found in Runner.xcodeproj/project.pbxproj!")
         else:
@@ -198,7 +198,7 @@ class Ios:
         if old_app_name is not None and old_app_name != self.project.new_app_name:
             self.replace_text_in_file(file_path=self.project_file, contain_text="APP_DISPLAY_NAME",
                                       old_text=old_app_name, new_text=self.project.new_app_name)
-            print("✅  Rename iOS app successully!")
+            print("✅ Rename iOS app successully!")
         elif old_app_name is None:
             print("❌ Unable to find the old app name for iOS!")
             sys.exit()
@@ -212,7 +212,7 @@ class Ios:
                                       old_text=old_project_name, new_text=self.project.new_project_name)
             self.replace_text_in_file(file_path=self.info_file, contain_text=old_project_name,
                                       old_text=old_project_name, new_text=self.project.new_project_name)
-            print(f'✅  Renamed to {self.project.new_project_name} in iOS succesfully!')
+            print(f'✅ Renamed to {self.project.new_project_name} in iOS succesfully!')
         elif old_project_name is None:
             print("❌ Unable to update project name in iOS! Please check again!")
             sys.exit()
@@ -271,7 +271,7 @@ class Flutter:
                                               old_project_name, self.project.new_project_name)
                 else:
                     self.replace_text(path, old_project_name, self.project.new_project_name)
-            print(f'✅  Renamed to {self.project.new_project_name} in Flutter succesfully!')
+            print(f'✅ Renamed to {self.project.new_project_name} in Flutter succesfully!')
         elif old_project_name is None:
             print("❌ Unable to update project name in Flutter! Please check again!")
             sys.exit()
@@ -285,7 +285,7 @@ class Flutter:
             pubspec_file = self.project.project_path + os.sep + "pubspec.yaml"
             self.replace_text(pubspec_file, current_project_version, new_project_version)
             print(
-                f'✅  Updated project version to {new_project_version} in Flutter succesfully!')
+                f'✅ Updated project version to {new_project_version} in Flutter succesfully!')
         elif current_project_version is None:
             print("❌ Unable to update project version in Flutter! Please check again!")
             sys.exit()
@@ -307,15 +307,15 @@ def handleParameters():
                         help='The project path')
     parser.add_argument('--package_name',
                         type=str,
-                        default='',
+                        required=True,
                         help='The new package name')
     parser.add_argument('--app_name',
                         type=str,
-                        default='',
+                        required=True,
                         help='The app name')
     parser.add_argument('--project_name',
                         type=str,
-                        default='',
+                        required=True,
                         help='The project name')
     parser.add_argument('--app_version',
                         type=str,
