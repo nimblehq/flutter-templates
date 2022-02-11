@@ -56,7 +56,7 @@ Clone the repository
 
 - The fields detail:
 
-  | Field name   | Is mandatory | Rationale                                                                       |
+  | Field name   | Is mandatory | Description                                                                     |
   | :----------- | :----------: | :------------------------------------------------------------------------------ |
   | PACKAGE_NAME |     Yes      | The application package name. The naming convention follows `com.your.package`  |
   | PROJECT_NAME |     Yes      | The application project name. The naming convention follows `your_project_name` |
