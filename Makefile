@@ -6,14 +6,18 @@ PYTHON3 := $(shell command -v python3 2> /dev/null)
 VENV_ACTIVATE=$(VENV_NAME)/bin/activate
 PYTHON=$(VENV_NAME)/bin/python3
 
-PACKAGE_NAME=co.nimblehq.flutter.template
-PROJECT_NAME=flutter_templates
-APP_NAME=Flutter Templates
+PACKAGE_NAME=
+PROJECT_NAME=
+APP_NAME=
+APP_VERSION=0.1.0
+BUILD_NUMBER=1
 
 # Add the variable to env
 export PACKAGE_NAME
 export PROJECT_NAME
 export APP_NAME
+export APP_VERSION
+export BUILD_NUMBER
 
 .DEFAULT: help
 help:
@@ -35,7 +39,7 @@ prepare-dev:
 	python3 -m venv $(VENV_NAME)
 
 init: prepare-dev
-	$(PYTHON) ./scripts/setup.py --project_path $(PWD) --package_name $(PACKAGE_NAME) --project_name $(PROJECT_NAME) --app_name "$(APP_NAME)"
+	$(PYTHON) ./scripts/setup.py --project_path $(PWD) --package_name "$(PACKAGE_NAME)" --project_name "$(PROJECT_NAME)" --app_name "$(APP_NAME)" --app_version "$(APP_VERSION)" --build_number "$(BUILD_NUMBER)"
 
 test: prepare-dev
 	$(PYTHON) ./scripts/test.py

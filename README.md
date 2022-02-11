@@ -9,22 +9,34 @@ Clone the repository
 `git clone git@github.com:nimblehq/flutter_templates.git`
 
 ## Prerequisite
+
 - Flutter 2.2
 - Flutter version manager (recommend): [fvm](https://fvm.app/)
 
 ## Getting Started
 
-- Create these env files in the root directory according to the flavors and add the required environment variables into them. The example environment variable is in `.env.sample`.
+### Setup
+
+- Create these `.env` files in the root directory according to the flavors and add the required
+  environment variables into them. The example environment variable is in `.env.sample`.
 
   - Staging: `.env.staging`
 
   - Production: `.env`
+
+- Run code generator
+
+  - `$ fvm flutter packages pub run build_runner build --delete-conflicting-outputs`
+
+### Run
 
 - Run the app with the desire app flavor:
 
   - Staging: `$ fvm flutter run --flavor staging`
 
   - Production: `$ fvm flutter run --flavor production`
+
+### Test
 
 - Run unit testing:
 
@@ -38,10 +50,6 @@ Clone the repository
 
     `$ fvm flutter drive --driver=test_driver/integration_test.dart --target=integration_test/my_home_page_test.dart --flavor staging`
 
-- Generate assets folder
-  
-  - `$ fvm flutter packages pub run build_runner build --delete-conflicting-outputs`
-
 ## Use the template
 
 ### Setup a new project
@@ -54,7 +62,15 @@ Clone the repository
 
   - Re-fetch the project: `$ fvm flutter pub get`
 
-- The project uses the package name, the app name and the project name of the template if `PACKAGE_NAME`, `APP_NAME` and `PROJECT_NAME` aren't specified.
+- Parameters detail:
+
+  | Parameter name | Is mandatory | Description                                                                     |
+  | :------------- | :----------: | :------------------------------------------------------------------------------ |
+  | PACKAGE_NAME   |     Yes      | The application package name. The naming convention follows `com.your.package`  |
+  | PROJECT_NAME   |     Yes      | The application project name. The naming convention follows `your_project_name` |
+  | APP_NAME       |     Yes      | The application name.                                                           |
+  | APP_VERSION    |      No      | The app version that is set when initialize the project. Default is `0.1.0`     |
+  | BUILD_NUMBER   |      No      | The build number that is set when initialize the project. Default is `1`        |
 
 - For more supporting commands, run:
 

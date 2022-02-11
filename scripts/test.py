@@ -12,9 +12,9 @@ project.new_package = 'com.example'
 project.new_app_name = ''
 project.new_project_name = 'example_project'
 
-package_name = os.getenv('PACKAGE_NAME') or "co.nimblehq.flutter.template"
-project_name = os.getenv('PROJECT_NAME') or "flutter_templates"
-app_name = os.getenv('APP_NAME') or "Flutter Templates"
+package_name = "co.nimblehq.flutter.template"
+project_name = "flutter_templates"
+app_name = "Flutter Templates"
 
 
 class AndroidTest(unittest.TestCase):
