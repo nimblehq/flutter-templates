@@ -90,3 +90,10 @@ app.*.map.json
 
 # Python
 .venv/
+
+# Flutter generated files
+*.g.dart
+*.gen.dart
+*.config.dart
+*.freezed.dart
+*.mocks.dart
