@@ -51,7 +51,7 @@ class Android:
             print("Original package exists! Updating package...")
         else:
             print(
-                "Original package not found, please write a correct original package!"
+                "❌ Original package not found, please write a correct original package!"
             )
             sys.exit()
 
@@ -82,9 +82,9 @@ class Android:
             self.check_original_route(old_package)
             self.update_name(self.initial_folder, old_package, self.project.new_package)
             self.move_folders(old_package)
-            print("✅  Update package name for Android successfully!")
+            print("✅ Update package name for Android successfully!")
         elif old_package is None:
-            print("applicationId not found in app/build.gradle... Exiting!")
+            print("❌ applicationId not found in app/build.gradle... Exiting!")
             sys.exit()
         else:
             print("Reusing old package name in Android!")
@@ -93,9 +93,9 @@ class Android:
         old_app_name = self.get_old_app_name()
         if old_app_name is not None and old_app_name != self.project.new_app_name:
             self.update_name(self.initial_folder, old_app_name, self.project.new_app_name)
-            print("✅  Rename Android app successfully!")
+            print("✅ Rename Android app successfully!")
         elif old_app_name is None:
-            print("Unable to find the old app name for Android!")
+            print("❌ Unable to find the old app name for Android!")
             sys.exit()
         else:
             print("Reusing old app name in Android!")
@@ -187,9 +187,9 @@ class Ios:
         if old_package is not None and old_package != self.project.new_package:
             self.replace_text_in_file(file_path=self.project_file, contain_text="PRODUCT_BUNDLE_IDENTIFIER",
                                       old_text=old_package, new_text=self.project.new_package)
-            print("Update package name for iOS successfully!")
+            print("✅ Update package name for iOS successfully!")
         elif old_package is None:
-            print("Bundle identifier not found in Runner.xcodeproj/project.pbxproj!")
+            print("❌ Bundle identifier not found in Runner.xcodeproj/project.pbxproj!")
         else:
             print("Reusing old package name in iOS!")
 
@@ -198,9 +198,9 @@ class Ios:
         if old_app_name is not None and old_app_name != self.project.new_app_name:
             self.replace_text_in_file(file_path=self.project_file, contain_text="APP_DISPLAY_NAME",
                                       old_text=old_app_name, new_text=self.project.new_app_name)
-            print("✅  Rename iOS app successully!")
+            print("✅ Rename iOS app successully!")
         elif old_app_name is None:
-            print("Unable to find the old app name for iOS!")
+            print("❌ Unable to find the old app name for iOS!")
             sys.exit()
         else:
             print("Reusing old app name in iOS!")
@@ -212,9 +212,9 @@ class Ios:
                                       old_text=old_project_name, new_text=self.project.new_project_name)
             self.replace_text_in_file(file_path=self.info_file, contain_text=old_project_name,
                                       old_text=old_project_name, new_text=self.project.new_project_name)
-            print(f'✅  Renamed to {self.project.new_project_name} in iOS succesfully!')
+            print(f'✅ Renamed to {self.project.new_project_name} in iOS succesfully!')
         elif old_project_name is None:
-            print("Unable to update project name in iOS! Please check again!")
+            print("❌ Unable to update project name in iOS! Please check again!")
             sys.exit()
         else:
             print("Reusing old project name in iOS!")
@@ -231,15 +231,21 @@ class Flutter:
         self.includes = ['lib', 'test', 'test_driver',
                          'integration_test', 'pubspec.yaml', 'README.md']
 
-    def get_old_project_name(self):
+    def get_value_in_pubspec_file(self, key):
         pubspec_file = self.project.project_path + os.sep + "pubspec.yaml"
         f = open(pubspec_file, "r")
         file_text = f.read()
         f.close()
         for line in file_text.split("\n"):
-            if "name:" in line.strip():
-                return line.strip().replace("name:", "").strip()
+            if key in line.strip():
+                return line.strip().replace(key, "").strip()
         return None
+
+    def get_old_project_name(self):
+        return self.get_value_in_pubspec_file("name:")
+
+    def get_current_project_version(self):
+        return self.get_value_in_pubspec_file("version:")
 
     def replace_text(self, path_file, old_text, new_text):
         f = open(path_file, "r")
@@ -265,20 +271,35 @@ class Flutter:
                                               old_project_name, self.project.new_project_name)
                 else:
                     self.replace_text(path, old_project_name, self.project.new_project_name)
-            print(f'✅  Renamed to {self.project.new_project_name} in Flutter succesfully!')
+            print(f'✅ Renamed to {self.project.new_project_name} in Flutter succesfully!')
         elif old_project_name is None:
-            print("Unable to update project name in Flutter! Please check again!")
+            print("❌ Unable to update project name in Flutter! Please check again!")
             sys.exit()
         else:
             print("Reusing old project name in Flutter!")
 
+    def update_project_version(self):
+        current_project_version = self.get_current_project_version()
+        new_project_version = f"{self.project.app_version}+{self.project.build_number}"
+        if current_project_version is not None and current_project_version != new_project_version:
+            pubspec_file = self.project.project_path + os.sep + "pubspec.yaml"
+            self.replace_text(pubspec_file, current_project_version, new_project_version)
+            print(
+                f'✅ Updated project version to {new_project_version} in Flutter succesfully!')
+        elif current_project_version is None:
+            print("❌ Unable to update project version in Flutter! Please check again!")
+            sys.exit()
+        else:
+            print("Reusing old project version in Flutter!")
+
     def run(self):
         self.rename_project()
+        self.update_project_version()
 
 
 def handleParameters():
     parser = argparse.ArgumentParser(
-        description='The necessary arguments for renaming package and project.'
+        description='The necessary arguments for initializing the project.'
     )
     parser.add_argument('--project_path',
                         type=str,
@@ -286,28 +307,45 @@ def handleParameters():
                         help='The project path')
     parser.add_argument('--package_name',
                         type=str,
-                        default='co.nimblehq.flutter.template',
+                        required=True,
                         help='The new package name')
     parser.add_argument('--app_name',
                         type=str,
-                        default='Flutter Templates',
+                        required=True,
                         help='The app name')
     parser.add_argument('--project_name',
                         type=str,
-                        default='flutter_templates',
+                        required=True,
                         help='The project name')
+    parser.add_argument('--app_version',
+                        type=str,
+                        default='0.1.0',
+                        help='The app version')
+    parser.add_argument('--build_number',
+                        type=str,
+                        default='1',
+                        help='The build number')
 
     return parser.parse_args()
 
 
 def validateParameters(project):
+    # Check the mandatory fields should not be empty
+    if not project.new_package or not project.new_project_name or not project.new_app_name:
+        print("❌ PACKAGE_NAME, PROJECT_NAME and APP_NAME are required. Please fill the missing variables and try again!")
+        sys.exit()
+    # Then validate them
     if re.match(r'^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_]$', project.new_package) is None:
         print(
-            f"Invalid Package Name: {project.new_package} (needs to follow standard pattern `com.your.package`)")
+            f"❌ Invalid Package Name: {project.new_package} (needs to follow standard pattern `com.your.package`)")
         sys.exit()
     if re.match(r'^[a-z]*([a-z0-9_]+)*[a-z0-9]$', project.new_project_name) is None:
         print(
-            f"Invalid Project Name: {project.new_project_name} (needs to follow standard pattern `lowercase_with_underscores`)")
+            f"❌ Invalid Project Name: {project.new_project_name} (needs to follow standard pattern `lowercase_with_underscores`)")
+        sys.exit()
+    if re.match(r'^[0-9]\d*(\.[0-9]\d*){1,2}\+[0-9]\d*$', f"{project.app_version}+{project.build_number}") is None:
+        print(
+            f"❌ Invalid App Version or Build Number: {project.app_version}+{project.build_number} (needs to follow standard pattern `app_version+build_number`. Eg: `1.0+1` or `0.1.0+1`)")
         sys.exit()
 
 
@@ -319,6 +357,8 @@ if __name__ == "__main__":
     project.new_package = args.package_name
     project.new_app_name = args.app_name
     project.new_project_name = args.project_name
+    project.app_version = args.app_version
+    project.build_number = args.build_number
     validateParameters(project)
     print(f"=> 🐢 Staring init {project.new_project_name} with {project.new_package}...")
     android = Android(project)

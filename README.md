@@ -62,7 +62,15 @@ Clone the repository
 
   - Re-fetch the project: `$ fvm flutter pub get`
 
-- The project uses the package name, the app name and the project name of the template if `PACKAGE_NAME`, `APP_NAME` and `PROJECT_NAME` aren't specified.
+- Parameters detail:
+
+  | Parameter name | Is mandatory | Description                                                                     |
+  | :------------- | :----------: | :------------------------------------------------------------------------------ |
+  | PACKAGE_NAME   |     Yes      | The application package name. The naming convention follows `com.your.package`  |
+  | PROJECT_NAME   |     Yes      | The application project name. The naming convention follows `your_project_name` |
+  | APP_NAME       |     Yes      | The application name.                                                           |
+  | APP_VERSION    |      No      | The app version that is set when initialize the project. Default is `0.1.0`     |
+  | BUILD_NUMBER   |      No      | The build number that is set when initialize the project. Default is `1`        |
 
 - For more supporting commands, run:
 
