@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_templates/gen/assets.gen.dart';
+import 'package:flutter_templates/model/ui/user_ui_model.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 void main() async {
@@ -44,26 +45,53 @@ class MyHomePage extends StatelessWidget {
                   : SizedBox.shrink();
             }),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(height: 24),
-            FractionallySizedBox(
-              widthFactor: 0.5,
-              child: Image.asset(
-                Assets.images.nimbleLogo.path,
-                fit: BoxFit.fitWidth,
-              ),
+      body: Column(
+        children: [
+          SizedBox(height: 24),
+          FractionallySizedBox(
+            widthFactor: 0.5,
+            child: Image.asset(
+              Assets.images.nimbleLogo.path,
+              fit: BoxFit.fitWidth,
             ),
-            SizedBox(height: 24),
-            Text(AppLocalizations.of(context)!.hello),
-            Text(
-              FlutterConfig.get('SECRET'),
-              style: TextStyle(color: Colors.black, fontSize: 24),
-            )
-          ],
-        ),
+          ),
+          SizedBox(height: 24),
+          Expanded(child: _buildRepositories())
+        ],
       ),
+    );
+  }
+
+  Widget _buildRepositories() {
+    final list = UserUiModel.fakeData();
+    return ListView.separated(
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        final item = list[index];
+        return ListTile(
+          leading: Image.network(
+            item.avatarUrl,
+            width: 52,
+            height: 52,
+          ),
+          title: Text(
+            item.name,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
+          subtitle: Text(
+            item.description,
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
+        );
+      },
+      separatorBuilder: (_, __) => Divider(),
+      itemCount: list.length,
+      padding: EdgeInsets.all(16),
     );
   }
 }
