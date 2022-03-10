@@ -1,4 +1,3 @@
-
 import 'package:flutter_templates/api/exception/network_exceptions.dart';
 import 'package:flutter_templates/api/repository/credential_repository.dart';
 import 'package:flutter_templates/model/response/user_response.dart';
