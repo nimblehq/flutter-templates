@@ -33,3 +33,6 @@ jobs:
 
       - name: Statically analyze the Dart code for any errors.
         run: flutter analyze .
+
+      - name: Run widget tests, unit tests.
+        run: flutter test --machine --coverage
