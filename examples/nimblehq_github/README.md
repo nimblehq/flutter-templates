@@ -6,7 +6,7 @@ All the templates that can be used to kick off a new Flutter application quickly
 
 Clone the repository
 
-`git clone git@github.com:nimblehq/flutter_templates.git`
+`git clone git@github.com:nimblehq/nimblehq_github.git`
 
 ## Prerequisite
 

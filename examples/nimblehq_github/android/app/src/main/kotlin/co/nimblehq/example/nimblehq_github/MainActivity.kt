@@ -1,4 +1,4 @@
-package co.nimblehq.flutter.template
+package co.nimblehq.example.nimblehq_github
 
 import io.flutter.embedding.android.FlutterActivity
 

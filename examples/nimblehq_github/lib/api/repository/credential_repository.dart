@@ -1,6 +1,6 @@
-import 'package:flutter_templates/api/api_service.dart';
-import 'package:flutter_templates/api/exception/network_exceptions.dart';
-import 'package:flutter_templates/model/response/user_response.dart';
+import 'package:nimblehq_github/api/api_service.dart';
+import 'package:nimblehq_github/api/exception/network_exceptions.dart';
+import 'package:nimblehq_github/model/response/user_response.dart';
 
 abstract class CredentialRepository {
   Future<List<UserResponse>> getUsers();
