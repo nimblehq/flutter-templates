@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class AppInterceptor extends Interceptor {
-  bool _requireAuthenticate;
+  final bool _requireAuthenticate;
 
   AppInterceptor(this._requireAuthenticate);
 

@@ -7,14 +7,17 @@ import 'package:package_info_plus/package_info_plus.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // TODO: implement Routes then remove `home: MyHomePage()` and use initialRoute instead.
   final String initialRoute;
 
-  MyApp({this.initialRoute = '/'});
+  const MyApp({
+    Key? key,
+    this.initialRoute = '/',
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         fontFamily: Assets.fonts.neuzeit,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
     );
@@ -32,6 +35,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +46,13 @@ class MyHomePage extends StatelessWidget {
             builder: (context, snapshot) {
               return snapshot.hasData
                   ? Text(snapshot.data?.appName ?? "")
-                  : SizedBox.shrink();
+                  : const SizedBox.shrink();
             }),
       ),
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             FractionallySizedBox(
               widthFactor: 0.5,
               child: Image.asset(
@@ -55,11 +60,11 @@ class MyHomePage extends StatelessWidget {
                 fit: BoxFit.fitWidth,
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(AppLocalizations.of(context)!.hello),
             Text(
               FlutterConfig.get('SECRET'),
-              style: TextStyle(color: Colors.black, fontSize: 24),
+              style: const TextStyle(color: Colors.black, fontSize: 24),
             )
           ],
         ),
