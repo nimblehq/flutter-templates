@@ -254,6 +254,7 @@ class Flutter:
     def get_current_project_version(self):
         return self.get_value_in_pubspec_file("version:")
 
+ 	# TODO: Write unit test
     def get_json_serializable_field_rename(self):
         return self.get_value_in_build_file("field_rename:")
 
