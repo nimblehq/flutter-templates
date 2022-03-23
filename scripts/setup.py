@@ -387,10 +387,15 @@ if __name__ == "__main__":
     project.build_number = args.build_number
     validateParameters(project)
 
-    options = ['none', 'kebab', 'snake', 'pascal']
-    choice = enquiries.choose('Choose default json_serializable.field_rename: ', options)
+    options = {
+		'none' : 'none',
+		'kebab (kebab-case)' : 'kebab',
+		'snake (snake_case)' : 'snake',
+		'pascal (PascalCase)' : 'pascal'
+	}
+    choice = enquiries.choose('Choose default json_serializable.field_rename: ', options.keys())
     project.json_serializable = Object()
-    project.json_serializable.field_rename = choice
+    project.json_serializable.field_rename = options[choice]
 
     print(f"=> 🐢 Staring init {project.new_project_name} with {project.new_package}...")
     android = Android(project)
