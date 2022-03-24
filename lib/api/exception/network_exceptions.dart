@@ -50,45 +50,51 @@ class NetworkExceptions with _$NetworkExceptions {
         if (error is DioError) {
           switch (error.type) {
             case DioErrorType.cancel:
-              networkExceptions = NetworkExceptions.requestCancelled();
+              networkExceptions = const NetworkExceptions.requestCancelled();
               break;
             case DioErrorType.connectTimeout:
-              networkExceptions = NetworkExceptions.requestTimeout();
+              networkExceptions = const NetworkExceptions.requestTimeout();
               break;
             case DioErrorType.other:
-              networkExceptions = NetworkExceptions.noInternetConnection();
+              networkExceptions =
+                  const NetworkExceptions.noInternetConnection();
               break;
             case DioErrorType.receiveTimeout:
-              networkExceptions = NetworkExceptions.receiveTimeout();
+              networkExceptions = const NetworkExceptions.receiveTimeout();
               break;
             case DioErrorType.sendTimeout:
-              networkExceptions = NetworkExceptions.sendTimeout();
+              networkExceptions = const NetworkExceptions.sendTimeout();
               break;
             case DioErrorType.response:
               switch (error.response?.statusCode) {
                 case 400:
-                  networkExceptions = NetworkExceptions.badRequest();
+                  networkExceptions = const NetworkExceptions.badRequest();
                   break;
                 case 401:
-                  networkExceptions = NetworkExceptions.unauthorisedRequest();
+                  networkExceptions =
+                      const NetworkExceptions.unauthorisedRequest();
                   break;
                 case 403:
-                  networkExceptions = NetworkExceptions.unauthorisedRequest();
+                  networkExceptions =
+                      const NetworkExceptions.unauthorisedRequest();
                   break;
                 case 404:
-                  networkExceptions = NetworkExceptions.notFound("Not found");
+                  networkExceptions =
+                      const NetworkExceptions.notFound("Not found");
                   break;
                 case 409:
-                  networkExceptions = NetworkExceptions.conflict();
+                  networkExceptions = const NetworkExceptions.conflict();
                   break;
                 case 408:
-                  networkExceptions = NetworkExceptions.requestTimeout();
+                  networkExceptions = const NetworkExceptions.requestTimeout();
                   break;
                 case 500:
-                  networkExceptions = NetworkExceptions.internalServerError();
+                  networkExceptions =
+                      const NetworkExceptions.internalServerError();
                   break;
                 case 503:
-                  networkExceptions = NetworkExceptions.serviceUnavailable();
+                  networkExceptions =
+                      const NetworkExceptions.serviceUnavailable();
                   break;
                 default:
                   var responseCode = error.response?.statusCode;
@@ -99,21 +105,21 @@ class NetworkExceptions with _$NetworkExceptions {
               break;
           }
         } else if (error is SocketException) {
-          networkExceptions = NetworkExceptions.noInternetConnection();
+          networkExceptions = const NetworkExceptions.noInternetConnection();
         } else {
-          networkExceptions = NetworkExceptions.unexpectedError();
+          networkExceptions = const NetworkExceptions.unexpectedError();
         }
         return networkExceptions;
       } on FormatException catch (_) {
-        return NetworkExceptions.formatException();
+        return const NetworkExceptions.formatException();
       } catch (_) {
-        return NetworkExceptions.unexpectedError();
+        return const NetworkExceptions.unexpectedError();
       }
     } else {
       if (error.toString().contains("is not a subtype of")) {
-        return NetworkExceptions.unableToProcess();
+        return const NetworkExceptions.unableToProcess();
       } else {
-        return NetworkExceptions.unexpectedError();
+        return const NetworkExceptions.unexpectedError();
       }
     }
   }
