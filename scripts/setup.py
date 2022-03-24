@@ -12,9 +12,19 @@ PACKAGE_SEPARATOR = "."
 ANDROID_MODULE = "app"  # only app module now
 
 
-class Object:
-    def __init__(self):
-        pass
+class JsonSerializable:
+	def __init__(self, field_rename):
+		self.field_rename = field_rename
+
+class Project:
+	def __init__(self, project_path, new_package, new_app_name, new_project_name, app_version, build_number):
+		self.project_path = project_path
+		self.new_package = new_package
+		self.new_app_name = new_app_name
+		self.new_project_name = new_project_name
+		self.app_version = app_version
+		self.build_number = build_number
+		self.json_serializable = None
 
 
 class Android:
@@ -378,13 +388,14 @@ def validateParameters(project):
 if __name__ == "__main__":
     args = handleParameters()
 
-    project = Object()
-    project.project_path = args.project_path
-    project.new_package = args.package_name
-    project.new_app_name = args.app_name
-    project.new_project_name = args.project_name
-    project.app_version = args.app_version
-    project.build_number = args.build_number
+    project = Project(
+		args.project_path,
+		args.package_name,
+		args.app_name,
+		args.project_name,
+		args.app_version,
+		args.build_number
+	)
     validateParameters(project)
 
     options = {
@@ -394,8 +405,7 @@ if __name__ == "__main__":
 		'pascal (PascalCase)' : 'pascal'
 	}
     choice = enquiries.choose('Choose default json_serializable.field_rename: ', options.keys())
-    project.json_serializable = Object()
-    project.json_serializable.field_rename = options[choice]
+    project.json_serializable = JsonSerializable(options[choice])
 
     print(f"=> 🐢 Staring init {project.new_project_name} with {project.new_package}...")
     android = Android(project)
