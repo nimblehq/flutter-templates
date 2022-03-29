@@ -37,6 +37,7 @@ prepare-dev:
 	fi
 	python3 -m pip install pipenv
 	python3 -m venv $(VENV_NAME)
+	$(PYTHON) -m pip install enquiries
 
 init: prepare-dev
 	$(PYTHON) ./scripts/setup.py --project_path $(PWD) --package_name "$(PACKAGE_NAME)" --project_name "$(PROJECT_NAME)" --app_name "$(APP_NAME)" --app_version "$(APP_VERSION)" --build_number "$(BUILD_NUMBER)"
