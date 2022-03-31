@@ -1,2 +1,8 @@
-# These users will be requested for review when someone opens a pull request.
-*       @sleepylee @luongvo @manh-t @markgravity @doannimble
+# Team Lead
+* @manh-t
+
+# Team Members
+* @doannimble @luongvo @markgravity
+
+# Engineering Leads
+CODEOWNERS @nimblehq/engineering-leads
