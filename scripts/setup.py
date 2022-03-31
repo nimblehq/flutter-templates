@@ -6,14 +6,25 @@ import sys
 import shutil
 import argparse
 import re
+import enquiries
 
 PACKAGE_SEPARATOR = "."
 ANDROID_MODULE = "app"  # only app module now
 
 
+class JsonSerializable:
+	def __init__(self, field_rename):
+		self.field_rename = field_rename
+
 class Project:
-    def __init__(self):
-        pass
+	def __init__(self, project_path, new_package, new_app_name, new_project_name, app_version, build_number):
+		self.project_path = project_path
+		self.new_package = new_package
+		self.new_app_name = new_app_name
+		self.new_project_name = new_project_name
+		self.app_version = app_version
+		self.build_number = build_number
+		self.json_serializable = None
 
 
 class Android:
@@ -231,9 +242,9 @@ class Flutter:
         self.includes = ['lib', 'test', 'test_driver',
                          'integration_test', 'pubspec.yaml', 'README.md']
 
-    def get_value_in_pubspec_file(self, key):
-        pubspec_file = self.project.project_path + os.sep + "pubspec.yaml"
-        f = open(pubspec_file, "r")
+    def get_value_in_yaml_file(self, filename, key):
+        yaml_file = self.project.project_path + os.sep + filename
+        f = open(yaml_file, "r")
         file_text = f.read()
         f.close()
         for line in file_text.split("\n"):
@@ -241,11 +252,21 @@ class Flutter:
                 return line.strip().replace(key, "").strip()
         return None
 
+    def get_value_in_pubspec_file(self, key):
+        return self.get_value_in_yaml_file("pubspec.yaml", key)
+
+    def get_value_in_build_file(self, key):
+        return self.get_value_in_yaml_file("build.yaml", key)
+
     def get_old_project_name(self):
         return self.get_value_in_pubspec_file("name:")
 
     def get_current_project_version(self):
         return self.get_value_in_pubspec_file("version:")
+
+	# TODO: Write unit test
+    def get_json_serializable_field_rename(self):
+        return self.get_value_in_build_file("field_rename:")
 
     def replace_text(self, path_file, old_text, new_text):
         f = open(path_file, "r")
@@ -292,9 +313,24 @@ class Flutter:
         else:
             print("Reusing old project version in Flutter!")
 
+    def update_json_serializable_field_rename(self):
+        current_field_rename = self.get_json_serializable_field_rename()
+        new_field_rename = f'"{self.project.json_serializable.field_rename}"'
+        if current_field_rename is not None and current_field_rename != new_field_rename:
+            build_file = self.project.project_path + os.sep + "build.yaml"
+            self.replace_text(build_file, current_field_rename, new_field_rename)
+            print(
+                f'✅ Updated json_serializable.field_rename to {new_field_rename} in build.yaml succesfully!')
+        elif current_field_rename is None:
+            print("❌ Unable to update json_serializable.field_rename in build.yaml! Please check again!")
+            sys.exit()
+        else:
+            print("Reusing old json_serializable.field_rename in build.yaml!")
+
     def run(self):
         self.rename_project()
         self.update_project_version()
+        self.update_json_serializable_field_rename()
 
 
 def handleParameters():
@@ -352,14 +388,25 @@ def validateParameters(project):
 if __name__ == "__main__":
     args = handleParameters()
 
-    project = Project()
-    project.project_path = args.project_path
-    project.new_package = args.package_name
-    project.new_app_name = args.app_name
-    project.new_project_name = args.project_name
-    project.app_version = args.app_version
-    project.build_number = args.build_number
+    project = Project(
+		args.project_path,
+		args.package_name,
+		args.app_name,
+		args.project_name,
+		args.app_version,
+		args.build_number
+	)
     validateParameters(project)
+
+    options = {
+		'none' : 'none',
+		'kebab (kebab-case)' : 'kebab',
+		'snake (snake_case)' : 'snake',
+		'pascal (PascalCase)' : 'pascal'
+	}
+    choice = enquiries.choose('Choose default json_serializable.field_rename: ', options.keys())
+    project.json_serializable = JsonSerializable(options[choice])
+
     print(f"=> 🐢 Staring init {project.new_project_name} with {project.new_package}...")
     android = Android(project)
     android.run()

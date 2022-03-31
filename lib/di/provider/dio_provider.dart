@@ -2,16 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_templates/di/interceptor/app_interceptor.dart';
 
-const String HEADER_CONTENT_TYPE = 'Content-Type';
-const String DEFAULT_CONTENT_TYPE = 'application/json; charset=utf-8';
+const String headerContentType = 'Content-Type';
+const String defaultContentType = 'application/json; charset=utf-8';
 
 class DioProvider {
   Dio? _dio;
 
   Dio getDio() {
-    if (_dio == null) {
-      _dio = _createDio();
-    }
+    _dio ??= _createDio();
     return _dio!;
   }
 
@@ -32,7 +30,7 @@ class DioProvider {
     return dio
       ..options.connectTimeout = 3000
       ..options.receiveTimeout = 5000
-      ..options.headers = {HEADER_CONTENT_TYPE: DEFAULT_CONTENT_TYPE}
+      ..options.headers = {headerContentType: defaultContentType}
       ..interceptors.addAll(interceptors);
   }
 }

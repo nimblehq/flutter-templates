@@ -1,4 +1,3 @@
-
 import 'package:flutter_templates/api/exception/network_exceptions.dart';
 import 'package:flutter_templates/api/repository/credential_repository.dart';
 import 'package:flutter_templates/model/response/user_response.dart';
@@ -31,9 +30,11 @@ void main() {
     test("When getting user list failed, it returns NetworkExceptions error",
         () async {
       when(mockApiService.getUsers()).thenThrow(MockDioError());
-      final result = () => repository.getUsers();
 
-      expect(result, throwsA(isA<NetworkExceptions>()));
+      expect(
+        () => repository.getUsers(),
+        throwsA(isA<NetworkExceptions>()),
+      );
     });
   });
 }

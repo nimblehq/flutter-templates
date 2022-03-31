@@ -9,7 +9,8 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('My Home Page widget', (WidgetTester tester) async {
-    await tester.pumpWidget(TestUtil.pumpWidgetWithShellApp(MyHomePage()));
+    await tester
+        .pumpWidget(TestUtil.pumpWidgetWithShellApp(const MyHomePage()));
     await tester.pumpAndSettle();
 
     expect(find.widgetWithText(AppBar, 'Flutter templates testing'),
