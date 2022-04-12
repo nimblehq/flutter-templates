@@ -365,7 +365,7 @@ def handleParameters():
     return parser.parse_args()
 
 
-def validateParameters(project):
+def validate_parameters(project):
     # Check the mandatory fields should not be empty
     if not project.new_package or not project.new_project_name or not project.new_app_name:
         print("❌ PACKAGE_NAME, PROJECT_NAME and APP_NAME are required. Please fill the missing variables and try again!")
@@ -384,6 +384,20 @@ def validateParameters(project):
             f"❌ Invalid App Version or Build Number: {project.app_version}+{project.build_number} (needs to follow standard pattern `app_version+build_number`. Eg: `1.0+1` or `0.1.0+1`)")
         sys.exit()
 
+def move_project_to_root(project):
+    cur_dir = os.getcwd()
+    shutil.copytree(project.project_path, cur_dir, copy_function=shutil.move, dirs_exist_ok=True)
+
+def clean_up():
+    cur_dir = os.getcwd()
+    template_files = ['.template', '.github']
+    for template_file in template_files:
+        template_file_path = cur_dir + os.sep + template_file
+        if os.path.exists(template_file_path):
+            if (os.path.isdir(template_file_path)):
+                shutil.rmtree(template_file_path)
+            else:
+                os.remove(template_file_path)
 
 if __name__ == "__main__":
     args = handleParameters()
@@ -396,7 +410,7 @@ if __name__ == "__main__":
 		args.app_version,
 		args.build_number
 	)
-    validateParameters(project)
+    validate_parameters(project)
 
     options = {
 		'none' : 'none',
@@ -414,4 +428,9 @@ if __name__ == "__main__":
     ios.run()
     flutter = Flutter(project)
     flutter.run()
+    print('🤖 Generating project...')
+    move_project_to_root(project)
+    print('Would you like to remove `.template` and `.github` folder? (y/n)')
+    if input().lower() == 'y':
+        clean_up()
     print("=> 🚀 Done! App is ready to be tested 🙌")
