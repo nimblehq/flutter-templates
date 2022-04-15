@@ -6,6 +6,7 @@ PYTHON3 := $(shell command -v python3 2> /dev/null)
 VENV_ACTIVATE=$(VENV_NAME)/bin/activate
 PYTHON=$(VENV_NAME)/bin/python3
 
+PROJECT_PATH=$(PWD)/.template
 PACKAGE_NAME=
 PROJECT_NAME=
 APP_NAME=
@@ -40,7 +41,7 @@ prepare-dev:
 	$(PYTHON) -m pip install enquiries
 
 init: prepare-dev
-	$(PYTHON) ./scripts/setup.py --project_path $(PWD) --package_name "$(PACKAGE_NAME)" --project_name "$(PROJECT_NAME)" --app_name "$(APP_NAME)" --app_version "$(APP_VERSION)" --build_number "$(BUILD_NUMBER)"
+	$(PYTHON) ./scripts/setup.py --project_path "$(PROJECT_PATH)" --package_name "$(PACKAGE_NAME)" --project_name "$(PROJECT_NAME)" --app_name "$(APP_NAME)" --app_version "$(APP_VERSION)" --build_number "$(BUILD_NUMBER)"
 
 test: prepare-dev
 	$(PYTHON) ./scripts/test.py
