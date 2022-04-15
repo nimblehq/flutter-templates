@@ -388,16 +388,14 @@ def move_project_to_root(project):
     cur_dir = os.getcwd()
     shutil.copytree(project.project_path, cur_dir, copy_function=shutil.move, dirs_exist_ok=True)
 
-def clean_up():
+def clean_up(file):
     cur_dir = os.getcwd()
-    template_files = ['.template', '.github']
-    for template_file in template_files:
-        template_file_path = cur_dir + os.sep + template_file
-        if os.path.exists(template_file_path):
-            if (os.path.isdir(template_file_path)):
-                shutil.rmtree(template_file_path)
-            else:
-                os.remove(template_file_path)
+    file_path = cur_dir + os.sep + file
+    if os.path.exists(file_path):
+        if (os.path.isdir(file_path)):
+            shutil.rmtree(file_path)
+        else:
+            os.remove(file_path)
 
 if __name__ == "__main__":
     args = handleParameters()
@@ -429,8 +427,8 @@ if __name__ == "__main__":
     flutter = Flutter(project)
     flutter.run()
     print('🤖 Generating project...')
+    # Remove the `.github` folder to avoid redundant workflow
+    clean_up('.github')
     move_project_to_root(project)
-    print('Would you like to remove `.template` and `.github` folder? (y/n)')
-    if input().lower() == 'y':
-        clean_up()
-    print("=> 🚀 Done! App is ready to be tested 🙌")
+    clean_up('.template')
+    print("=> 🚀 Done! Project is ready for the next development 🙌")
