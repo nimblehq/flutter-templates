@@ -48,7 +48,6 @@ class Constants
     'github_action_keychain'
   end
 
-  # a scheme name for unit testing
   def self.KEYCHAIN_PASSWORD
     'password'
   end
@@ -56,12 +55,6 @@ class Constants
   #################
   ### ARCHIVING ###
   #################
-
-   # a developer portal team id
-  def self.DEV_PORTAL_TEAM_ID
-    '4TWS7E2EPE'
-  end
-
   # an staging environment scheme name
   def self.SCHEME_NAME_STAGING
     'staging'
@@ -90,14 +83,5 @@ class Constants
   # a main target name
   def self.MAIN_TARGET_NAME
     'Flutter Template'
-  end
-
-  ##################
-  ### DEV PORTAL ###
-  ##################
-
-  # Apple ID for Apple Developer Portal
-  def self.DEV_PORTAL_APPLE_ID
-    'manh@nimblehq.co'
   end
 end

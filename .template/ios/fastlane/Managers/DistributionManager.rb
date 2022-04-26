@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DistributionManager
-  def initialize(fastlane:, build_path:, firebase_token:)
+  def initialize(fastlane:, build_path:)
     @fastlane = fastlane
     @build_path = build_path
   end

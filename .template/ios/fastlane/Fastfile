@@ -2,17 +2,9 @@
 
 require './Constants/Constants'
 require './Constants/Environments'
-require './Managers/VersioningManager'
 require './Managers/BuildManager'
-require './Managers/SymbolManager'
 require './Managers/DistributionManager'
 require './Managers/MatchManager'
-
-versioning_manager = VersioningManager.new(
-  fastlane: self,
-  project_path: Constants.PROJECT_PATH,
-  main_target_name: Constants.MAIN_TARGET_NAME
-)
 
 builder = BuildManager.new(fastlane: self)
 
@@ -91,7 +83,7 @@ platform :ios do
   desc 'set build number with number of commits'
   private_lane :bump_build do
     increment_build_number(
-      build_number: 92,
+      build_number: number_of_commits,
       xcodeproj: Constants.PROJECT_PATH
     )
   end
