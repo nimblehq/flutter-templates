@@ -32,7 +32,7 @@ class Android:
         self.project = p
         self.initial_folder = p.project_path + os.sep + "android"
 
-    def get_old_package(self):
+    def get_current_package_name(self):
         build_file = self.initial_folder + os.sep + ANDROID_MODULE + os.sep + "build.gradle"
         f = open(build_file, "r")
         file_text = f.read()
@@ -42,7 +42,7 @@ class Android:
                 return line.strip().split(" ")[1].strip().replace("\"", "")
         return None
 
-    def get_old_app_name(self):
+    def get_current_app_name(self):
         string_res_file = self.initial_folder + os.sep + ANDROID_MODULE + os.sep + "src" + \
             os.sep + "main" + os.sep + "res" + os.sep + "values" + os.sep + "strings.xml"
         f = open(string_res_file, "r")
@@ -88,7 +88,7 @@ class Android:
                 self.move_code_folder(str(f), old_package)
 
     def repackage(self):
-        old_package = self.get_old_package()
+        old_package = self.get_current_package_name()
         if old_package is not None and old_package != self.project.new_package:
             self.check_original_route(old_package)
             self.update_name(self.initial_folder, old_package, self.project.new_package)
@@ -101,7 +101,7 @@ class Android:
             print("Reusing old package name in Android!")
 
     def rename_app(self):
-        old_app_name = self.get_old_app_name()
+        old_app_name = self.get_current_app_name()
         if old_app_name is not None and old_app_name != self.project.new_app_name:
             self.update_name(self.initial_folder, old_app_name, self.project.new_app_name)
             print("✅ Rename Android app successfully!")
@@ -147,7 +147,7 @@ class Ios:
             os.sep + "Runner.xcodeproj" + os.sep + "project.pbxproj"
         self.info_file = p.project_path + os.sep + "ios" + os.sep + "Runner" + os.sep + "Info.plist"
 
-    def get_old_package(self):
+    def get_current_package_name(self):
         f = open(self.project_file, "r")
         file_text = f.read()
         f.close()
@@ -156,7 +156,7 @@ class Ios:
                 return line.strip().split(" = ")[1].strip().replace(";", "").replace(".staging", "")
         return None
 
-    def get_old_app_name(self):
+    def get_current_app_name(self):
         f = open(self.project_file, "r")
         file_text = f.read()
         f.close()
@@ -166,7 +166,7 @@ class Ios:
                     .replace(";", "").replace(" Staging", "").replace(" Production", "")
         return None
 
-    def get_old_project_name(self):
+    def get_current_project_name(self):
         f = open(self.info_file, "r")
         file_text = f.read()
         f.close()
@@ -194,7 +194,7 @@ class Ios:
             f.close()
 
     def repackage(self):
-        old_package = self.get_old_package()
+        old_package = self.get_current_package_name()
         if old_package is not None and old_package != self.project.new_package:
             self.replace_text_in_file(file_path=self.project_file, contain_text="PRODUCT_BUNDLE_IDENTIFIER",
                                       old_text=old_package, new_text=self.project.new_package)
@@ -205,7 +205,7 @@ class Ios:
             print("Reusing old package name in iOS!")
 
     def rename_app(self):
-        old_app_name = self.get_old_app_name()
+        old_app_name = self.get_current_app_name()
         if old_app_name is not None and old_app_name != self.project.new_app_name:
             self.replace_text_in_file(file_path=self.project_file, contain_text="APP_DISPLAY_NAME",
                                       old_text=old_app_name, new_text=self.project.new_app_name)
@@ -217,7 +217,7 @@ class Ios:
             print("Reusing old app name in iOS!")
 
     def rename_project(self):
-        old_project_name = self.get_old_project_name()
+        old_project_name = self.get_current_project_name()
         if old_project_name is not None and old_project_name != self.project.new_project_name:
             self.replace_text_in_file(file_path=self.project_file, contain_text=old_project_name,
                                       old_text=old_project_name, new_text=self.project.new_project_name)

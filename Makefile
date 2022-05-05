@@ -14,6 +14,7 @@ APP_VERSION=0.1.0
 BUILD_NUMBER=1
 
 # Add the variable to env
+export PROJECT_PATH
 export PACKAGE_NAME
 export PROJECT_NAME
 export APP_NAME
