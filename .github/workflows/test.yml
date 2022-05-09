@@ -18,5 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.2
 
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
       - name: Set new project
         run: make run PACKAGE_NAME=co.nimblehq.flutter.template PROJECT_NAME=flutter_templates APP_NAME="Flutter Templates"
