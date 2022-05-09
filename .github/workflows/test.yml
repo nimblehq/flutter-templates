@@ -1,0 +1,22 @@
+name: CI
+on:
+  # Trigger the workflow on push or pull request,
+  # but push action is only for the feature branch
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+  push:
+    branches-ignore:
+      - develop
+      - 'release/**'
+      - main
+
+jobs:
+  lint_and_test:
+    name: Template initializing scripts test
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v2.3.2
+
+      - name: Set new project
+        run: make run PACKAGE_NAME=co.nimblehq.flutter.template PROJECT_NAME=flutter_templates APP_NAME="Flutter Templates"
