@@ -74,15 +74,6 @@
 .pub/
 /build/
 
-# iOS related
-**/ios/Flutter/.last_build_id
-**/ios/.envfile
-**/ios/Flutter/tmp.xcconfig
-**/ios/Build/
-**/ios/DerivedData/
-**/ios/fastlane/README.md
-**/ios/fastlane/report.xml
-
 # Web related
 lib/generated_plugin_registrant.dart
 
