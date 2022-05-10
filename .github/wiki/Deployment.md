@@ -8,8 +8,8 @@
 
     - An Apple developer account.
     - Your application’s bundle id. This could be multiple bundle ids according to the number of application’s flavors.
-    - An application that links to the bundle id.
-    - The access to Github’s [Match repository](https://codesigning.guide/).
+    - A new app's on Apple Store Connect that links to the bundle id.
+    - The access to Git’s [Match repository](https://codesigning.guide/).
 
 - Create certificates for distribution and [code signing](https://codesigning.guide/) so we are able to fetch the certificates through [Match](https://docs.fastlane.tools/actions/match/).
 - Setup [Fastlane](https://docs.fastlane.tools/getting-started/ios/setup/) and [Match](https://docs.fastlane.tools/actions/match/).
@@ -21,7 +21,7 @@
     - **FASTLANE_SESSION**: When your Apple ID has Two-Factor Authentication or Two-Step verification information, we can’t validate your Apple ID with a prompt on your CI machine. We need to generate a login session for Apple ID in advance with `spaceauth`. Please check `Method 2: Two-step or two-factor authentication` in [here](https://docs.fastlane.tools/getting-started/ios/authentication/) to get the fastlane session and read the note in `Important note about session duration`.
     - **MATCH_PASSWORD**: This will be referred to internally in `fastlane match` to decrypt your profiles. We can get the password from the one who has Admin access in Apple Store Connect.
     - **KEYCHAIN_PASSWORD**: We can create a keychain password for ourself and it could be anything.
-    - **SSH_PRIVATE_KEY**: In order to fetch the distribution files from Github’s [Match repository](https://codesigning.guide/), we have to [generate an SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and save it as the environment variable in CI.
+    - **SSH_PRIVATE_KEY**: In order to fetch the distribution files from Git’s [Match repository](https://codesigning.guide/), we have to generate an SSH key and save it as the environment variable in CI.
   
 - Run the corresponding workflows CI or `fastlane` commands and enjoy the result!
 
