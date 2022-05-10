@@ -11,10 +11,9 @@ on:
       - main
 
 jobs:
-  lint_and_test:
+  test:
     name: Template initializing scripts test
     runs-on: ubuntu-latest
-    environment: staging
     steps:
       - uses: actions/checkout@v2.3.2
 
