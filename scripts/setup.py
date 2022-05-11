@@ -424,7 +424,7 @@ if __name__ == "__main__":
         # Skip enquiries on CI
         project.json_serializable = JsonSerializable('snake')
 
-    print(f"=> 🐢 Staring init {project.new_project_name} with {project.new_package}...")
+    print(f"=> 🐢 Starting init {project.new_project_name} with {project.new_package}...")
     android = Android(project)
     android.run()
     ios = Ios(project)
