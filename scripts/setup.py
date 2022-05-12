@@ -411,16 +411,20 @@ if __name__ == "__main__":
 	)
     validate_parameters(project)
 
-    options = {
-		'none' : 'none',
-		'kebab (kebab-case)' : 'kebab',
-		'snake (snake_case)' : 'snake',
-		'pascal (PascalCase)' : 'pascal'
-	}
-    choice = enquiries.choose('Choose default json_serializable.field_rename: ', options.keys())
-    project.json_serializable = JsonSerializable(options[choice])
+    if os.environ.get("CI") != "true":
+        options = {
+            'none': 'none',
+            'kebab (kebab-case)': 'kebab',
+            'snake (snake_case)': 'snake',
+            'pascal (PascalCase)': 'pascal'
+        }
+        choice = enquiries.choose('Choose default json_serializable.field_rename: ', options.keys())
+        project.json_serializable = JsonSerializable(options[choice])
+    else:
+        # Skip enquiries on CI
+        project.json_serializable = JsonSerializable('snake')
 
-    print(f"=> 🐢 Staring init {project.new_project_name} with {project.new_package}...")
+    print(f"=> 🐢 Starting init {project.new_project_name} with {project.new_package}...")
     android = Android(project)
     android.run()
     ios = Ios(project)
