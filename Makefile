@@ -13,12 +13,15 @@ APP_NAME=
 APP_VERSION=0.1.0
 BUILD_NUMBER=1
 
-# Add the variable to env
+RUNNING_TEST_MODE=1 # 0: false, 1: true
+
+export PROJECT_PATH
 export PACKAGE_NAME
 export PROJECT_NAME
 export APP_NAME
 export APP_VERSION
 export BUILD_NUMBER
+export RUNNING_TEST_MODE
 
 .DEFAULT: help
 help:
@@ -46,4 +49,5 @@ init: prepare-dev
 test: prepare-dev
 	$(PYTHON) ./scripts/test.py
 
+run: RUNNING_TEST_MODE=0
 run: init test
