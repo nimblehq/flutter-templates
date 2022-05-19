@@ -195,9 +195,12 @@ class Ios:
 
     def repackage(self):
         old_package = self.get_current_package_name()
-        if old_package is not None and old_package != self.project.new_package:
+        # To follow iOS identifier rules, we need to replace underscore (_) with hyphen (-)
+        # Read more: https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleidentifier
+        new_package = self.project.new_package.replace("_", "-")
+        if old_package is not None and old_package != new_package:
             self.replace_text_in_file(file_path=self.project_file, contain_text="PRODUCT_BUNDLE_IDENTIFIER",
-                                      old_text=old_package, new_text=self.project.new_package)
+                                      old_text=old_package, new_text=new_package)
             print("✅ Update package name for iOS successfully!")
         elif old_package is None:
             print("❌ Bundle identifier not found in Runner.xcodeproj/project.pbxproj!")
