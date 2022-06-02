@@ -1,4 +1,4 @@
-name: ios-deployment
+name: ios-deploy-to-testflight
 on:
   # Trigger the workflow on push action
   push:
