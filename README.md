@@ -27,8 +27,8 @@ Clone the repository
   | PACKAGE_NAME   |     Yes      | The application package name. The naming convention follows `com.your.package`  |
   | PROJECT_NAME   |     Yes      | The application project name. The naming convention follows `your_project_name` |
   | APP_NAME       |     Yes      | The application name.                                                           |
-  | APP_VERSION    |      No      | The app version that is set when initialize the project. Default is `0.1.0`     |
-  | BUILD_NUMBER   |      No      | The build number that is set when initialize the project. Default is `1`        |
+
+	More available configs [here](https://github.com/nimblehq/flutter_templates/wiki/Setup-More-Available-Configs)
 
 - For more supporting commands, run:
 
