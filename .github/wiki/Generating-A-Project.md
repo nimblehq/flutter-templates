@@ -1,4 +1,6 @@
-# Available Configs
+# Generating a project
+
+## The available configs
 | Parameter name | Is mandatory | Description                                                                     |
 | :------------- | :----------: | :------------------------------------------------------------------------------ |
 | PACKAGE_NAME   |     Yes      | The application package name. The naming convention follows `com.your.package`  |
