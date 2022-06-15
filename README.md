@@ -28,7 +28,7 @@ Clone the repository
   | PROJECT_NAME   |     Yes      | The application project name. The naming convention follows `your_project_name` |
   | APP_NAME       |     Yes      | The application name.                                                           |
 
-  More available configs [here](https://github.com/nimblehq/flutter_templates/wiki/Setup-More-Available-Configs)
+  More available configs [here](https://github.com/nimblehq/flutter_templates/wiki/Generating-A-Project)
 
 - For more supporting commands, run:
 
