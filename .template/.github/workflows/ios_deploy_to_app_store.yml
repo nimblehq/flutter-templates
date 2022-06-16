@@ -1,4 +1,4 @@
-name: ios-deployment
+name: ios-deploy-to-app-store
 on:
   # Trigger the workflow on push action
   push:
@@ -6,9 +6,12 @@ on:
       - develop
 
 jobs:
-  build_and_upload_to_testflight:
-    name: Build And Upload iOS Application To TestFlight
+  build_and_upload_to_app_store:
+    name: Build And Upload iOS Application To AppStore
     runs-on: macOS-latest
+    defaults:
+      run:
+        working-directory: .template
     env:
       TEAM_ID: ${{ secrets.TEAM_ID }}
       FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
@@ -45,6 +48,6 @@ jobs:
     - name: Match AppStore
       run: cd ./ios && bundle exec fastlane sync_appstore_staging_signing
 
-    - name: Deploy to TestFlight
+    - name: Deploy to AppStore
       run: |
-        cd ./ios && bundle exec fastlane build_and_upload_testflight_app
+        cd ./ios && bundle exec fastlane build_and_upload_app_store_connect_app

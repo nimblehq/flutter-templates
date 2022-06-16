@@ -68,6 +68,29 @@ platform :ios do
     )
   end
 
+  # AppStore
+
+  desc 'Build and upload Staging app to App Store Connect'
+  lane :build_and_upload_app_store_connect_app do
+    set_app_version
+    bump_build
+    builder.build_app_store(
+      Constants.SCHEME_NAME_STAGING,
+      Constants.PRODUCT_NAME_STAGING,
+      Constants.BUNDLE_ID_STAGING,
+      false
+    )
+    upload_build_to_app_store_connect
+  end
+
+  desc 'upload develop build to App Store Connect'
+  private_lane :upload_build_to_app_store_connect do
+    distribution_manager.upload_to_app_store_connect(
+      product_name: Constants.PRODUCT_NAME_STAGING,
+      bundle_identifier: Constants.BUNDLE_ID_STAGING
+    )
+  end
+
   # Private helper lanes
 
   desc 'check if any specific version number in build environment'
