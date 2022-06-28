@@ -39,9 +39,9 @@ jobs:
 
       - uses: codecov/codecov-action@v2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          name: Upload coverage to codecov
           files: ./coverage/lcov.info
           flags: unittests # optional
-          name: Upload coverage to codecov
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           fail_ci_if_error: false
           verbose: true
