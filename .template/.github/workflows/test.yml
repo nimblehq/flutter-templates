@@ -36,3 +36,12 @@ jobs:
 
       - name: Run widget tests, unit tests.
         run: flutter test --machine --coverage
+
+      - uses: codecov/codecov-action@v2
+        with:
+          name: Upload coverage to codecov
+          files: ./coverage/lcov.info
+          flags: unittests # optional
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          fail_ci_if_error: false
+          verbose: true
