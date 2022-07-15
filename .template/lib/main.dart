@@ -2,40 +2,57 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_templates/gen/assets.gen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // TODO: implement Routes then remove `home: MyHomePage()` and use initialRoute instead.
-  final String initialRoute;
+const routePathRootScreen = '/';
+const routePathSecondScreen = 'second';
 
-  const MyApp({
-    Key? key,
-    this.initialRoute = '/',
-  }) : super(key: key);
+class MyApp extends StatelessWidget {
+  MyApp({Key? key}) : super(key: key);
+
+  final GoRouter _router = GoRouter(
+    routes: <GoRoute>[
+      GoRoute(
+        path: routePathRootScreen,
+        builder: (BuildContext context, GoRouterState state) =>
+            const HomeScreen(),
+        routes: [
+          GoRoute(
+            path: routePathSecondScreen,
+            builder: (BuildContext context, GoRouterState state) =>
+                const SecondScreen(),
+          ),
+        ],
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       theme: ThemeData(
         primarySwatch: Colors.blue,
         brightness: Brightness.light,
         fontFamily: Assets.fonts.neuzeit,
       ),
-      home: const MyHomePage(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      routeInformationProvider: _router.routeInformationProvider,
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +82,29 @@ class MyHomePage extends StatelessWidget {
             Text(
               FlutterConfig.get('SECRET'),
               style: const TextStyle(color: Colors.black, fontSize: 24),
-            )
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () => context.go('/$routePathSecondScreen'),
+              child: const Text("Navigate to Second Screen"),
+            ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class SecondScreen extends StatelessWidget {
+  const SecondScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Second Screen"),
       ),
     );
   }
