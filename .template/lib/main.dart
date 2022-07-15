@@ -11,9 +11,8 @@ void main() async {
   runApp(MyApp());
 }
 
-const routePathRoot = '/';
-const routePathPage2 = 'page2';
-const routePathPage3 = 'page3';
+const routePathRootScreen = '/';
+const routePathSecondScreen = 'second';
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
@@ -21,19 +20,14 @@ class MyApp extends StatelessWidget {
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
       GoRoute(
-        path: routePathRoot,
+        path: routePathRootScreen,
         builder: (BuildContext context, GoRouterState state) =>
-            const MyHomePage(),
+            const HomeScreen(),
         routes: [
           GoRoute(
-            path: routePathPage2,
+            path: routePathSecondScreen,
             builder: (BuildContext context, GoRouterState state) =>
-                const Page2Screen(),
-          ),
-          GoRoute(
-            path: routePathPage3,
-            builder: (BuildContext context, GoRouterState state) =>
-                const Page3Screen(),
+                const SecondScreen(),
           ),
         ],
       ),
@@ -57,8 +51,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +85,8 @@ class MyHomePage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () => context.go('/$routePathPage2'),
-              child: const Text("Navigate to Page 2"),
+              onPressed: () => context.go('/$routePathSecondScreen'),
+              child: const Text("Navigate to Second Screen"),
             ),
           ],
         ),
@@ -101,8 +95,8 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class Page2Screen extends StatelessWidget {
-  const Page2Screen({
+class SecondScreen extends StatelessWidget {
+  const SecondScreen({
     Key? key,
   }) : super(key: key);
 
@@ -110,33 +104,8 @@ class Page2Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Page 2"),
+        title: const Text("Second Screen"),
       ),
-      body: Center(
-          child: ElevatedButton(
-        onPressed: () => context.push('/$routePathPage3'),
-        child: const Text("Navigate to Page 3"),
-      )),
-    );
-  }
-}
-
-class Page3Screen extends StatelessWidget {
-  const Page3Screen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Page 3"),
-      ),
-      body: Center(
-          child: ElevatedButton(
-        onPressed: () => context.pop(),
-        child: const Text("Back"),
-      )),
     );
   }
 }

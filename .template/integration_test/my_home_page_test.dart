@@ -10,7 +10,7 @@ void main() {
 
   testWidgets('My Home Page widget', (WidgetTester tester) async {
     await tester
-        .pumpWidget(TestUtil.pumpWidgetWithShellApp(const MyHomePage()));
+        .pumpWidget(TestUtil.pumpWidgetWithShellApp(const HomeScreen()));
     await tester.pumpAndSettle();
 
     expect(find.widgetWithText(AppBar, 'Flutter templates testing'),
