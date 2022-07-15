@@ -11,23 +11,27 @@ void main() async {
   runApp(MyApp());
 }
 
+const routePathRoot = '/';
+const routePathPage2 = 'page2';
+const routePathPage3 = 'page3';
+
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
       GoRoute(
-        path: '/',
+        path: routePathRoot,
         builder: (BuildContext context, GoRouterState state) =>
             const MyHomePage(),
         routes: [
           GoRoute(
-            path: 'page2',
+            path: routePathPage2,
             builder: (BuildContext context, GoRouterState state) =>
                 const Page2Screen(),
           ),
           GoRoute(
-            path: 'page3',
+            path: routePathPage3,
             builder: (BuildContext context, GoRouterState state) =>
                 const Page3Screen(),
           ),
@@ -87,12 +91,32 @@ class MyHomePage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () => context.go('/page2'),
+              onPressed: () => context.go('/$routePathPage2'),
               child: const Text("Navigate to Page 2"),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class Page2Screen extends StatelessWidget {
+  const Page2Screen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Page 2"),
+      ),
+      body: Center(
+          child: ElevatedButton(
+        onPressed: () => context.push('/$routePathPage3'),
+        child: const Text("Navigate to Page 3"),
+      )),
     );
   }
 }
@@ -112,26 +136,6 @@ class Page3Screen extends StatelessWidget {
           child: ElevatedButton(
         onPressed: () => context.pop(),
         child: const Text("Back"),
-      )),
-    );
-  }
-}
-
-class Page2Screen extends StatelessWidget {
-  const Page2Screen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Page 2"),
-      ),
-      body: Center(
-          child: ElevatedButton(
-        onPressed: () => context.push('/page3'),
-        child: const Text("Navigate to Page 3"),
       )),
     );
   }
