@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 class AppInterceptor extends Interceptor {
@@ -15,4 +17,25 @@ class AppInterceptor extends Interceptor {
     }
     return super.onRequest(options, handler);
   }
+
+  @override
+  void onError(DioError err, ErrorInterceptorHandler handler) {
+    final statusCode = err.response?.statusCode;
+    if ((statusCode == HttpStatus.forbidden ||
+        statusCode == HttpStatus.unauthorized) &&
+        _requireAuthenticate) {
+      _doRefreshToken(err, handler);
+    } else {
+      handler.next(err);
+    }
+  }
+
+  Future<void> _doRefreshToken(
+      DioError err,
+      ErrorInterceptorHandler handler,
+      ) async {
+    //TODO handle refresh token here
+
+  }
+
 }
