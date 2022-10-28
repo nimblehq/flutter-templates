@@ -34,31 +34,9 @@ class AppInterceptor extends Interceptor {
     DioError err,
     ErrorInterceptorHandler handler,
   ) async {
-    // try {
-    //   // TODO Request new token
-    //
-    //   if (result is Success) {
-    //     // TODO Update new token header
-    //     // err.requestOptions.headers[_headerAuthorization] = newToken;
-    //     // Create request with new access token
-    //     final options = Options(
-    //         method: err.requestOptions.method,
-    //         headers: err.requestOptions.headers);
-    //     final newRequest = await _dio.request(
-    //         "${err.requestOptions.baseUrl}${err.requestOptions.path}",
-    //         options: options,
-    //         data: err.requestOptions.data,
-    //         queryParameters: err.requestOptions.queryParameters);
-    //     handler.resolve(newRequest);
-    //   } else {
-    //     handler.next(err);
-    //   }
-    // } catch (exception) {
-    //   if (exception is DioError) {
-    //     handler.next(exception);
-    //   } else {
-    //     handler.next(err);
-    //   }
-    // }
+    // TODO Request new token
+    //...
+    // TODO Update new token header
+    //...
   }
 }
