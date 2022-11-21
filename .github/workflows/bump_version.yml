@@ -1,0 +1,52 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      newVersion:
+        description: "New version"
+        required: true
+        type: string
+
+jobs:
+  bump:
+    name: Bump version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the latest code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get the version
+        id: get_version
+        run: |
+          # Find and increment the version number.
+          perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/$1.($2+1)/e' ./.template/pubspec.yaml
+
+          # Commit and tag this change.
+          version=`grep 'version: ' ./.template/pubspec.yaml | sed 's/version: //'`
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          assignees: doannimble
+          token: ${{ secrets.WIKI_ACTION_TOKEN }}
+          commit-message: Bump version to ${{ steps.get_version.version }}
+          committer: Nimble Bot <bot@nimblehq.co>
+          branch: chore/bump-version-to-${{ steps.get_version.version }}
+          delete-branch: true
+          title: '[Chore] Bump version to ${{ steps.get_version.version }}'
+          labels: |
+            type : chore
+          body: |
+            ## What happened
+
+            Bump version to ${{ steps.get_version.version }}
+
+            ## Insight
+
+            Automatically created by the Bump Version workflow.
+
+            ## Proof Of Work
+
+            On the Files changed tab
