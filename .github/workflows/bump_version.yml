@@ -1,13 +1,5 @@
 name: Bump Version
 
-on:
-  workflow_dispatch:
-    inputs:
-      newVersion:
-        description: "New version"
-        required: true
-        type: string
-
 jobs:
   bump:
     name: Bump version
