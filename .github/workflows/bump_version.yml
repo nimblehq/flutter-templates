@@ -17,31 +17,28 @@ jobs:
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Get the version
-        id: get_version
+      - name: Set new version
+        id: set_version
         run: |
           # Find and increment the version number.
-          perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/$1.($2+1)/e' ./.template/pubspec.yaml
-
-          # Commit and tag this change.
-          version=`grep 'version: ' ./.template/pubspec.yaml | sed 's/version: //'`
+          sed -i '' "s/^version.*/version: ${{ github.event.inputs.newVersion }}/g" ./.template/pubspec.yaml
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
           assignees: doannimble
           token: ${{ secrets.WIKI_ACTION_TOKEN }}
-          commit-message: Bump version to ${{ steps.get_version.version }}
+          commit-message: Bump version to ${{ github.event.inputs.newVersion }}
           committer: Nimble Bot <bot@nimblehq.co>
-          branch: chore/bump-version-to-${{ steps.get_version.version }}
+          branch: chore/bump-version-to-${{ github.event.inputs.newVersion }}
           delete-branch: true
-          title: '[Chore] Bump version to ${{ steps.get_version.version }}'
+          title: '[Chore] Bump version to ${{ github.event.inputs.newVersion }}'
           labels: |
             type : chore
           body: |
             ## What happened
 
-            Bump version to ${{ steps.get_version.version }}
+            Bump version to ${{ github.event.inputs.newVersion }}
 
             ## Insight
 
