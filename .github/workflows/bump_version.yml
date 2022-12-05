@@ -20,7 +20,7 @@ jobs:
       - name: Set new version
         id: set_version
         run: |
-          perl -i -pe 's/^(version:)${{ github.event.inputs.newVersion }}/e'  ./.template/pubspec.yaml
+          perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/${{ github.event.inputs.newVersion }}/e'  ./.template/pubspec.yaml
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
