@@ -20,6 +20,6 @@ jobs:
       - name: Set new version
         id: set_version
         run: |
-          perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/$1.($2+1)/e' .template/pubspec.yaml
+          perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/1.3.2/e' .template/pubspec.yaml
 
       
