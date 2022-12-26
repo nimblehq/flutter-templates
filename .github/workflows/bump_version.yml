@@ -1,7 +1,7 @@
 name: Bump Version
 
 jobs:
-  bump:
+  bump_version:
     name: Bump version
     runs-on: ubuntu-latest
     steps:
@@ -16,7 +16,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          assignees: doannimble
+          assignees: ${{ secrets.GITHUB_USER }}
           token: ${{ secrets.WIKI_ACTION_TOKEN }}
           commit-message: Bump version to ${{ github.event.inputs.newVersion }}
           committer: Nimble Bot <bot@nimblehq.co>
