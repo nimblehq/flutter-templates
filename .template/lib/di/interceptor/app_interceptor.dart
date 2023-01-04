@@ -4,8 +4,12 @@ import 'package:dio/dio.dart';
 
 class AppInterceptor extends Interceptor {
   final bool _requireAuthenticate;
+  final Dio _dio;
 
-  AppInterceptor(this._requireAuthenticate);
+  AppInterceptor(
+    this._requireAuthenticate,
+    this._dio,
+  );
 
   @override
   Future onRequest(
