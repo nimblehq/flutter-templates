@@ -15,7 +15,10 @@ class DioProvider {
 
   Dio _createDio({bool requireAuthenticate = false}) {
     final dio = Dio();
-    final appInterceptor = AppInterceptor(requireAuthenticate);
+    final appInterceptor = AppInterceptor(
+      requireAuthenticate,
+      dio,
+    );
     final interceptors = <Interceptor>[];
     interceptors.add(appInterceptor);
     if (!kReleaseMode) {
