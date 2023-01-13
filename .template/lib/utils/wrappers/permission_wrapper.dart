@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart'
     as permission_handler;
 
@@ -10,7 +9,6 @@ abstract class PermissionWrapper {
   Future<bool> isCameraPermissionPermanentlyDenied();
 }
 
-@Singleton(as: PermissionWrapper)
 class PermissionWrapperImpl extends PermissionWrapper {
   @override
   Future<bool> requestCameraPermission() {
