@@ -391,7 +391,7 @@ def move_project_to_root(project):
     cur_dir = os.getcwd()
     shutil.copytree(project.project_path, cur_dir, copy_function=shutil.move, dirs_exist_ok=True)
 
-def clean_up(files: list[str]):
+def clean_up(files):
     cur_dir = os.getcwd()
     for file in files:
         file_path = cur_dir + os.sep + file
@@ -402,41 +402,45 @@ def clean_up(files: list[str]):
                 os.remove(file_path)
 
 if __name__ == "__main__":
-    args = handleParameters()
+    try:
+        args = handleParameters()
 
-    project = Project(
-		args.project_path,
-		args.package_name,
-		args.app_name,
-		args.project_name,
-		args.app_version,
-		args.build_number
-	)
-    validate_parameters(project)
+        project = Project(
+            args.project_path,
+            args.package_name,
+            args.app_name,
+            args.project_name,
+            args.app_version,
+            args.build_number
+        )
+        validate_parameters(project)
 
-    if os.environ.get("CI") != "true":
-        options = {
-            'none': 'none',
-            'kebab (kebab-case)': 'kebab',
-            'snake (snake_case)': 'snake',
-            'pascal (PascalCase)': 'pascal'
-        }
-        choice = enquiries.choose('Choose default json_serializable.field_rename: ', options.keys())
-        project.json_serializable = JsonSerializable(options[choice])
-    else:
-        # Skip enquiries on CI
-        project.json_serializable = JsonSerializable('snake')
+        if os.environ.get("CI") != "true":
+            options = {
+                'none': 'none',
+                'kebab (kebab-case)': 'kebab',
+                'snake (snake_case)': 'snake',
+                'pascal (PascalCase)': 'pascal'
+            }
+            choice = enquiries.choose('Choose default json_serializable.field_rename: ', options.keys())
+            project.json_serializable = JsonSerializable(options[choice])
+        else:
+            # Skip enquiries on CI
+            project.json_serializable = JsonSerializable('snake')
 
-    print(f"=> 🐢 Starting init {project.new_project_name} with {project.new_package}...")
-    android = Android(project)
-    android.run()
-    ios = Ios(project)
-    ios.run()
-    flutter = Flutter(project)
-    flutter.run()
-    print('🤖 Generating project...')
-    # Remove the `.github` folder to avoid redundant workflow
-    clean_up(['.github'])
-    move_project_to_root(project)
-    clean_up(['.template', 'LICENSE', 'Makefile'])
-    print("=> 🚀 Done! Project is ready for the next development 🙌")
+        print(f"=> 🐢 Starting init {project.new_project_name} with {project.new_package}...")
+        android = Android(project)
+        android.run()
+        ios = Ios(project)
+        ios.run()
+        flutter = Flutter(project)
+        flutter.run()
+        print('🤖 Generating project...')
+        # Remove the `.github` folder to avoid redundant workflow
+        clean_up(['.github'])
+        move_project_to_root(project)
+        clean_up(['.template', 'LICENSE', 'Makefile'])
+        print("=> 🚀 Done! Project is ready for the next development 🙌")
+    except:
+        print("❌ There is something wrong! Please try again.")
+        sys.exit()
