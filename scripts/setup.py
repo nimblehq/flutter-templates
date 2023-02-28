@@ -439,7 +439,7 @@ if __name__ == "__main__":
         # Remove the `.github` folder to avoid redundant workflow
         clean_up(['.github'])
         move_project_to_root(project)
-        clean_up(['.template', 'LICENSE', 'Makefile'])
+        clean_up(['template', 'LICENSE', 'Makefile'])
         print("=> 🚀 Done! Project is ready for the next development 🙌")
     except:
         print("❌ There is something wrong! Please try again.")

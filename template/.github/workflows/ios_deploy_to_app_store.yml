@@ -11,7 +11,7 @@ jobs:
     runs-on: macOS-latest
     defaults:
       run:
-        working-directory: .template
+        working-directory: template
     env:
       TEAM_ID: ${{ secrets.TEAM_ID }}
       FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
