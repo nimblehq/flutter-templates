@@ -6,7 +6,7 @@ PYTHON3 := $(shell command -v python3 2> /dev/null)
 VENV_ACTIVATE=$(VENV_NAME)/bin/activate
 PYTHON=$(VENV_NAME)/bin/python3
 
-PROJECT_PATH=$(PWD)/.template
+PROJECT_PATH=$(PWD)/template
 PACKAGE_NAME=
 PROJECT_NAME=
 APP_NAME=

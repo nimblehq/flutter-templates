@@ -7,7 +7,7 @@ import unittest
 from setup import Android, Project, Ios, Flutter
 
 # After creating a new project, the new project will be created in the current directory.
-expected_project_path = os.environ.get("PROJECT_PATH").replace("/.template", "") if os.environ.get("RUNNING_TEST_MODE") == "0" else os.environ.get("PROJECT_PATH")
+expected_project_path = os.environ.get("PROJECT_PATH").replace("/template", "") if os.environ.get("RUNNING_TEST_MODE") == "0" else os.environ.get("PROJECT_PATH")
 expected_package_name = os.environ.get("PACKAGE_NAME") if bool(os.environ.get("PACKAGE_NAME")) else "co.nimblehq.flutter.template"
 expected_app_name = os.environ.get("APP_NAME") if bool(os.environ.get("APP_NAME")) else "Flutter Templates"
 expected_project_name = os.environ.get("PROJECT_NAME") if bool(os.environ.get("PROJECT_NAME")) else "flutter_templates"
