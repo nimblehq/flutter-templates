@@ -42,7 +42,7 @@ Clone the repository
 
 - Run unit testing:
 
-  - `$ fvm flutter test .`
+  - `$ fvm flutter test`
 
 - Run integration testing:
 
