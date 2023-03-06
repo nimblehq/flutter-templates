@@ -6,11 +6,14 @@ require './Managers/BuildManager'
 require './Managers/DistributionManager'
 require './Managers/MatchManager'
 
+ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "180"
+
 builder = BuildManager.new(fastlane: self)
 
 distribution_manager = DistributionManager.new(
   fastlane: self,
-  build_path: Constants.BUILD_PATH
+  build_path: Constants.BUILD_PATH,
+  firebase_token: Environments.FIREBASE_CLI_TOKEN
 )
 
 match_manager = MatchManager.new(
@@ -33,6 +36,11 @@ platform :ios do
   desc 'Sync AppStore Staging match signing'
   lane :sync_appstore_staging_signing do
     match_manager.sync_app_store_signing(app_identifier: [Constants.BUNDLE_ID_STAGING])
+  end
+
+  desc 'Sync Adhoc Staging match signing'
+  lane :sync_adhoc_staging_signing do
+    match_manager.sync_adhoc_signing(app_identifier: [Constants.BUNDLE_ID_STAGING])
   end
 
   desc 'Register new devices'
@@ -91,6 +99,33 @@ platform :ios do
     )
   end
 
+  # Firebase
+  desc 'Build and upload Staging app to Firebase'
+  lane :build_and_upload_staging_app do
+    build_and_upload_to_firebase(
+      scheme_name: Constants.SCHEME_NAME_STAGING,
+      product_name: Constants.PRODUCT_NAME_STAGING,
+      bundle_id: Constants.BUNDLE_ID_STAGING,
+      app_id: Constants.FIREBASE_APP_ID_STAGING
+    )
+  end
+
+  desc 'build and upload app to Firebase'
+  private_lane :build_and_upload_to_firebase do |options|
+    set_app_version
+    bump_build
+    builder.build_ad_hoc(
+      options[:scheme_name],
+      options[:product_name],
+      options[:bundle_id]
+    )
+    upload_build_to_firebase(
+      product_name: options[:product_name],
+      firebase_app_id: options[:app_id],
+      tester_groups: Constants.FIREBASE_TESTER_GROUPS
+    )
+  end
+
   # Private helper lanes
 
   desc 'check if any specific version number in build environment'
@@ -108,6 +143,16 @@ platform :ios do
     increment_build_number(
       build_number: number_of_commits,
       xcodeproj: Constants.PROJECT_PATH
+    )
+  end
+
+  desc 'upload develop build to Firebase app distribution'
+  private_lane :upload_build_to_firebase do |options|
+    distribution_manager.upload_to_firebase(
+      product_name: options[:product_name],
+      firebase_app_id: options[:firebase_app_id],
+      tester_groups: options[:tester_groups],
+      notes: ""
     )
   end
 end
