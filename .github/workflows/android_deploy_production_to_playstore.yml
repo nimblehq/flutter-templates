@@ -48,12 +48,14 @@ jobs:
       - name: Build Production App Bundle
         run: flutter build appbundle --flavor production --release --build-number $GITHUB_RUN_NUMBER
 
-      - name: Upload Android Production Release bundle to Play Store
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: co.nimblehq.flutter.template
-          releaseFile: build/app/outputs/bundle/productionRelease/app-production-release.aab
-          track: internal
-          userFraction: 1.0
-          whatsNewDirectory: .github/workflows/whatsnew
+      # TODO We will enable this step later when having a shared Service Account on our organization
+      # Basically, this step will work properly after providing a valid Service Account.
+      # - name: Upload Android Production Release bundle to Play Store
+      #   uses: r0adkll/upload-google-play@v1
+      #   with:
+      #     serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+      #     packageName: co.nimblehq.flutter.template
+      #     releaseFile: build/app/outputs/bundle/productionRelease/app-production-release.aab
+      #     track: internal
+      #     userFraction: 1.0
+      #     whatsNewDirectory: .github/workflows/whatsnew
