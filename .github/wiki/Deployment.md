@@ -1,19 +1,37 @@
 # Deployment Process
 
+## For Android
+
+### Guide
+
+- Before publishing the Android application, we have to prepare the necessary credentials and information:
+  - A Play Store developer account.
+  - Your application's app id. This could be multiple bundle ids according to the number of application’s flavors.
+  - A new app on Play Store.
+
+- Add these variables as the secrets of CI:
+  - **ENV_PRODUCTION**: the production .env configuration file content.
+  - **GOOGLE_PLAY_SERVICE_ACCOUNT_JSON**: the json file content of the Play Store's Service Account for app publishing. Please check out [how to create the Service Account](https://support.staffbase.com/hc/en-us/articles/360018569579-Preparing-Automated-Publishing-for-Google-Play-Store).
+
+### Resources
+
+- [Build and release an Android app](https://docs.flutter.dev/deployment/android#build-an-apk).
+- [Preparing Automated Publishing for Google Play Store](https://support.staffbase.com/hc/en-us/articles/360018569579-Preparing-Automated-Publishing-for-Google-Play-Store).
+
 ## For iOS
 
 ### Guide
 
-- Before deploying the iOS application, we have to prepare the necessary credentials and information:
+- Before publishing the iOS application, we have to prepare the necessary credentials and information:
 
     - An Apple developer account.
     - Your application’s bundle id. This could be multiple bundle ids according to the number of application’s flavors.
-    - A new app's on Apple Store Connect that links to the bundle id.
+    - A new app on Apple Store Connect that links to the bundle id.
     - The access to Git’s [Match repository](https://codesigning.guide/).
 
-- Create certificates for distribution and [code signing](https://codesigning.guide/) so we are able to fetch the certificates through [Match](https://docs.fastlane.tools/actions/match/).
+- Create certificates for distribution and [code signing](https://codesigning.guide/) so we are able to fetch the certificates through the [Match](https://docs.fastlane.tools/actions/match/) repository.
 - Setup [Fastlane](https://docs.fastlane.tools/getting-started/ios/setup/) and [Match](https://docs.fastlane.tools/actions/match/).
-- Adding these variables as the environment variable of CI:
+- Add these variables as the secrets of CI:
 
     - **FASTLANE_USER**: This will be referred to in `Appfile` and `Fastfile`. Set your Apple ID to this variable.
     - **FASTLANE_PASSWORD**: This variable will be referred to internally in Fastlane. Set the password of your Apple ID to this variable.
@@ -23,9 +41,9 @@
     - **KEYCHAIN_PASSWORD**: We can create a keychain password for ourself and it could be anything.
     - **SSH_PRIVATE_KEY**: In order to fetch the distribution files from Git’s [Match repository](https://codesigning.guide/), we have to generate an SSH key and save it as the environment variable in CI.
   
-- Run the corresponding workflows CI or `fastlane` commands and enjoy the result!
+- Run the corresponding workflows or `fastlane` commands and enjoy the result!
 
-### Resource
+### Resources
 
 - [https://medium.com/flutter-community/deploying-flutter-ios-apps-with-fastlane-and-github-actions-2e87465e056e](https://medium.com/flutter-community/deploying-flutter-ios-apps-with-fastlane-and-github-actions-2e87465e056e)
 - [https://docs.flutter.dev/deployment/cd](https://docs.flutter.dev/deployment/cd)
