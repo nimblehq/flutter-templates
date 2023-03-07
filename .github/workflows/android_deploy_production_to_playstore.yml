@@ -55,5 +55,5 @@ jobs:
           packageName: co.nimblehq.flutter.template
           releaseFile: build/app/outputs/bundle/productionRelease/app-production-release.aab
           track: internal
-          userFraction: 0.0
+          userFraction: 1.0
           whatsNewDirectory: .github/workflows/whatsnew
