@@ -8,6 +8,10 @@ Clone the repository
 
 `git clone git@github.com:nimblehq/flutter-templates.git`
 
+## Documentation
+
+Checkout the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to access the full documentation.
+
 ## Use the template
 
 ### Setup a new project
