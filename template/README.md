@@ -1,6 +1,6 @@
 # Flutter Templates
 
-[![codecov](https://codecov.io/gh/nimblehq/flutter_templates/branch/main/graph/badge.svg?token=ATUNXDX218)](https://codecov.io/gh/nimblehq/flutter_templates)
+[![codecov](https://codecov.io/gh/nimblehq/flutter-templates/branch/main/graph/badge.svg?token=ATUNXDX218)](https://codecov.io/gh/nimblehq/flutter-templates)
 
 All the templates that can be used to kick off a new Flutter application quickly.
 
@@ -8,7 +8,7 @@ All the templates that can be used to kick off a new Flutter application quickly
 
 Clone the repository
 
-`git clone git@github.com:nimblehq/flutter_templates.git`
+`git clone git@github.com:nimblehq/flutter-templates.git`
 
 ## Prerequisite
 
