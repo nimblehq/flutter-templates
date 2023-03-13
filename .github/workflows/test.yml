@@ -17,16 +17,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.2
 
-      - uses: actions/setup-python@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
           python-version: '3.9'
 
-      - name: Set new project
+      - name: Generate new project
         run: make run PACKAGE_NAME=co.nimblehq.flutter.template PROJECT_NAME=flutter_templates APP_NAME="Flutter Templates"
 
-      - uses: subosito/flutter-action@v1
+      - name: Setup Flutter environment
+        uses: subosito/flutter-action@v2
         with:
-          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+          channel: 'stable'
           flutter-version: '3.3.10'
 
       - name: Get flutter dependencies.
