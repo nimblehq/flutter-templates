@@ -7,3 +7,7 @@ scripts/__pycache__/
 
 # VSCode
 .vscode
+
+# Mason
+mason-lock.json
+.mason/
