@@ -23,19 +23,19 @@ jobs:
           channel: 'stable'
           flutter-version: '3.3.10'
 
-      - name: Get flutter dependencies.
+      - name: Get Flutter dependencies
         run: flutter pub get
 
       - name: Run code generator
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      - name: Check for any formatting issues in the code.
+      - name: Check for any formatting issues in the code
         run: flutter format --set-exit-if-changed .
 
-      - name: Statically analyze the Dart code for any errors.
+      - name: Statically analyze the Dart code for any errors
         run: flutter analyze .
 
-      - name: Run widget tests, unit tests.
+      - name: Run widget tests, unit tests
         run: flutter test --machine --coverage
 
       - name: Upload coverage to codecov 

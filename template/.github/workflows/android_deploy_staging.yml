@@ -26,10 +26,10 @@ jobs:
           channel: 'stable'
           flutter-version: '3.3.10'
 
-      - name: Get flutter dependencies
+      - name: Get Flutter dependencies
         run: flutter pub get
 
-      - name: Run code generator.
+      - name: Run code generator
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       - name: Set up .env.staging

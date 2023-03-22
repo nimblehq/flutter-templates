@@ -32,7 +32,7 @@ jobs:
         channel: 'stable'
         flutter-version: '3.3.10'
 
-    - name: Get flutter dependencies
+    - name: Get Flutter dependencies
       run: flutter pub get
 
     - name: Run code generator
