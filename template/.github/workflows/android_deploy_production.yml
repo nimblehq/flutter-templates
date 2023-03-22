@@ -14,13 +14,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Java JDK
+      - name: Set up Java JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Setup Flutter environment
+      - name: Set up Flutter environment
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -32,7 +32,7 @@ jobs:
       - name: Run code generator.
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      - name: Setup .env
+      - name: Set up .env
         env:
           ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
         run: |

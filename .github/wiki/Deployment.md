@@ -30,7 +30,7 @@
     - The access to Git’s [Match repository](https://codesigning.guide/).
 
 - Create certificates for distribution and [code signing](https://codesigning.guide/) so we are able to fetch the certificates through the [Match](https://docs.fastlane.tools/actions/match/) repository.
-- Setup [Fastlane](https://docs.fastlane.tools/getting-started/ios/setup/) and [Match](https://docs.fastlane.tools/actions/match/).
+- Set up [Fastlane](https://docs.fastlane.tools/getting-started/ios/setup/) and [Match](https://docs.fastlane.tools/actions/match/).
 - Add these variables as the secrets of CI:
 
     - **FASTLANE_USER**: This will be referred to in `Appfile` and `Fastfile`. Set your Apple ID to this variable.
