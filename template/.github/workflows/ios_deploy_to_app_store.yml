@@ -9,6 +9,7 @@ jobs:
   build_and_upload_to_app_store:
     name: Build And Upload iOS Application To AppStore
     runs-on: macOS-latest
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: template

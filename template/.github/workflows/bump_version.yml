@@ -12,6 +12,7 @@ jobs:
   bump_version:
     name: Bump version
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout the latest code
         uses: actions/checkout@v3
