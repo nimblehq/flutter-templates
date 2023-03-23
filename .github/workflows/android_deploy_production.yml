@@ -9,10 +9,12 @@ jobs:
   build_and_deploy_android:
     name: Build & Deploy Android
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
@@ -20,25 +22,25 @@ jobs:
       - name: Generate new project
         run: make run PACKAGE_NAME=co.nimblehq.flutter.template PROJECT_NAME=flutter_templates APP_NAME="Flutter Templates"
 
-      - name: Setup Java JDK
+      - name: Set up Java JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Setup Flutter environment
+      - name: Set up Flutter environment
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: '3.3.10'
 
-      - name: Get flutter dependencies
+      - name: Get Flutter dependencies
         run: flutter pub get
 
-      - name: Run code generator.
+      - name: Run code generator
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      - name: Setup .env
+      - name: Set up .env
         env:
           ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
         run: |

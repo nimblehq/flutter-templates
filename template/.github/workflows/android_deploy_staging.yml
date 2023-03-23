@@ -9,28 +9,30 @@ jobs:
   build_and_deploy_android:
     name: Build & Deploy Android
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Setup Java JDK
+      - name: Set up Java JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Setup Flutter environment
+      - name: Set up Flutter environment
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           flutter-version: '3.3.10'
 
-      - name: Get flutter dependencies
+      - name: Get Flutter dependencies
         run: flutter pub get
 
-      - name: Run code generator.
+      - name: Run code generator
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      - name: Setup .env.staging
+      - name: Set up .env.staging
         env:
           ENV_STAGING: ${{ secrets.ENV_STAGING }}
         run: |

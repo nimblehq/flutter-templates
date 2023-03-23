@@ -1,4 +1,4 @@
-name: Android - Deploy Production build to Firebase
+name: Android - Deploy Production build to Play Store
 
 on:
   push:
@@ -38,14 +38,15 @@ jobs:
         run: |
           echo $ENV_PRODUCTION > .env
 
-      # App Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
-      - name: Build Android apk
-        run: flutter build apk --flavor production --debug --build-number $GITHUB_RUN_NUMBER
+      - name: Build Production App Bundle
+        run: flutter build appbundle --flavor production --release --build-number $GITHUB_RUN_NUMBER
 
-      - name: Deploy Android Production to Firebase
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
+      - name: Upload Android Production Release bundle to Play Store
+        uses: r0adkll/upload-google-play@v1
         with:
-          appId: ${{ secrets.FIREBASE_ANDROID_APP_ID_PRODUCTION }}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
-          groups: nimble
-          file: build/app/outputs/flutter-apk/app-production-debug.apk
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: co.nimblehq.flutter.template
+          releaseFile: build/app/outputs/bundle/productionRelease/app-production-release.aab
+          track: internal
+          userFraction: 1.0
+          whatsNewDirectory: .github/workflows/whatsnew
