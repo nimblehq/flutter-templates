@@ -21,8 +21,28 @@ environment:
 #  * an optional prompt phrase used when asking for the variable
 #  * a list of values (enums only)
 vars:
-  name:
+  package_name:
     type: string
-    description: Your name
-    default: Dash
-    prompt: What is your name?
+    description: Your package name
+    default: co.nimblehq.template
+    prompt: Package name?
+  app_name:
+    type: string
+    description: Your app name
+    default: Your App Name
+    prompt: App name?
+  project_name:
+    type: string
+    description: Your project name
+    default: your_project_name
+    prompt: Project name?
+  app_version:
+    type: string
+    description: Your app version
+    default: "0.1.0"
+    prompt: App version?
+  build_number:
+    type: string
+    description: Your app version
+    default: "1"
+    prompt: Build number?
