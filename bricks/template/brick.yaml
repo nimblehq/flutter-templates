@@ -21,6 +21,11 @@ environment:
 #  * an optional prompt phrase used when asking for the variable
 #  * a list of values (enums only)
 vars:
+  project_name:
+    type: string
+    description: Your project name
+    default: your_project_name
+    prompt: Project name?
   package_name:
     type: string
     description: Your package name
@@ -31,11 +36,6 @@ vars:
     description: Your app name
     default: Your App Name
     prompt: App name?
-  project_name:
-    type: string
-    description: Your project name
-    default: your_project_name
-    prompt: Project name?
   app_version:
     type: string
     description: Your app version
