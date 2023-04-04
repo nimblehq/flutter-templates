@@ -3,7 +3,7 @@ on:
   # Trigger the workflow on push action
   push:
     branches:
-      - feature/48-as-a-developer-i-can-have-a-cd-process-to-build-and-deploy-the-ios-app-to-firebase-app-distribution
+      - develop
 
 jobs:
   build_and_upload_staging_app_to_firebase:
@@ -11,7 +11,7 @@ jobs:
     runs-on: macOS-latest
     defaults:
       run:
-        working-directory: .template
+        working-directory: template
     env:
       TEAM_ID: ${{ secrets.TEAM_ID }}
       FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
