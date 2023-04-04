@@ -1,0 +1,51 @@
+name: Android - Deploy Staging build to Firebase
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build_and_deploy_android:
+    name: Build & Deploy Android
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.3.10'
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Run code generator
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Set up .env.staging
+        env:
+          ENV_STAGING: ${{ secrets.ENV_STAGING }}
+        run: |
+          echo $ENV_STAGING > .env.staging
+
+      # App Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
+      - name: Build Android apk
+        run: flutter build apk --flavor staging --debug --build-number $GITHUB_RUN_NUMBER
+
+      - name: Deploy Android Staging to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
+        with:
+          appId: ${{ secrets.FIREBASE_ANDROID_APP_ID_STAGING }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
+          groups: nimble
+          file: build/app/outputs/flutter-apk/app-staging-debug.apk

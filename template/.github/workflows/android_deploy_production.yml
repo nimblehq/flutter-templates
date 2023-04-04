@@ -1,0 +1,51 @@
+name: Android - Deploy Production build to Firebase
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy_android:
+    name: Build & Deploy Android
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.3.10'
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Run code generator
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Set up .env
+        env:
+          ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
+        run: |
+          echo $ENV_PRODUCTION > .env
+
+      # App Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
+      - name: Build Android apk
+        run: flutter build apk --flavor production --debug --build-number $GITHUB_RUN_NUMBER
+
+      - name: Deploy Android Production to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
+        with:
+          appId: ${{ secrets.FIREBASE_ANDROID_APP_ID_PRODUCTION }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
+          groups: nimble
+          file: build/app/outputs/flutter-apk/app-production-debug.apk

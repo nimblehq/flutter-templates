@@ -1,0 +1,52 @@
+name: Android - Deploy Production build to Play Store
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy_android:
+    name: Build & Deploy Android
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.3.10'
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Run code generator
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Set up .env
+        env:
+          ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
+        run: |
+          echo $ENV_PRODUCTION > .env
+
+      - name: Build Production App Bundle
+        run: flutter build appbundle --flavor production --release --build-number $GITHUB_RUN_NUMBER
+
+      - name: Upload Android Production Release bundle to Play Store
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: co.nimblehq.flutter.template
+          releaseFile: build/app/outputs/bundle/productionRelease/app-production-release.aab
+          track: internal
+          userFraction: 1.0
+          whatsNewDirectory: .github/workflows/whatsnew

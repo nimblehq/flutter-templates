@@ -6,7 +6,11 @@ All the templates that can be used to kick off a new Flutter application quickly
 
 Clone the repository
 
-`git clone git@github.com:nimblehq/flutter_templates.git`
+`git clone git@github.com:nimblehq/flutter-templates.git`
+
+## Documentation
+
+Checkout the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to access the full documentation.
 
 ## Use the template
 
@@ -28,7 +32,7 @@ Clone the repository
   | PROJECT_NAME   |     Yes      | The application project name. The naming convention follows `your_project_name` |
   | APP_NAME       |     Yes      | The application name.                                                           |
 
-  More available configs [here](https://github.com/nimblehq/flutter_templates/wiki/Generating-A-Project)
+  More available configs [here](https://github.com/nimblehq/flutter-templates/wiki/Generating-A-Project)
 
 - For more supporting commands, run:
 
