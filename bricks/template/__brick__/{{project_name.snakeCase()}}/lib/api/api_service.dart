@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_templates/model/response/user_response.dart';
+import 'package:{{project_name.snakeCase()}}/model/response/user_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_service.g.dart';
