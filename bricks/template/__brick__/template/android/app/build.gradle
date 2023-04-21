@@ -48,13 +48,12 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "co.nimblehq.flutter.template"
+        applicationId "{{package_name.dotCase()}}"
         minSdkVersion 23
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        resValue "string", "build_config_package", "co.nimblehq.flutter.template"
+        resValue "string", "build_config_package", "{{package_name.dotCase()}}"
     }
 
     buildTypes {
@@ -68,12 +67,12 @@ android {
     flavorDimensions "stage"
     productFlavors {
         production {
-            applicationId "co.nimblehq.flutter.template"
+            applicationId "{{package_name.dotCase()}}"
             dimension "stage"
         }
         staging {
             dimension "stage"
-            applicationId "co.nimblehq.flutter.template.staging"
+            applicationId "{{package_name.dotCase()}}.staging"
         }
     }
 
