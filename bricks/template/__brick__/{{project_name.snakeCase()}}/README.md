@@ -1,4 +1,4 @@
-# Flutter Templates
+# {{app_name.titleCase()}}
 
 [![codecov](https://codecov.io/gh/nimblehq/flutter-templates/branch/main/graph/badge.svg?token=ATUNXDX218)](https://codecov.io/gh/nimblehq/flutter-templates)
 

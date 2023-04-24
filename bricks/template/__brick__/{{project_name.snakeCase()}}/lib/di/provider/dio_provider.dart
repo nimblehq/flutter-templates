@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_templates/di/interceptor/app_interceptor.dart';
+import 'package:{{project_name.snakeCase()}}/di/interceptor/app_interceptor.dart';
 
 const String headerContentType = 'Content-Type';
 const String defaultContentType = 'application/json; charset=utf-8';

@@ -1,6 +1,6 @@
-import 'package:flutter_templates/api/api_service.dart';
-import 'package:flutter_templates/api/exception/network_exceptions.dart';
-import 'package:flutter_templates/model/response/user_response.dart';
+import 'package:{{project_name.snakeCase()}}/api/api_service.dart';
+import 'package:{{project_name.snakeCase()}}/api/exception/network_exceptions.dart';
+import 'package:{{project_name.snakeCase()}}/model/response/user_response.dart';
 
 abstract class CredentialRepository {
   Future<List<UserResponse>> getUsers();
