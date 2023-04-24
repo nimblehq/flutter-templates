@@ -21,14 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-
-      - name: Generate new project
-        run: make run PACKAGE_NAME=co.nimblehq.flutter.template PROJECT_NAME=flutter_templates APP_NAME="Flutter Templates"
-
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.4.1
         with:
@@ -66,4 +58,3 @@ jobs:
           cd ./ios && bundle exec fastlane build_and_upload_staging_app
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
-
