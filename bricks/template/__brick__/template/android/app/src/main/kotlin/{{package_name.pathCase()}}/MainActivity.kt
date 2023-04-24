@@ -1,4 +1,4 @@
-package co.nimblehq.flutter.template
+package {{package_name.dotCase()}}
 
 import io.flutter.embedding.android.FlutterActivity
 
