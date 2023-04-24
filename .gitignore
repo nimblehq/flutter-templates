@@ -11,3 +11,7 @@ scripts/__pycache__/
 # Intellij
 *.iml
 .idea/*
+
+# Mason
+mason-lock.json
+.mason/
