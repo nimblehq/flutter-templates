@@ -10,9 +10,6 @@ jobs:
     name: Build And Upload iOS Application To AppStore
     runs-on: macOS-latest
     timeout-minutes: 30
-    defaults:
-      run:
-        working-directory: template
     env:
       TEAM_ID: ${{ secrets.TEAM_ID }}
       FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
