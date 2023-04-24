@@ -14,4 +14,8 @@ class Environments
   def self.TEAM_ID
     ENV['TEAM_ID']
   end
+
+  def self.FIREBASE_CLI_TOKEN
+    ENV['FIREBASE_CLI_TOKEN']
+  end
 end
