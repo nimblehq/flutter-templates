@@ -12,41 +12,36 @@ Clone the repository
 
 Checkout the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to access the full documentation.
 
-## Use the template
+## Template Usage
 
-### Setup a new project
+Before using the template, make sure you have the following prerequisites installed on your system:
 
-- To set up a new project from the template, run the command:
+- [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.0-dev.44
+- Flutter 3.0.5
+- Flutter version manager (recommend): [fvm](https://fvm.app/)
 
-  - `$ make run PACKAGE_NAME={com.your.package} PROJECT_NAME={your_project_name} APP_NAME="{Your App Name}"`
+To set up a new project from the template, follow these steps:
 
-  - Then clean the project: `$ fvm flutter clean`
+- Open your terminal and run the following command:
 
-  - Re-fetch the project: `$ fvm flutter pub get`
+  - `$ mason make template`
 
-- Parameters detail:
+- Navigate to the newly created project using the following command:
 
-  | Parameter name | Is mandatory | Description                                                                     |
-  | :------------- | :----------: | :------------------------------------------------------------------------------ |
-  | PACKAGE_NAME   |     Yes      | The application package name. The naming convention follows `com.your.package`  |
-  | PROJECT_NAME   |     Yes      | The application project name. The naming convention follows `your_project_name` |
-  | APP_NAME       |     Yes      | The application name.                                                           |
+  - `$ cd {project_name}`
 
-  More available configs [here](https://github.com/nimblehq/flutter-templates/wiki/Generating-A-Project)
+- Clean the project by running the command:
 
-- For more supporting commands, run:
+  - `$ fvm flutter clean`
 
-  - `$ make`
+- Re-fetch the project by running the command:
 
-  - Or `$ make help`
+  - `$ fvm flutter pub get`
 
-### Maintain the template
+- Run code generator using the command:
+  - `$ fvm flutter packages pub run build_runner build --delete-conflicting-outputs`
 
-- While implementing a new feature or fixing an issue, there may be a chance to break the functions of `setup.py` script due to the change in the codebase (update the app name, the package directory, etc.).
-
-- To make sure that the `setup.py` script is still working correctly, run the command:
-
-  - `$ make test`
+- Once you have completed these steps, your new Flutter project is ready to develop!
 
 ## License
 
