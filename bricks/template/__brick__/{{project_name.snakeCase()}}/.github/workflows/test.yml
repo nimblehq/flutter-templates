@@ -3,18 +3,17 @@ on:
   # Trigger the workflow on push or pull request,
   # but push action is only for the feature branch
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [ opened, synchronize, edited, reopened ]
   push:
     branches-ignore:
       - develop
       - 'release/**'
-      - main
-
 jobs:
-  test:
-    name: Template initializing scripts test
+  lint_and_test:
+    name: Static code analyze & Unit test
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment: staging
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,15 +23,6 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '3.3.10'
-
-      - name: Generate new project
-        run: |
-          dart pub global activate mason_cli
-          mason get
-          mason make template -c mason-config.json
-          # Move the generated project to the root directory for next steps & cleanup to not affect static code analysis
-          rsync -av --remove-source-files flutter_templates/ ./
-          rm -rf bricks/template
 
       - name: Get Flutter dependencies
         run: flutter pub get
@@ -48,3 +38,12 @@ jobs:
 
       - name: Run widget tests, unit tests
         run: flutter test --machine --coverage
+
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage/lcov.info
+          flags: unittests # optional
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          fail_ci_if_error: false
+          verbose: true
