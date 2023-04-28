@@ -1,10 +1,6 @@
 # Miscellaneous
 .DS_Store
 
-# Python
-.venv/
-scripts/__pycache__/
-
 # VSCode
 .vscode
 

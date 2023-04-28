@@ -67,17 +67,17 @@ class Constants
 
   # an staging product name
   def self.PRODUCT_NAME_STAGING
-    'Flutter Template Staging'
+    '{{app_name.titleCase()}} Staging'
   end
 
   # a staging TestFlight product name
   def self.PRODUCT_NAME_STAGING_TEST_FLIGHT
-    'Flutter Template Staging'
+    '{{app_name.titleCase()}} Staging'
   end
 
   # a Production product name
   def self.PRODUCT_NAME_PRODUCTION
-    'Flutter Template'
+    '{{app_name.titleCase()}}'
   end
 
   # a main target name
