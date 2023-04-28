@@ -1,6 +1,6 @@
 # Flutter Templates
 
-All the templates that can be used to kick off a new Flutter application quickly.
+All the templates can be used to kick off a new Flutter application quickly.
 
 ## Usage
 
@@ -10,43 +10,32 @@ Clone the repository
 
 ## Documentation
 
-Checkout the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to access the full documentation.
+Check out the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to access the full documentation.
 
 ## Use the template
 
 ### Setup a new project
 
-- To set up a new project from the template, run the command:
+Before using the template, ensure that you have installed the following prerequisites on your system:
 
-  - `$ make run PACKAGE_NAME={com.your.package} PROJECT_NAME={your_project_name} APP_NAME="{Your App Name}"`
+- Flutter 3.3.10
+- [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.0-dev.44
 
-  - Then clean the project: `$ fvm flutter clean`
+Follow these steps to set up a new project from the template:
 
-  - Re-fetch the project: `$ fvm flutter pub get`
+- Fetch all required bricks by running the command:
 
-- Parameters detail:
+  `$ mason get`
 
-  | Parameter name | Is mandatory | Description                                                                     |
-  | :------------- | :----------: | :------------------------------------------------------------------------------ |
-  | PACKAGE_NAME   |     Yes      | The application package name. The naming convention follows `com.your.package`  |
-  | PROJECT_NAME   |     Yes      | The application project name. The naming convention follows `your_project_name` |
-  | APP_NAME       |     Yes      | The application name.                                                           |
+- Generate the new project by running the following command:
 
-  More available configs [here](https://github.com/nimblehq/flutter-templates/wiki/Generating-A-Project)
+  `$ mason make template`
 
-- For more supporting commands, run:
+  > You can find the detailed information on `make` command options and usage in the [Mason documentation](https://github.com/felangel/mason/tree/master/packages/mason_cli#overview).
 
-  - `$ make`
+- Once the project is generated at `/{project_name}`, please refer to the [Getting Started](https://github.com/nimblehq/flutter-templates/tree/develop/bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#getting-started) documentation to make it ready for development.
 
-  - Or `$ make help`
-
-### Maintain the template
-
-- While implementing a new feature or fixing an issue, there may be a chance to break the functions of `setup.py` script due to the change in the codebase (update the app name, the package directory, etc.).
-
-- To make sure that the `setup.py` script is still working correctly, run the command:
-
-  - `$ make test`
+That's it! You have now set up a new Flutter project using the template 🎉
 
 ## License
 
