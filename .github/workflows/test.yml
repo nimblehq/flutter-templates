@@ -1,49 +1,50 @@
-# TODO: Edit the CICD workflow after integrating Mason successfully.
-# name: CI
-# on:
-#   # Trigger the workflow on push or pull request,
-#   # but push action is only for the feature branch
-#   pull_request:
-#     types: [ opened, synchronize, reopened ]
-#   push:
-#     branches-ignore:
-#       - develop
-#       - 'release/**'
-#       - main
+name: CI
+on:
+  # Trigger the workflow on push or pull request,
+  # but push action is only for the feature branch
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+  push:
+    branches-ignore:
+      - develop
+      - 'release/**'
+      - main
 
-# jobs:
-#   test:
-#     name: Template initializing scripts test
-#     runs-on: ubuntu-latest
-#     timeout-minutes: 30
-#     steps:
-#       - uses: actions/checkout@v2.3.2
+jobs:
+  test:
+    name: Template initializing scripts test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-#       - name: Set up Python
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: '3.9'
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.3.10'
 
-#       - name: Generate new project
-#         run: make run PACKAGE_NAME=co.nimblehq.flutter.template PROJECT_NAME=flutter_templates APP_NAME="Flutter Templates"
+      - name: Generate new project
+        run: |
+          dart pub global activate mason_cli
+          mason get
+          mason make template -c mason-config.json
+          # Move the generated project to the root directory for next steps & cleanup to not affect static code analysis
+          rsync -av --remove-source-files flutter_templates/ ./
+          rm -rf bricks/template
 
-#       - name: Set up Flutter environment
-#         uses: subosito/flutter-action@v2
-#         with:
-#           channel: 'stable'
-#           flutter-version: '3.3.10'
+      - name: Get Flutter dependencies
+        run: flutter pub get
 
-#       - name: Get Flutter dependencies
-#         run: flutter pub get
+      - name: Run code generator
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-#       - name: Run code generator
-#         run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      - name: Check for any formatting issues in the code
+        run: flutter format --set-exit-if-changed .
 
-#       - name: Check for any formatting issues in the code
-#         run: flutter format --set-exit-if-changed .
+      - name: Statically analyze the Dart code for any errors
+        run: flutter analyze .
 
-#       - name: Statically analyze the Dart code for any errors
-#         run: flutter analyze .
-
-#       - name: Run widget tests, unit tests
-#         run: flutter test --machine --coverage
+      - name: Run widget tests, unit tests
+        run: flutter test --machine --coverage
