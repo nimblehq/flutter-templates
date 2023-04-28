@@ -20,7 +20,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set new version
-        id: set_version
         run: |
           perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/"version: ${{ github.event.inputs.newVersion }}+".($2+1)/e' ./pubspec.yaml
 

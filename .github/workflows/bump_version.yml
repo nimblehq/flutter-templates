@@ -20,9 +20,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set new version
-        id: set_version
-        run: |
-          perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/"version: ${{ github.event.inputs.newVersion }}+".($2+1)/e' ./template/pubspec.yaml
+        uses: jossef/action-set-json-field@v2.1
+        with:
+          file: mason-config.json
+          field: app_version
+          value: ${{ github.event.inputs.newVersion }}
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
