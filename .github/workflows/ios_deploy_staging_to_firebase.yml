@@ -21,14 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-
-      - name: Generate new project
-        run: make run PACKAGE_NAME=co.nimblehq.flutter.template PROJECT_NAME=flutter_templates APP_NAME="Flutter Templates"
-
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.4.1
         with:
@@ -39,6 +31,14 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '3.3.10'
+
+      - name: Generate new project
+        run: |
+          dart pub global activate mason_cli
+          mason get
+          mason make template -c mason-config.json
+          rsync -av --remove-source-files flutter_templates/ ./
+          rm -rf bricks/template
 
       - name: Get Flutter dependencies
         run: flutter pub get
