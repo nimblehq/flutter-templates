@@ -12,36 +12,29 @@ Clone the repository
 
 Checkout the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to access the full documentation.
 
-## Template Usage
+## Use the template
 
-Before using the template, make sure you have the following prerequisites installed on your system:
+### Setup a new project
+
+Before using the template, ensure that you have installed the following prerequisites on your system:
 
 - [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.0-dev.44
-- Flutter 3.0.5
-- Flutter version manager (recommend): [fvm](https://fvm.app/)
 
-To set up a new project from the template, follow these steps:
+Follow these steps to set up a new project from the template:
 
-- Open your terminal and run the following command:
+- Fetch all required bricks by running the command:
+
+  - `$ mason get`
+
+- Generate the new project by running the following command:
 
   - `$ mason make template`
 
-- Navigate to the newly created project using the following command:
+  > You can find the detailed information on `make` command options and usage in the [Mason documentation](https://github.com/felangel/mason/tree/master/packages/mason_cli#overview).
 
-  - `$ cd {project_name}`
+- Once the project is generated at `/{project_name}`, please refer to the [Getting Started](https://github.com/nimblehq/flutter-templates/tree/feature/mason-integration/bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#getting-started) documentation to prepare your project for development.
 
-- Clean the project by running the command:
-
-  - `$ fvm flutter clean`
-
-- Re-fetch the project by running the command:
-
-  - `$ fvm flutter pub get`
-
-- Run code generator using the command:
-  - `$ fvm flutter packages pub run build_runner build --delete-conflicting-outputs`
-
-- Once you have completed these steps, your new Flutter project is ready to develop!
+That's it! You have now set up a new Flutter project using the template.
 
 ## License
 
