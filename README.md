@@ -18,6 +18,7 @@ Checkout the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to 
 
 Before using the template, ensure that you have installed the following prerequisites on your system:
 
+- Flutter 3.3.10
 - [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.0-dev.44
 
 Follow these steps to set up a new project from the template:
@@ -32,9 +33,9 @@ Follow these steps to set up a new project from the template:
 
   > You can find the detailed information on `make` command options and usage in the [Mason documentation](https://github.com/felangel/mason/tree/master/packages/mason_cli#overview).
 
-- Once the project is generated at `/{project_name}`, please refer to the [Getting Started](https://github.com/nimblehq/flutter-templates/tree/develop/bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#getting-started) documentation to prepare your project for development.
+- Once the project is generated at `/{project_name}`, please refer to the [Getting Started](https://github.com/nimblehq/flutter-templates/tree/develop/bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#getting-started) documentation to make it ready for development.
 
-That's it! You have now set up a new Flutter project using the template.
+That's it! You have now set up a new Flutter project using the template 🎉
 
 ## License
 
