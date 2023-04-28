@@ -1,6 +1,6 @@
 # Flutter Templates
 
-All the templates that can be used to kick off a new Flutter application quickly.
+All the templates can be used to kick off a new Flutter application quickly.
 
 ## Usage
 
@@ -10,7 +10,7 @@ Clone the repository
 
 ## Documentation
 
-Checkout the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to access the full documentation.
+Check out the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to access the full documentation.
 
 ## Use the template
 
@@ -25,11 +25,11 @@ Follow these steps to set up a new project from the template:
 
 - Fetch all required bricks by running the command:
 
-  - `$ mason get`
+  `$ mason get`
 
 - Generate the new project by running the following command:
 
-  - `$ mason make template`
+  `$ mason make template`
 
   > You can find the detailed information on `make` command options and usage in the [Mason documentation](https://github.com/felangel/mason/tree/master/packages/mason_cli#overview).
 
