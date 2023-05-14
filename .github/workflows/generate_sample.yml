@@ -21,7 +21,11 @@ jobs:
           channel: 'stable'
           flutter-version: '3.3.10'
 
-      - name: Generate new project
+      - name: Remove sample project
+        run: |
+          rm -rf sample
+
+      - name: Generate new sample project
         run: |
           dart pub global activate mason_cli
           mason get
