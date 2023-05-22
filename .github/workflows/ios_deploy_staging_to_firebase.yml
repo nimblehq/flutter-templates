@@ -18,7 +18,7 @@ jobs:
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
     steps:
-      - name: Checkout
+      - name: Check out
         uses: actions/checkout@v3
 
       - name: Install SSH key

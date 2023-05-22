@@ -1,4 +1,4 @@
-name: Generate sample project
+name: Generate the sample project
 
 on:
   push:
@@ -7,11 +7,11 @@ on:
 
 jobs:
   test:
-    name: Generate sample project
+    name: Generate the sample project
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Checkout
+      - name: Check out
         uses: actions/checkout@v3
 
       - name: Set up Flutter environment
@@ -20,7 +20,7 @@ jobs:
           channel: 'stable'
           flutter-version: '3.3.10'
 
-      - name: Remove sample project
+      - name: Remove the sample project
         run: |
           rm -rf sample
 
