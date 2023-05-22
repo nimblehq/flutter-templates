@@ -35,22 +35,27 @@ project.ext.envConfigFiles = [
 apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
 
 android {
-    compileSdkVersion 31
+    namespace "{{package_name.dotCase()}}"
+    compileSdkVersion flutter.compileSdkVersion
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-        production {
-            res.srcDirs = ['src/production/res']
-        }
-        staging {
-            res.srcDirs = ['src/staging/res']
-        }
     }
 
     defaultConfig {
         applicationId "{{package_name.dotCase()}}"
-        minSdkVersion 23
-        targetSdkVersion 31
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         resValue "string", "build_config_package", "{{package_name.dotCase()}}"
@@ -74,15 +79,6 @@ android {
             dimension "stage"
             applicationId "{{package_name.dotCase()}}.staging"
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
