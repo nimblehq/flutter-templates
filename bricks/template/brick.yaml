@@ -46,3 +46,13 @@ vars:
     description: Your app version
     default: "1"
     prompt: Build number?
+  json_format:
+    type: enum
+    description: Your default Json formatting when making the network request
+    default: snake
+    prompt: Your default Json formatting?
+    values:
+      - none
+      - kebab
+      - snake
+      - pascal
