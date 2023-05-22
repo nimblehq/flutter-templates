@@ -24,16 +24,20 @@ jobs:
         run: |
           rm -rf sample
 
-      - name: Generate new sample project
+      - name: Set the project name "sample"
+        uses: jossef/action-set-json-field@v2.1
+        with:
+          file: mason-config.json
+          field: project_name
+          value: sample
+
+      - name: Generate the new sample project
         run: |
           dart pub global activate mason_cli
           mason get
           mason make template -c mason-config.json
-          # Move the generated project to the root directory for next steps & cleanup to not affect static code analysis
-          rsync -av --remove-source-files flutter_templates/ ./sample
-          rm -rf bricks/template
 
-      - name: Commit & push sample project changes
+      - name: Commit & push the sample project changes
         run: |
           git config user.name team-nimblehq
           git config user.email bot@nimblehq.co
