@@ -1,0 +1,49 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      newVersion:
+        description: "New version"
+        required: true
+        type: string
+
+jobs:
+  bump_version:
+    name: Bump version
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+        with:
+          token: $
+
+      - name: Set new version
+        run: |
+          perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/"version: $+".($2+1)/e' ./pubspec.yaml
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          assignees: $
+          token: $
+          commit-message: Bump version to $
+          committer: Nimble Bot <bot@nimblehq.co>
+          branch: chore/bump-version-to-$
+          delete-branch: true
+          title: '[Chore] Bump version to $'
+          labels: |
+            type : chore
+          body: |
+            ## What happened 👀
+
+            Bump version to $
+
+            ## Insight 📝
+
+            Automatically created by the Bump Version workflow.
+
+            ## Proof Of Work 📹
+
+            On the Files changed tab
