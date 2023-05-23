@@ -1,0 +1,46 @@
+name: Generate the sample project
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  test:
+    name: Generate the sample project
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.3.10'
+
+      - name: Remove the old sample project
+        run: |
+          rm -rf sample
+
+      - name: Set the project name "sample"
+        uses: jossef/action-set-json-field@v2.1
+        with:
+          file: mason-config.json
+          field: project_name
+          value: sample
+
+      - name: Generate the new sample project
+        run: |
+          dart pub global activate mason_cli
+          mason get
+          mason make template -c mason-config.json
+
+      - name: Commit & push the sample project changes
+        run: |
+          git config user.name team-nimblehq
+          git config user.email bot@nimblehq.co
+          git add sample
+          git commit -m "[Chore] Generate & update sample project"
+          git push
