@@ -20,7 +20,7 @@ jobs:
           channel: 'stable'
           flutter-version: '3.3.10'
 
-      - name: Remove the sample project
+      - name: Remove the old sample project
         run: |
           rm -rf sample
 
