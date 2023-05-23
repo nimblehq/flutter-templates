@@ -46,11 +46,11 @@ vars:
     description: Your app version
     default: "1"
     prompt: Build number?
-  json_format:
+  json_field_rename_format:
     type: enum
-    description: Your default Json formatting when making the network request
+    description: Default Json field renaming format with json_serializable (https://pub.dev/packages/json_serializable#build-configuration)
     default: snake
-    prompt: Your default Json formatting?
+    prompt: Default Json field renaming format?
     values:
       - none
       - kebab
