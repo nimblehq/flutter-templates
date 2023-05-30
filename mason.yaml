@@ -3,3 +3,7 @@
 bricks:
   template:
     path: ./bricks/template/
+
+  # Other features
+  permission_handler:
+    path: ./bricks/permission_handler/

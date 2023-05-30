@@ -56,3 +56,8 @@ vars:
       - kebab
       - snake
       - pascal
+  add_permission_handler:
+    type: boolean
+    description: Add permission_handler (https://pub.dev/packages/permission_handler) package to the project with some basic setup
+    default: false
+    prompt: Add permission_handler package?
