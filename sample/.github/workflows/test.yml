@@ -1,0 +1,49 @@
+name: CI
+on:
+  # Trigger the workflow on push or pull request,
+  # but push action is only for the feature branch
+  pull_request:
+    types: [ opened, synchronize, edited, reopened ]
+  push:
+    branches-ignore:
+      - develop
+      - 'release/**'
+jobs:
+  lint_and_test:
+    name: Static code analyze & Unit test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: staging
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.3.10'
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Run code generator
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Check for any formatting issues in the code
+        run: flutter format --set-exit-if-changed .
+
+      - name: Statically analyze the Dart code for any errors
+        run: flutter analyze .
+
+      - name: Run widget tests, unit tests
+        run: flutter test --machine --coverage
+
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage/lcov.info
+          flags: unittests # optional
+          token: $ # not required for public repos
+          fail_ci_if_error: false
+          verbose: true

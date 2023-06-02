@@ -1,0 +1,26 @@
+# Sample CodeCov config for private repository
+codecov:
+  bot: luongvo
+  require_ci_to_pass: yes
+
+coverage:
+  status:
+    project: off
+    patch: off
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+comment:
+  layout: "reach,diff,flags,files,tree"
+  behavior: default
+  require_changes: no
+
+ignore:
+  - "lib/di"
+  - "lib/gen"
