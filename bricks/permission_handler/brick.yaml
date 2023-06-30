@@ -21,8 +21,6 @@ environment:
 #  * an optional prompt phrase used when asking for the variable
 #  * a list of values (enums only)
 vars:
+  # Injected from the root brick by post_gen hook
   project_name:
     type: string
-    description: Your project name
-    default: your_project_name
-    prompt: Project name?
