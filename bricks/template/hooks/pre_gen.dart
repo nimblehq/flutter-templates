@@ -29,5 +29,5 @@ Future<Map<String, dynamic>> addPermissionHandlerVariables() async {
       vars.putIfAbsent(formattedName, () => String.fromCharCodes(content));
     }
   });
-  return Future.value(vars);
+  return vars;
 }
