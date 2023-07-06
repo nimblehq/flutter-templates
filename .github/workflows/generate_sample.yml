@@ -4,9 +4,12 @@ on:
   push:
     branches:
       - develop
+      - chore/212-improve-not-push-to-dev-if-no-changes
 
 jobs:
   test:
+    # Run on merge commits only
+    if: github.event.head_commit.parents[@] > 1
     name: Generate the sample project
     runs-on: ubuntu-latest
     timeout-minutes: 30
