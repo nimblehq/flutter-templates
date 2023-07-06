@@ -4,9 +4,12 @@ on:
   push:
     branches:
       - develop
+      - chore/212-improve-not-push-to-dev-if-no-changes
 
 jobs:
-  test:
+  generate_sample_project:
+    # Run on merge commits only
+    if: ${{ contains(github.event.head_commit.message, 'Merge pull request') || (github.event.head_commit.author.email != 'luong@nimblehq.co') }}
     name: Generate the sample project
     runs-on: ubuntu-latest
     timeout-minutes: 30
