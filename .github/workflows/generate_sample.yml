@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - develop
+      - chore/212-improve-not-push-to-dev-if-no-changes
 
 jobs:
   test:
+    if: github.event.pull_request.merged == true
     name: Generate the sample project
     runs-on: ubuntu-latest
     timeout-minutes: 30
