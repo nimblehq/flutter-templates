@@ -39,7 +39,14 @@ jobs:
           mason get
           mason make template -c mason-config.json
 
+      - id: changes
+        name: Check for changes in the sample project
+        run: |
+          count=$(git status sample --porcelain | wc -l)
+          echo "count=$count" >> $GITHUB_OUTPUT
+
       - name: Commit & push the sample project changes
+        if: steps.changes.outputs.count > 0
         run: |
           git config user.name team-nimblehq
           git config user.email bot@nimblehq.co
