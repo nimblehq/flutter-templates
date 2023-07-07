@@ -18,7 +18,7 @@ Check out the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to
 
 Before using the template, ensure that you have installed the following prerequisites on your system:
 
-- Flutter 3.3.10
+- Flutter 3.10.5
 - [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.0-dev.44
 
 Follow these steps to set up a new project from the template:

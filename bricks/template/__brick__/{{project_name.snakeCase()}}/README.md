@@ -10,7 +10,7 @@ Clone the repository
 
 ## Prerequisite
 
-- Flutter 2.10.3
+- Flutter 3.10.5
 - Flutter version manager (recommend): [fvm](https://fvm.app/)
 
 ## Getting Started
