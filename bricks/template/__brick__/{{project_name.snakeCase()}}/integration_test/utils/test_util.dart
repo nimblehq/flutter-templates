@@ -30,6 +30,7 @@ class TestUtil {
         version: '',
         buildNumber: '',
         buildSignature: '');
-    FlutterConfigPlus.loadValueForTesting({'SECRET': 'This is only for testing'});
+    FlutterConfigPlus.loadValueForTesting(
+        {'SECRET': 'This is only for testing'});
   }
 }
