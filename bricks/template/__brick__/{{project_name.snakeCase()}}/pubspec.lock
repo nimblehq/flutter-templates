@@ -230,14 +230,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_config:
+  flutter_config_plus:
     dependency: "direct main"
     description:
-      name: flutter_config
-      sha256: "8e2be2d560a52e06d2ef53a31913a11fc80ef708a442571c96194fd32e29fb1a"
+      name: flutter_config_plus
+      sha256: aaacb29778db1f66245a1f1bf5aeb3e934d1cb707eee080c342edab8f06333bf
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "1.1.1"
   flutter_driver:
     dependency: transitive
     description: flutter
@@ -323,10 +323,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: aec1999abe8b2f131eda46d4c9629048fb1befed2b65e90b73f9193a300ce489
+      sha256: bd7e671d26fd39c78cba82070fa34ef1f830b0e7ed1aeebccabc6561302a7ee5
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.1"
+    version: "6.5.9"
   graphs:
     dependency: transitive
     description:

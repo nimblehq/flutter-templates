@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_config_plus/flutter_config_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:{{project_name.snakeCase()}}/gen/assets.gen.dart';
 import 'package:go_router/go_router.dart';
@@ -7,7 +7,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterConfig.loadEnvVariables();
+  await FlutterConfigPlus.loadEnvVariables();
   runApp(MyApp());
 }
 
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 24),
             Text(AppLocalizations.of(context)!.hello),
             Text(
-              FlutterConfig.get('SECRET'),
+              FlutterConfigPlus.get('SECRET'),
               style: const TextStyle(color: Colors.black, fontSize: 24),
             ),
             const SizedBox(height: 24),
