@@ -10,13 +10,13 @@ jobs:
     name: Build And Upload iOS Staging Application To Firebase
     runs-on: macOS-latest
     env:
-      TEAM_ID: ${{ secrets.TEAM_ID }}
-      FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-      FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
-      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      TEAM_ID: ${{#mustacheCase}}secrets.TEAM_ID{{/mustacheCase}}
+      FASTLANE_USER: ${{#mustacheCase}}secrets.FASTLANE_USER{{/mustacheCase}}
+      FASTLANE_PASSWORD: ${{#mustacheCase}}secrets.FASTLANE_PASSWORD{{/mustacheCase}}
+      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{#mustacheCase}}secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD{{/mustacheCase}}
+      FASTLANE_SESSION: ${{#mustacheCase}}secrets.FASTLANE_SESSION{{/mustacheCase}}
+      MATCH_PASSWORD: ${{#mustacheCase}}secrets.MATCH_PASSWORD{{/mustacheCase}}
+      KEYCHAIN_PASSWORD: ${{#mustacheCase}}secrets.KEYCHAIN_PASSWORD{{/mustacheCase}}
     steps:
       - name: Check out
         uses: actions/checkout@v3
@@ -24,7 +24,7 @@ jobs:
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.4.1
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{#mustacheCase}}secrets.SSH_PRIVATE_KEY{{/mustacheCase}}
 
       - name: Set up Flutter environment
         uses: subosito/flutter-action@v1
@@ -37,7 +37,7 @@ jobs:
 
       - name: Set up .env.staging
         env:
-          ENV_STAGING: ${{ secrets.ENV_STAGING }}
+          ENV_STAGING: ${{#mustacheCase}}secrets.ENV_STAGING{{/mustacheCase}}
         run: |
           echo $ENV_STAGING > .env.staging
 
@@ -57,4 +57,4 @@ jobs:
         run: |
           cd ./ios && bundle exec fastlane build_and_upload_staging_app
         env:
-          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+          FIREBASE_CLI_TOKEN: ${{#mustacheCase}}secrets.FIREBASE_CLI_TOKEN{{/mustacheCase}}

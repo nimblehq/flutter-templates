@@ -34,7 +34,7 @@ jobs:
 
       - name: Set up .env
         env:
-          ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
+          ENV_PRODUCTION: ${{#mustacheCase}}secrets.ENV_PRODUCTION{{/mustacheCase}}
         run: |
           echo $ENV_PRODUCTION > .env
 
@@ -45,7 +45,7 @@ jobs:
       - name: Deploy Android Production to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
         with:
-          appId: ${{ secrets.FIREBASE_ANDROID_APP_ID_PRODUCTION }}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
+          appId: ${{#mustacheCase}}secrets.FIREBASE_ANDROID_APP_ID_PRODUCTION{{/mustacheCase}}
+          serviceCredentialsFileContent: ${{#mustacheCase}}secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON{{/mustacheCase}}
           groups: nimble
           file: build/app/outputs/flutter-apk/app-production-debug.apk

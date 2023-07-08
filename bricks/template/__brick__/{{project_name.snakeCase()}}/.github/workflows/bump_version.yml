@@ -17,28 +17,28 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{#mustacheCase}}secrets.GITHUB_TOKEN{{/mustacheCase}}
 
       - name: Set new version
         run: |
-          perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/"version: ${{ github.event.inputs.newVersion }}+".($2+1)/e' ./pubspec.yaml
+          perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/"version: ${{#mustacheCase}}github.event.inputs.newVersion{{/mustacheCase}}+".($2+1)/e' ./pubspec.yaml
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
         with:
-          assignees: ${{ secrets.GITHUB_USER }}
-          token: ${{ secrets.WIKI_ACTION_TOKEN }}
-          commit-message: Bump version to ${{ github.event.inputs.newVersion }}
+          assignees: ${{#mustacheCase}}secrets.GITHUB_USER{{/mustacheCase}}
+          token: ${{#mustacheCase}}secrets.WIKI_ACTION_TOKEN{{/mustacheCase}}
+          commit-message: Bump version to ${{#mustacheCase}}github.event.inputs.newVersion{{/mustacheCase}}
           committer: Nimble Bot <bot@nimblehq.co>
-          branch: chore/bump-version-to-${{ github.event.inputs.newVersion }}
+          branch: chore/bump-version-to-${{#mustacheCase}}github.event.inputs.newVersion{{/mustacheCase}}
           delete-branch: true
-          title: '[Chore] Bump version to ${{ github.event.inputs.newVersion }}'
+          title: '[Chore] Bump version to ${{#mustacheCase}}github.event.inputs.newVersion{{/mustacheCase}}'
           labels: |
             type : chore
           body: |
             ## What happened 👀
 
-            Bump version to ${{ github.event.inputs.newVersion }}
+            Bump version to ${{#mustacheCase}}github.event.inputs.newVersion{{/mustacheCase}}
 
             ## Insight 📝
 
