@@ -44,6 +44,6 @@ jobs:
         with:
           files: ./coverage/lcov.info
           flags: unittests # optional
-          token: $ # not required for public repos
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           fail_ci_if_error: false
           verbose: true
