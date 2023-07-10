@@ -34,7 +34,7 @@ jobs:
 
       - name: Set up .env.staging
         env:
-          ENV_STAGING: ${{ secrets.ENV_STAGING }}
+          ENV_STAGING: ${{#mustacheCase}}secrets.ENV_STAGING{{/mustacheCase}}
         run: |
           echo $ENV_STAGING > .env.staging
 
@@ -45,7 +45,7 @@ jobs:
       - name: Deploy Android Staging to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
         with:
-          appId: ${{ secrets.FIREBASE_ANDROID_APP_ID_STAGING }}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
+          appId: ${{#mustacheCase}}secrets.FIREBASE_ANDROID_APP_ID_STAGING{{/mustacheCase}}
+          serviceCredentialsFileContent: ${{#mustacheCase}}secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON{{/mustacheCase}}
           groups: nimble
           file: build/app/outputs/flutter-apk/app-staging-debug.apk
