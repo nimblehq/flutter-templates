@@ -32,7 +32,7 @@ project.ext.envConfigFiles = [
         productionrelease: ".env"
 ]
 
-apply from: project(':flutter_config_plus').projectDir.getPath() + "/dotenv.gradle"
+apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
 
 android {
     namespace "{{package_name.dotCase()}}"

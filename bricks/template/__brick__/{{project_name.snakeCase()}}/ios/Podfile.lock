@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_config_plus (0.0.1):
+  - flutter_config (0.0.1):
     - Flutter
   - integration_test (0.0.1):
     - Flutter
@@ -11,7 +11,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_config_plus (from `.symlinks/plugins/flutter_config_plus/ios`)
+  - flutter_config (from `.symlinks/plugins/flutter_config/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -19,8 +19,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_config_plus:
-    :path: ".symlinks/plugins/flutter_config_plus/ios"
+  flutter_config:
+    :path: ".symlinks/plugins/flutter_config/ios"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
   package_info_plus:
@@ -30,11 +30,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_config_plus: 2df4781de772ac3c0d253ae6122a8396ec306e35
+  flutter_config: 2226c1df19c78fe34a05eb7f1363445f18e76fc1
   integration_test: 13825b8a9334a850581300559b8839134b124670
   package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
 
-PODFILE CHECKSUM: 0649db66e3e5e19c303123296d621da53d2eeafc
+PODFILE CHECKSUM: 632d6ac0b577d6e268ff7a13a105bbc4f7941989
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
