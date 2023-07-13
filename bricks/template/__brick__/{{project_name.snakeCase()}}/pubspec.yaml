@@ -38,8 +38,7 @@ dependencies:
   go_router: ^9.0.3
   intl: ^0.18.0
   json_annotation: ^4.8.1
-  package_info_plus: ^4.0.0
-{{#add_permission_handler}}{{{ _pubspec_dependencyyaml }}}{{/add_permission_handler}}
+  package_info_plus: ^4.0.0{{#add_permission_handler}}{{{ _pubspec_dependencyyaml }}}{{/add_permission_handler}}
   retrofit: ^4.0.1
 
 dev_dependencies:
