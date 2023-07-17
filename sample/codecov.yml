@@ -1,4 +1,4 @@
-# Sample CodeCov config for private repository
+# For the private repository, set up a TeamBot https://docs.codecov.com/docs/team-bot
 codecov:
   bot: luongvo
   require_ci_to_pass: yes
