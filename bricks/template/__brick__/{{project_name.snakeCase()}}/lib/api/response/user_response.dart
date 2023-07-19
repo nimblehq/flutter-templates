@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:{{project_name.snakeCase()}}/model/user_model.dart';
 
-part 'user_response.g.dart';
+part 'response/user_response.g.dart';
 
 @JsonSerializable()
 class UserResponse {
@@ -13,4 +14,9 @@ class UserResponse {
       _$UserResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
+
+  UserModel toUserModel() => UserModel(
+        email: email,
+        username: username,
+      );
 }
