@@ -35,22 +35,27 @@ project.ext.envConfigFiles = [
 apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
 
 android {
-    compileSdkVersion 31
+    namespace "co.nimblehq.flutter.template"
+    compileSdkVersion flutter.compileSdkVersion
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-        production {
-            res.srcDirs = ['src/production/res']
-        }
-        staging {
-            res.srcDirs = ['src/staging/res']
-        }
     }
 
     defaultConfig {
         applicationId "co.nimblehq.flutter.template"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         resValue "string", "build_config_package", "co.nimblehq.flutter.template"
@@ -74,15 +79,6 @@ android {
             dimension "stage"
             applicationId "co.nimblehq.flutter.template.staging"
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
