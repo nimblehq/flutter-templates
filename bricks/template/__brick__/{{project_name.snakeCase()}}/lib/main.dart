@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:{{project_name.snakeCase()}}/gen/assets.gen.dart';
+import 'package:{{project_name.snakeCase()}}/gen/colors.gen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -77,11 +78,19 @@ class HomeScreen extends StatelessWidget {
                 fit: BoxFit.fitWidth,
               ),
             ),
+            const SizedBox(height: 8),
+            Assets.svg.flutterLogo.svg(
+              width: 32,
+              height: 32,
+            ),
             const SizedBox(height: 24),
             Text(AppLocalizations.of(context)!.hello),
             Text(
               FlutterConfig.get('SECRET'),
-              style: const TextStyle(color: Colors.black, fontSize: 24),
+              style: const TextStyle(
+                color: ColorName.nimblePrimaryBlue,
+                fontSize: 24,
+              ),
             ),
             const SizedBox(height: 24),
             ElevatedButton(
