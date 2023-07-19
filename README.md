@@ -5,7 +5,7 @@ All the templates can be used to kick off a new Flutter project quickly.
 ## Features
 
 - Supports __Android__ and __iOS__ platforms *(Web and Desktop are not yet supported)*.
-- MVVM with __Clean Architecture__ and pre-built foundational components.
+- [__Clean Architecture__](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) with `MVVM` and pre-built foundational components.
 - [Pre-set environments](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#setup): `Staging` and `Production`. Environment variables are supplied through `.env` files through [flutter_config](https://pub.dev/packages/flutter_config).
 - Dependency Injection (DI), State Management, and Navigating with [get_it](https://pub.dev/packages/get_it) and [go_router](https://pub.dev/packages/go_router).
 - Networking with [dio](https://pub.dev/packages/dio) and [retrofit](https://pub.dev/packages/retrofit), JSON serializing with [json_serializable](https://pub.dev/packages/json_serializable).
