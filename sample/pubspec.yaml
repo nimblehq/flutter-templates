@@ -34,6 +34,7 @@ dependencies:
   flutter_config: ^2.0.2
   flutter_localizations:
     sdk: flutter
+  flutter_svg: ^2.0.7
   freezed_annotation: ^2.2.0
   go_router: ^9.0.3
   intl: ^0.18.0
@@ -77,6 +78,7 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/
+    - assets/svg/
     - assets/images/
     - assets/fonts/
 
@@ -84,3 +86,11 @@ flutter:
     - family: neuzeit
       fonts:
         - asset: assets/fonts/neuzeit.otf
+
+flutter_gen:
+  integrations:
+    flutter_svg: true
+
+  colors:
+    inputs:
+      - assets/colors/colors.xml
