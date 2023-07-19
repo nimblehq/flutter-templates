@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:{{project_name.snakeCase()}}/model/user_model.dart';
 
-part 'response/user_response.g.dart';
+part 'user_response.g.dart';
 
 @JsonSerializable()
 class UserResponse {
