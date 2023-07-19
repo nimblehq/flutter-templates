@@ -1,18 +1,16 @@
 # {{app_name.titleCase()}}
 
-[![codecov](https://codecov.io/gh/nimblehq/flutter-templates/branch/main/graph/badge.svg?token=ATUNXDX218)](https://codecov.io/gh/nimblehq/flutter-templates)
-
-All the templates that can be used to kick off a new Flutter application quickly.
+[![codecov](https://codecov.io/gh/nimblehq/{{project_name.paramCase()}}/branch/main/graph/badge.svg?token=ATUNXDX218)](https://codecov.io/gh/nimblehq/{{project_name.paramCase()}})
 
 ## Usage
 
 Clone the repository
 
-`git clone git@github.com:nimblehq/flutter-templates.git`
+`git clone git@github.com:nimblehq/{{project_name.paramCase()}}.git`
 
 ## Prerequisite
 
-- Flutter 2.10.3
+- Flutter 3.10.5
 - Flutter version manager (recommend): [fvm](https://fvm.app/)
 
 ## Getting Started
