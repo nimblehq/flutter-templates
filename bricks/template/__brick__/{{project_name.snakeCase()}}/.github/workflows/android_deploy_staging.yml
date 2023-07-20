@@ -47,5 +47,5 @@ jobs:
         with:
           appId: ${{#mustacheCase}}secrets.FIREBASE_ANDROID_APP_ID_STAGING{{/mustacheCase}}
           serviceCredentialsFileContent: ${{#mustacheCase}}secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON{{/mustacheCase}}
-          groups: nimble
+          groups: ${{#mustacheCase}}vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS{{/mustacheCase}}
           file: build/app/outputs/flutter-apk/app-staging-debug.apk
