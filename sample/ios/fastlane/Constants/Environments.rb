@@ -15,7 +15,19 @@ class Environments
     ENV['TEAM_ID']
   end
 
+  #################
+  ### Firebase ###
+  #################
+
   def self.FIREBASE_CLI_TOKEN
     ENV['FIREBASE_CLI_TOKEN']
+  end
+
+  def self.FIREBASE_APP_ID_STAGING
+    ENV['FIREBASE_APP_ID_STAGING']
+  end
+
+  def self.FIREBASE_TESTER_GROUPS
+    ENV['FIREBASE_DISTRIBUTION_TESTER_GROUPS']
   end
 end

@@ -47,5 +47,5 @@ jobs:
         with:
           appId: ${{ secrets.FIREBASE_ANDROID_APP_ID_PRODUCTION }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
-          groups: nimble
+          groups: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
           file: build/app/outputs/flutter-apk/app-production-debug.apk
