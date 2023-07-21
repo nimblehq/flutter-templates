@@ -9,7 +9,7 @@ abstract class NetworkModule {
   ApiService provideApiService(DioProvider dioProvider) {
     return ApiService(
       dioProvider.getDio(),
-      baseUrl: Env.baseEndpoint,
+      baseUrl: Env.restApiEndpoint,
     );
   }
 }
