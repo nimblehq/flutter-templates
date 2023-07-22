@@ -3,7 +3,6 @@ import 'package:mockito/mockito.dart';
 import 'package:{{project_name.snakeCase()}}/model/user.dart';
 import 'package:{{project_name.snakeCase()}}/usecases/base/base_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/usecases/user/get_users_use_case.dart';
-import 'package:{{project_name.snakeCase()}}/api/response/user_response.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
 import '../../mocks/response/user_response_mocks.dart';
