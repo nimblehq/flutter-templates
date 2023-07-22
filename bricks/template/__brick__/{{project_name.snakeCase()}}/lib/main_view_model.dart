@@ -8,8 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class MainViewModel extends StateNotifier<MainViewState> {
   final GetUsersUseCase _getUsersUseCase;
 
-  final StreamController<List<User>?> _usersStream =
-      StreamController();
+  final StreamController<List<User>?> _usersStream = StreamController();
 
   MainViewModel(
     this._getUsersUseCase,

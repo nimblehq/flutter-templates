@@ -21,7 +21,8 @@ void main() {
     test('When getting users successfully, it returns Success result',
         () async {
       final expectedResult = [UserResponseMocks.mock().toUser()];
-      when(mockRepository.getUsers()).thenAnswer((_) async => [UserResponseMocks.mock()]);
+      when(mockRepository.getUsers())
+          .thenAnswer((_) async => [UserResponseMocks.mock()]);
       final result = await getUsersUseCase.call();
 
       expect(result, isA<Success>());
