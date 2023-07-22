@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:{{project_name.snakeCase()}}/model/user.dart';
 import 'package:{{project_name.snakeCase()}}/usecases/base/base_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/usecases/user/get_users_use_case.dart';
 
