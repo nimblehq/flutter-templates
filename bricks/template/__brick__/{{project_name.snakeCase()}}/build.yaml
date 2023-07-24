@@ -3,4 +3,5 @@ targets:
     builders:
       json_serializable:
         options:
+          # Full FieldRename's options, refer https://github.com/google/json_serializable.dart/blob/2185e8b80d8d0c12e2adbf897d920b6f5725cded/json_annotation/lib/src/json_serializable.dart#L16-L32
           field_rename: "{{json_field_rename_format}}"
