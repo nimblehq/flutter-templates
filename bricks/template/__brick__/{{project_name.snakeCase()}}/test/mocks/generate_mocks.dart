@@ -5,8 +5,8 @@ import 'package:mockito/annotations.dart';
 
 @GenerateMocks([
   ApiService,
-  DioError,
   CredentialRepository,
+  DioError,
 ])
 main() {
   // empty class to generate mock repository classes

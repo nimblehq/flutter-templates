@@ -13,8 +13,9 @@ class GetUsersUseCase extends NoParamsUseCase<List<User>> {
   Future<Result<List<User>>> call() async {
     try {
       final userResponses = await _credentialRepository.getUsers();
-      final users =
-          userResponses.map((userResponse) => userResponse.toUser()).toList();
+      final users = userResponses
+          .map((userResponse) => User.fromUserResponse(userResponse))
+          .toList();
       return Success(users);
     } catch (exception) {
       return Failed(UseCaseException(exception));

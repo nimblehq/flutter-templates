@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:{{project_name.snakeCase()}}/api/response/user_response.dart';
 
 class User extends Equatable {
   final String email;
@@ -8,6 +9,13 @@ class User extends Equatable {
     required this.email,
     required this.username,
   });
+
+  factory User.fromUserResponse(UserResponse response) {
+    return User(
+      email: response.email,
+      username: response.username,
+    );
+  }
 
   @override
   bool? get stringify => true;

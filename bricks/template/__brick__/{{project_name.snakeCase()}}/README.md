@@ -11,6 +11,8 @@
 
 ### Setup
 
+- Dependency Injection (DI), State Management, and Navigating with [get_it](https://pub.dev/packages/get_it), [flutter_riverpod](https://pub.dev/packages/flutter_riverpod), and [go_router](https://pub.dev/packages/go_router).
+
 - Create these `.env` files in the root directory according to the flavors and add the required
 environment variables. The example environment variable is in `.env.sample`.
 
