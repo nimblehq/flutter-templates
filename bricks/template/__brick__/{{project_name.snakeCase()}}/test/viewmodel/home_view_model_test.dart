@@ -16,7 +16,7 @@ void main() {
 
     setUp(() {
       TestWidgetsFlutterBinding.ensureInitialized();
-      mockGetUsersUseCase = MockGetUersUseCase();
+      mockGetUsersUseCase = MockGetUsersUseCase();
 
       container = ProviderContainer(
         overrides: [
