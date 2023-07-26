@@ -1,6 +1,6 @@
 import 'package:{{project_name.snakeCase()}}/api/api_service.dart';
 import 'package:{{project_name.snakeCase()}}/api/exception/network_exceptions.dart';
-import 'package:{{project_name.snakeCase()}}/api/response/user_response.dart';
+import 'package:{{project_name.snakeCase()}}/model/user.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class CredentialRepository {
@@ -14,9 +14,12 @@ class CredentialRepositoryImpl extends CredentialRepository {
   CredentialRepositoryImpl(this._apiService);
 
   @override
-  Future<List<UserResponse>> getUsers() async {
+  Future<List<User>> getUsers() async {
     try {
-      return await _apiService.getUsers();
+      final userResponses = await _apiService.getUsers();
+      return userResponses
+          .map((userResponse) => User.fromUserResponse(userResponse))
+          .toList();
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
