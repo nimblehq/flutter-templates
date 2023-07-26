@@ -7,11 +7,12 @@ import 'package:{{project_name.snakeCase()}}/main.dart';
 import 'package:{{project_name.snakeCase()}}/model/user.dart';
 
 import '../mocks/generate_mocks.mocks.dart';
+import '../mocks/response/user_response_mocks.dart';
 
 void main() {
   group("HomeViewModelTest", () {
     late ProviderContainer container;
-    late MockGetUersUseCase mockGetUsersUseCase;
+    late MockGetUsersUseCase mockGetUsersUseCase;
 
     setUp(() {
       TestWidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +20,9 @@ void main() {
 
       container = ProviderContainer(
         overrides: [
-          homeViewModelProvider.overrideWithValue(
-            HomeViewModel(
-              mockGetUsersUseCase,
-            ),
-          ),
+          homeViewModelProvider.overrideWith((ref) => HomeViewModel(
+                mockGetUsersUseCase,
+              )),
         ],
       );
       addTearDown(container.dispose);
