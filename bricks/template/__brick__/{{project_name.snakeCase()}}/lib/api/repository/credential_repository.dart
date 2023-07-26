@@ -4,7 +4,7 @@ import 'package:{{project_name.snakeCase()}}/model/user.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class CredentialRepository {
-  Future<List<UserResponse>> getUsers();
+  Future<List<User>> getUsers();
 }
 
 @LazySingleton(as: CredentialRepository)
