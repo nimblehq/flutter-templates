@@ -36,7 +36,7 @@ void main() {
 
       final usersStream =
           container.read(homeViewModelProvider.notifier).usersStream;
-      expect(usersStream, emitsInOrder(expectedResult));
+      expect(usersStream, emitsInOrder([expectedResult]));
 
       container.read(homeViewModelProvider.notifier).getUsers();
     });
