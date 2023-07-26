@@ -48,3 +48,43 @@ jobs:
 
       - name: Run widget tests, unit tests
         run: flutter test --machine --coverage
+
+  generate_mason_bundle:
+    # The job generate_mason_bundle identify that the job test must complete successfully
+    # before this generate_mason_bundle job will run
+    needs: test
+    name: Generate Mason bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.10.5'
+
+      - name: Install Mason CLI
+        run: |
+          dart pub global activate mason_cli
+          mason get
+
+      - name: Generate Mason bundle
+        run: |
+          mason bundle bricks/permission_handler -t dart -o bricks/template/hooks/bundles
+
+      - id: changes
+        name: Check for changes in the Mason bricks
+        run: |
+          count=$(git status bricks --porcelain | wc -l)
+          echo "count=$count" >> $GITHUB_OUTPUT
+
+      - name: Commit & push the sample project changes
+        if: steps.changes.outputs.count > 0
+        run: |
+          git config user.name team-nimblehq
+          git config user.email bot@nimblehq.co
+          git add bricks
+          git commit -m "[Chore] Generate Mason bundle"
+          git push
