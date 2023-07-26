@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'package:{{project_name.snakeCase()}}/main_view_state.dart';
+import 'package:{{project_name.snakeCase()}}/home_view_state.dart';
 import 'package:{{project_name.snakeCase()}}/usecases/base/base_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/usecases/user/get_users_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/model/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MainViewModel extends StateNotifier<MainViewState> {
+class HomeViewModel extends StateNotifier<HomeViewState> {
   final GetUsersUseCase _getUsersUseCase;
 
-  MainViewModel(
+  HomeViewModel(
     this._getUsersUseCase,
-  ) : super(const MainViewState.init());
+  ) : super(const HomeViewState.init());
 
   final StreamController<List<User>> _usersStream = StreamController();
 
