@@ -14,7 +14,7 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
 
   final StreamController<List<User>> _usersStream = StreamController();
 
-  Stream<User> get usersStream => _usersStream.stream;
+  Stream<List<User>> get usersStream => _usersStream.stream;
 
   Future<void> getUsers() async {
     final result = await _getUsersUseCase.call();
