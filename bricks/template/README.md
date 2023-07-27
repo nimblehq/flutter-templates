@@ -14,7 +14,6 @@ A few resources to get you started if this is your first brick template:
 - [Official Mason Documentation][2]
 - [Code generation with Mason Blog][3]
 - [Very Good Livestream: Felix Angelov Demos Mason][4]
-- Dependency Injection (DI), State Management, and Navigating with [get_it](https://pub.dev/packages/get_it), [flutter_riverpod](https://pub.dev/packages/flutter_riverpod), and [go_router](https://pub.dev/packages/go_router).
 
 [1]: https://github.com/felangel/mason
 [2]: https://github.com/felangel/mason/tree/master/packages/mason_cli#readme
