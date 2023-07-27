@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - feature/241-ios-github-run-number
 
 jobs:
   build_and_upload_staging_app_to_firebase:
@@ -20,6 +21,7 @@ jobs:
       FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
       FIREBASE_APP_ID_STAGING: ${{ secrets.FIREBASE_IOS_APP_ID_STAGING }}
       FIREBASE_DISTRIBUTION_TESTER_GROUPS: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
+      GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER
     steps:
       - name: Check out
         uses: actions/checkout@v3

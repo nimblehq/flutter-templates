@@ -20,6 +20,7 @@ jobs:
       FIREBASE_CLI_TOKEN: ${{#mustacheCase}}secrets.FIREBASE_CLI_TOKEN{{/mustacheCase}}
       FIREBASE_APP_ID_STAGING: ${{#mustacheCase}}secrets.FIREBASE_IOS_APP_ID_STAGING{{/mustacheCase}}
       FIREBASE_DISTRIBUTION_TESTER_GROUPS: ${{#mustacheCase}}vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS{{/mustacheCase}}
+      GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER
     steps:
       - name: Check out
         uses: actions/checkout@v3

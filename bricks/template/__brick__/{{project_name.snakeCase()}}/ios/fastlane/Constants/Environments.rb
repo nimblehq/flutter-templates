@@ -30,4 +30,8 @@ class Environments
   def self.FIREBASE_TESTER_GROUPS
     ENV['FIREBASE_DISTRIBUTION_TESTER_GROUPS']
   end
+
+  def self.GITHUB_RUN_NUMBER
+    ENV["GITHUB_RUN_NUMBER"]
+  end
 end

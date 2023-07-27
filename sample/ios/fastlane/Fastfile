@@ -138,7 +138,7 @@ platform :ios do
     end
   end
 
-  desc 'set build number with number of commits'
+  desc 'set build number with the run number'
   private_lane :bump_build do
     increment_build_number(
       build_number: number_of_commits,
