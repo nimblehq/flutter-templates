@@ -48,18 +48,21 @@ dependencies:
   retrofit: ^4.0.1
 
 dev_dependencies:
-  build_runner: ^2.4.4
+  build_runner: ^2.4.6
   flutter_gen_runner: ^5.3.1
-  flutter_lints: ^2.0.1
+  flutter_lints: ^2.0.2
   flutter_test:
     sdk: flutter
-  freezed: ^2.3.4
+  freezed: ^2.4.1
   injectable_generator: ^2.1.6
   integration_test:
     sdk: flutter
-  json_serializable: ^6.6.2
-  mockito: ^5.4.0
-  retrofit_generator: ^7.0.0
+  json_serializable: ^6.7.1
+  mockito: ^5.4.2
+  retrofit_generator: ^7.0.8
+
+dependency_overrides:
+  intl: ^0.18.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
