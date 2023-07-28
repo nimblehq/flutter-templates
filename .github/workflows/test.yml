@@ -80,7 +80,7 @@ jobs:
           count=$(git status bricks --porcelain | wc -l)
           echo "count=$count" >> $GITHUB_OUTPUT
 
-      - name: Commit & push the sample project changes
+      - name: Commit & push the Mason bundle changes
         if: steps.changes.outputs.count > 0
         run: |
           git config user.name team-nimblehq
