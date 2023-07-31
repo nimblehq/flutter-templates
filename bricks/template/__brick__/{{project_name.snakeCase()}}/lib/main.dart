@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:{{project_name.snakeCase()}}/di/di.dart';
 import 'package:{{project_name.snakeCase()}}/gen/assets.gen.dart';
-import 'package:{{project_name.snakeCase()}}/gen/colors.gen.dart';
+import 'package:{{project_name.snakeCase()}}/resources/app_colors.dart';
 import 'package:{{project_name.snakeCase()}}/usecases/user/get_users_use_case.dart';
 
 import 'home_view_model.dart';
@@ -117,7 +117,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             Text(
               FlutterConfig.get('SECRET'),
               style: const TextStyle(
-                color: ColorName.nimblePrimaryBlue,
+                color: AppColors.nimblePrimaryBlue,
                 fontSize: 24,
               ),
             ),
