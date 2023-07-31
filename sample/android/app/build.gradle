@@ -6,6 +6,12 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('signing.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
@@ -26,10 +32,10 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 project.ext.envConfigFiles = [
-        stagingdebug: ".env.staging",
-        stagingrelease: ".env.staging",
-        productiondebug: ".env",
-        productionrelease: ".env"
+    stagingdebug     : ".env.staging",
+    stagingrelease   : ".env.staging",
+    productiondebug  : ".env",
+    productionrelease: ".env"
 ]
 
 apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
@@ -61,10 +67,32 @@ android {
         resValue "string", "build_config_package", "co.nimblehq.flutter.template"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('../config/release.keystore')
+            storePassword keystoreProperties['KEYSTORE_PASSWORD']
+            keyAlias keystoreProperties['KEY_ALIAS']
+            keyPassword keystoreProperties['KEY_PASSWORD']
+        }
+
+        debug {
+            storeFile file('../config/debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
             signingConfig signingConfigs.debug
         }
     }
