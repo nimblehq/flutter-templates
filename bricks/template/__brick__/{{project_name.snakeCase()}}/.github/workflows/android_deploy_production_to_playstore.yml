@@ -38,6 +38,14 @@ jobs:
         run: |
           echo $ENV_PRODUCTION > .env
 
+      - name: Set up release signing configs
+        env:
+          ANDROID_RELEASE_KEYSTORE_BASE64: ${{#mustacheCase}}secrets.ANDROID_RELEASE_KEYSTORE_BASE64{{/mustacheCase}}
+          ANDROID_SIGNING_PROPERTIES_BASE64: ${{#mustacheCase}}secrets.ANDROID_SIGNING_PROPERTIES_BASE64{{/mustacheCase}}
+        run: |
+          echo $ANDROID_RELEASE_KEYSTORE_BASE64 | base64 --decode > android/config/release.keystore
+          echo $ANDROID_SIGNING_PROPERTIES_BASE64 | base64 --decode > android/signing.properties
+
       - name: Build Production App Bundle
         run: flutter build appbundle --flavor production --release --build-number $GITHUB_RUN_NUMBER
 
