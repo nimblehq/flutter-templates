@@ -18,6 +18,7 @@ jobs:
       FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      GITHUB_RUN_NUMBER: $secrets.GITHUB_RUN_NUMBER
     steps:
     - name: Check out
       uses: actions/checkout@v3
