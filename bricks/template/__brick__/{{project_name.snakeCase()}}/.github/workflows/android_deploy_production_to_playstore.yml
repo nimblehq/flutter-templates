@@ -9,6 +9,7 @@ jobs:
   build_and_deploy_android:
     name: Build & Deploy Android
     runs-on: ubuntu-latest
+    environment: production
     timeout-minutes: 30
     steps:
       - name: Check out
@@ -34,17 +35,17 @@ jobs:
 
       - name: Set up .env
         env:
-          ENV_PRODUCTION: ${{#mustacheCase}}secrets.ENV_PRODUCTION{{/mustacheCase}}
+          ENV: ${{#mustacheCase}}secrets.ENV{{/mustacheCase}}
         run: |
-          echo $ENV_PRODUCTION > .env
+          echo "$ENV" > .env
 
       - name: Set up release signing configs
         env:
           ANDROID_RELEASE_KEYSTORE_BASE64: ${{#mustacheCase}}secrets.ANDROID_RELEASE_KEYSTORE_BASE64{{/mustacheCase}}
-          ANDROID_SIGNING_PROPERTIES_BASE64: ${{#mustacheCase}}secrets.ANDROID_SIGNING_PROPERTIES_BASE64{{/mustacheCase}}
+          ANDROID_SIGNING_PROPERTIES: ${{#mustacheCase}}secrets.ANDROID_SIGNING_PROPERTIES{{/mustacheCase}}
         run: |
           echo $ANDROID_RELEASE_KEYSTORE_BASE64 | base64 --decode > android/config/release.keystore
-          echo $ANDROID_SIGNING_PROPERTIES_BASE64 | base64 --decode > android/signing.properties
+          echo "$ANDROID_SIGNING_PROPERTIES" > android/signing.properties
 
       - name: Build Production App Bundle
         run: flutter build appbundle --flavor production --release --build-number $GITHUB_RUN_NUMBER
