@@ -93,7 +93,6 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v3
-        ref: ${{ github.ref }}
         with:
           ref: ${{ github.head_ref }}
 
