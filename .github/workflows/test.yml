@@ -88,14 +88,13 @@ jobs:
     # The job generate_sample_project identify that the job generate_mason_bundle must complete successfully
     # before this generate_sample_project job will run
     needs: generate_mason_bundle
-    # Run on merge commits only
-    # if: ${{ contains(github.event.head_commit.message, 'Merge pull request') || (github.event.head_commit.author.email != 'bot@nimblehq.co') }}
     name: Generate the sample project
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: Check out
         uses: actions/checkout@v3
+        ref: ${{ github.ref }}
         with:
           ref: ${{ github.head_ref }}
 
