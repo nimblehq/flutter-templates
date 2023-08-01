@@ -1,9 +1,8 @@
 name: CI
 on:
-  # Trigger the workflow on push or pull request,
-  # but push action is only for the feature branch
-  pull_request:
-    types: [ opened, synchronize, reopened ]
+  push:
+    branches:
+      - feature/255-generate-sample-test
 
 jobs:
   test:
