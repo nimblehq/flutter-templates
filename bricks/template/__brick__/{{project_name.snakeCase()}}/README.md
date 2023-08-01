@@ -1,18 +1,10 @@
 # {{app_name.titleCase()}}
 
-[![codecov](https://codecov.io/gh/nimblehq/flutter-templates/branch/main/graph/badge.svg?token=ATUNXDX218)](https://codecov.io/gh/nimblehq/flutter-templates)
-
-All the templates that can be used to kick off a new Flutter application quickly.
-
-## Usage
-
-Clone the repository
-
-`git clone git@github.com:nimblehq/flutter-templates.git`
+[![codecov](https://codecov.io/gh/nimblehq/{{project_name.paramCase()}}/branch/main/graph/badge.svg?token=ATUNXDX218)](https://codecov.io/gh/nimblehq/{{project_name.paramCase()}})
 
 ## Prerequisite
 
-- Flutter 2.10.3
+- Flutter 3.10.5
 - Flutter version manager (recommend): [fvm](https://fvm.app/)
 
 ## Getting Started
@@ -20,29 +12,34 @@ Clone the repository
 ### Setup
 
 - Create these `.env` files in the root directory according to the flavors and add the required
-  environment variables into them. The example environment variable is in `.env.sample`.
+environment variables. The example environment variable is in `.env.sample`.
 
   - Staging: `.env.staging`
 
   - Production: `.env`
 
-- Run code generator
+### Run
+
+- Run code generator for JSON models, DI dependencies, etc:
 
   - `$ fvm flutter packages pub run build_runner build --delete-conflicting-outputs`
 
-### Run
+- Run the app with the desired app flavor:
 
-- Run the app with the desire app flavor:
+  - `$ fvm flutter run --flavor staging`
+  - `$ fvm flutter run --flavor production`
 
-  - Staging: `$ fvm flutter run --flavor staging`
+- Check code formatting & static code analyzing:
 
-  - Production: `$ fvm flutter run --flavor production`
+  - `$ dart format --set-exit-if-changed .`
+  - `$ fvm flutter analyze .`
 
 ### Test
 
 - Run unit testing:
 
   - `$ fvm flutter test`
+  - `$ fvm flutter test --machine --coverage`
 
 - Run integration testing:
 
@@ -51,10 +48,6 @@ Clone the repository
   - For example:
 
     `$ fvm flutter drive --driver=test_driver/integration_test.dart --target=integration_test/my_home_page_test.dart --flavor staging`
-
-- Code coverage integration:
-
-  - CodeCov: for the private repository, we need to set up a [TeamBot](https://docs.codecov.com/docs/team-bot) in `codecov.yml`.
 
 ## License
 

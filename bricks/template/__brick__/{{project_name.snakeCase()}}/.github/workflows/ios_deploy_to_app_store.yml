@@ -11,13 +11,14 @@ jobs:
     runs-on: macOS-latest
     timeout-minutes: 30
     env:
-      TEAM_ID: ${{ secrets.TEAM_ID }}
-      FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-      FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
-      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      TEAM_ID: ${{#mustacheCase}}secrets.TEAM_ID{{/mustacheCase}}
+      FASTLANE_USER: ${{#mustacheCase}}secrets.FASTLANE_USER{{/mustacheCase}}
+      FASTLANE_PASSWORD: ${{#mustacheCase}}secrets.FASTLANE_PASSWORD{{/mustacheCase}}
+      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{#mustacheCase}}secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD{{/mustacheCase}}
+      FASTLANE_SESSION: ${{#mustacheCase}}secrets.FASTLANE_SESSION{{/mustacheCase}}
+      MATCH_PASSWORD: ${{#mustacheCase}}secrets.MATCH_PASSWORD{{/mustacheCase}}
+      KEYCHAIN_PASSWORD: ${{#mustacheCase}}secrets.KEYCHAIN_PASSWORD{{/mustacheCase}}
+      GITHUB_RUN_NUMBER: $secrets.GITHUB_RUN_NUMBER
     steps:
     - name: Check out
       uses: actions/checkout@v3
@@ -25,13 +26,13 @@ jobs:
     - name: Install SSH key
       uses: webfactory/ssh-agent@v0.4.1
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-private-key: ${{#mustacheCase}}secrets.SSH_PRIVATE_KEY{{/mustacheCase}}
 
     - name: Set up Flutter environment
       uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
-        flutter-version: '3.3.10'
+        flutter-version: '3.10.5'
 
     - name: Get Flutter dependencies
       run: flutter pub get

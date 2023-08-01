@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sample/gen/assets.gen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sample/di/di.dart';
+import 'package:sample/gen/assets.gen.dart';
+import 'package:sample/resources/app_colors.dart';
+import 'package:sample/usecases/user/get_users_use_case.dart';
+
+import 'home_view_model.dart';
+import 'home_view_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
-  runApp(MyApp());
+  await configureInjection();
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 const routePathRootScreen = '/';
@@ -51,8 +63,26 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+final homeViewModelProvider =
+    StateNotifierProvider.autoDispose<HomeViewModel, HomeViewState>((ref) {
+  return HomeViewModel(
+    getIt.get<GetUsersUseCase>(),
+  );
+});
+
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  HomeScreenState createState() => HomeScreenState();
+}
+
+class HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(homeViewModelProvider.notifier).getUsers();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +107,19 @@ class HomeScreen extends StatelessWidget {
                 fit: BoxFit.fitWidth,
               ),
             ),
+            const SizedBox(height: 8),
+            Assets.svg.flutterLogo.svg(
+              width: 32,
+              height: 32,
+            ),
             const SizedBox(height: 24),
             Text(AppLocalizations.of(context)!.hello),
             Text(
               FlutterConfig.get('SECRET'),
-              style: const TextStyle(color: Colors.black, fontSize: 24),
+              style: const TextStyle(
+                color: AppColors.nimblePrimaryBlue,
+                fontSize: 24,
+              ),
             ),
             const SizedBox(height: 24),
             ElevatedButton(

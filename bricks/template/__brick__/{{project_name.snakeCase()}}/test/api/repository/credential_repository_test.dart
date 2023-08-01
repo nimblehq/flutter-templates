@@ -1,6 +1,6 @@
 import 'package:{{project_name.snakeCase()}}/api/exception/network_exceptions.dart';
 import 'package:{{project_name.snakeCase()}}/api/repository/credential_repository.dart';
-import 'package:{{project_name.snakeCase()}}/model/response/user_response.dart';
+import 'package:{{project_name.snakeCase()}}/api/response/user_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

@@ -1,4 +1,4 @@
-https://github.com/nimblehq/flutter-templates/issues/??
+https://github.com/nimblehq/{{project_name.paramCase()}}/issues/??
 
 ## What happened 👀
 

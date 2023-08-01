@@ -24,7 +24,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.3.10'
+          flutter-version: '3.10.5'
 
       - name: Get Flutter dependencies
         run: flutter pub get
@@ -34,9 +34,17 @@ jobs:
 
       - name: Set up .env
         env:
-          ENV_PRODUCTION: $
+          ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
         run: |
           echo $ENV_PRODUCTION > .env
+
+      - name: Set up release signing configs
+        env:
+          ANDROID_RELEASE_KEYSTORE_BASE64: ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}
+          ANDROID_SIGNING_PROPERTIES_BASE64: ${{ secrets.ANDROID_SIGNING_PROPERTIES_BASE64 }}
+        run: |
+          echo $ANDROID_RELEASE_KEYSTORE_BASE64 | base64 --decode > android/config/release.keystore
+          echo $ANDROID_SIGNING_PROPERTIES_BASE64 | base64 --decode > android/signing.properties
 
       - name: Build Production App Bundle
         run: flutter build appbundle --flavor production --release --build-number $GITHUB_RUN_NUMBER
@@ -44,7 +52,7 @@ jobs:
       - name: Upload Android Production Release bundle to Play Store
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: $
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: co.nimblehq.flutter.template
           releaseFile: build/app/outputs/bundle/productionRelease/app-production-release.aab
           track: internal

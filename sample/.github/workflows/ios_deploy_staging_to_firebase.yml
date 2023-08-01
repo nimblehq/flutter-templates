@@ -10,13 +10,17 @@ jobs:
     name: Build And Upload iOS Staging Application To Firebase
     runs-on: macOS-latest
     env:
-      TEAM_ID: $
-      FASTLANE_USER: $
-      FASTLANE_PASSWORD: $
-      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: $
-      FASTLANE_SESSION: $
-      MATCH_PASSWORD: $
-      KEYCHAIN_PASSWORD: $
+      TEAM_ID: ${{ secrets.TEAM_ID }}
+      FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+      FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+      FIREBASE_APP_ID_STAGING: ${{ secrets.FIREBASE_IOS_APP_ID_STAGING }}
+      FIREBASE_DISTRIBUTION_TESTER_GROUPS: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
+      GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER
     steps:
       - name: Check out
         uses: actions/checkout@v3
@@ -24,20 +28,20 @@ jobs:
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.4.1
         with:
-          ssh-private-key: $
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Set up Flutter environment
         uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: '3.3.10'
+          flutter-version: '3.10.5'
 
       - name: Get Flutter dependencies
         run: flutter pub get
 
       - name: Set up .env.staging
         env:
-          ENV_STAGING: $
+          ENV_STAGING: ${{ secrets.ENV_STAGING }}
         run: |
           echo $ENV_STAGING > .env.staging
 
@@ -56,5 +60,3 @@ jobs:
       - name: Deploy to Firebase
         run: |
           cd ./ios && bundle exec fastlane build_and_upload_staging_app
-        env:
-          FIREBASE_CLI_TOKEN: $

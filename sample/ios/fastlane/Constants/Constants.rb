@@ -38,7 +38,7 @@ class Constants
   def self.BUILD_PATH
     './Build'
   end
-  
+
   #################
   #### KEYCHAIN ####
   #################
@@ -83,19 +83,5 @@ class Constants
   # a main target name
   def self.MAIN_TARGET_NAME
     'Runner'
-  end
-
-  #################
-  ### Firebase ###
-  #################
-
-  # A firebase app ID for Staging
-  def self.FIREBASE_APP_ID_STAGING
-    '1:817987785013:ios:7acad3966ca17fcaefbc7c'
-  end
-
-  # Firebase Tester group name, seperate by comma(,) string
-  def self.FIREBASE_TESTER_GROUPS
-    ""
   end
 end
