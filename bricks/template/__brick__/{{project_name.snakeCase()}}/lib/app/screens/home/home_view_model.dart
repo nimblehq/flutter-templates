@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:{{project_name.snakeCase()}}/app/screens//home/home_view_state.dart';
+import 'package:{{project_name.snakeCase()}}/app/screens/home/home_view_state.dart';
 import 'package:{{project_name.snakeCase()}}/domain/usecases/base/base_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/domain/usecases/user/get_users_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/domain/models/user.dart';
