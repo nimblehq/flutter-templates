@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:{{project_name.snakeCase()}}/app/screens/home/home_view_model.dart';
 import 'package:{{project_name.snakeCase()}}/domain/usecases/base/base_use_case.dart';
-import 'package:{{project_name.snakeCase()}}/domain/models/user.dart';
 import 'package:{{project_name.snakeCase()}}/main.dart';
 
 import '../mocks/generate_mocks.mocks.dart';
