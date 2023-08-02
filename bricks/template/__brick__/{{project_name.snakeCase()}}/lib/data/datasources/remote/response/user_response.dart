@@ -16,7 +16,7 @@ class UserResponse {
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 
   User toUser() => User(
-    email: email,
-    username: username,
-  );
+        email: email,
+        username: username,
+      );
 }
