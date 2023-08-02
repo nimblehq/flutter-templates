@@ -8,9 +8,8 @@ import 'package:{{project_name.snakeCase()}}/di/di.dart';
 import 'package:{{project_name.snakeCase()}}/gen/assets.gen.dart';
 import 'package:{{project_name.snakeCase()}}/app/resources/app_colors.dart';
 import 'package:{{project_name.snakeCase()}}/app/screens/home/home_view_model.dart';
+import 'package:{{project_name.snakeCase()}}/app/screens/home/home_view_state.dart';
 import 'package:{{project_name.snakeCase()}}/domain/usecases/user/get_users_use_case.dart';
-
-import 'home_view_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

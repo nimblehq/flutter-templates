@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '../../data/datasources/remote/exception/network_exceptions.freezed.dart';
+part 'network_exceptions.freezed.dart';
 
 @freezed
 class NetworkExceptions with _$NetworkExceptions {

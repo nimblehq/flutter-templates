@@ -30,7 +30,7 @@ void main() {
 
     test('When calling get user list successfully, it returns correctly',
         () async {
-      final expectedResult = [User.fromUserResponse(UserResponseMocks.mock())];
+      final expectedResult = [UserResponseMocks.mock().toUser()];
       when(mockGetUsersUseCase.call())
           .thenAnswer((_) async => Success(expectedResult));
 
