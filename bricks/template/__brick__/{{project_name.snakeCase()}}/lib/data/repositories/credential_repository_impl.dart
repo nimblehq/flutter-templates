@@ -1,11 +1,8 @@
-import 'package:{{project_name.snakeCase()}}/api/api_service.dart';
-import 'package:{{project_name.snakeCase()}}/api/exception/network_exceptions.dart';
-import 'package:{{project_name.snakeCase()}}/model/user.dart';
+import 'package:{{project_name.snakeCase()}}/data/datasources/remote/api_service.dart';
+import 'package:{{project_name.snakeCase()}}/core/errors/network_exceptions.dart';
+import 'package:{{project_name.snakeCase()}}/domain/model/user.dart';
+import 'package:{{project_name.snakeCase()}}/domain/repositories/credential_repository.dart';
 import 'package:injectable/injectable.dart';
-
-abstract class CredentialRepository {
-  Future<List<User>> getUsers();
-}
 
 @LazySingleton(as: CredentialRepository)
 class CredentialRepositoryImpl extends CredentialRepository {
@@ -18,7 +15,7 @@ class CredentialRepositoryImpl extends CredentialRepository {
     try {
       final userResponses = await _apiService.getUsers();
       return userResponses
-          .map((userResponse) => User.fromUserResponse(userResponse))
+          .map((userResponse) => userResponse.toUser())
           .toList();
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);

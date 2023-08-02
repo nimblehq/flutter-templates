@@ -1,7 +1,7 @@
-import 'package:{{project_name.snakeCase()}}/api/exception/network_exceptions.dart';
-import 'package:{{project_name.snakeCase()}}/api/repository/credential_repository.dart';
-import 'package:{{project_name.snakeCase()}}/usecases/base/base_use_case.dart';
-import 'package:{{project_name.snakeCase()}}/model/user.dart';
+import 'package:{{project_name.snakeCase()}}/core/errors/network_exceptions.dart';
+import 'package:{{project_name.snakeCase()}}/domain/repositories/credential_repository.dart';
+import 'package:{{project_name.snakeCase()}}/domain/usecases/base/base_use_case.dart';
+import 'package:{{project_name.snakeCase()}}/domain/models/user.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable()

@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:{{project_name.snakeCase()}}/home_view_state.dart';
-import 'package:{{project_name.snakeCase()}}/usecases/base/base_use_case.dart';
-import 'package:{{project_name.snakeCase()}}/usecases/user/get_users_use_case.dart';
-import 'package:{{project_name.snakeCase()}}/model/user.dart';
+import 'package:{{project_name.snakeCase()}}/app/screens//home/home_view_state.dart';
+import 'package:{{project_name.snakeCase()}}/domain/usecases/base/base_use_case.dart';
+import 'package:{{project_name.snakeCase()}}/domain/usecases/user/get_users_use_case.dart';
+import 'package:{{project_name.snakeCase()}}/domain/models/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeViewModel extends StateNotifier<HomeViewState> {
