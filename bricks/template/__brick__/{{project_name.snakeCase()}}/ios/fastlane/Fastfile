@@ -106,7 +106,7 @@ platform :ios do
       scheme_name: Constants.SCHEME_NAME_STAGING,
       product_name: Constants.PRODUCT_NAME_STAGING,
       bundle_id: Constants.BUNDLE_ID_STAGING,
-      app_id: Environments.FIREBASE_APP_ID_STAGING
+      app_id: Environments.FIREBASE_APP_ID
     )
   end
 
