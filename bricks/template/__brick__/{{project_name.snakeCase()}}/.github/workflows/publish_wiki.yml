@@ -9,11 +9,11 @@ on:
       - develop
 
 jobs:
-  publish_wiki:
+  publish:
     name: Publish Wiki
     uses: nimblehq/github-actions-workflows/.github/workflows/publish_wiki.yml@0.1.0
     with:
-      USER_NAME: team-nimblehq
-      USER_EMAIL: bot@nimblehq.co
+      USER_NAME: github-wiki-workflow
+      USER_EMAIL: ${{#mustacheCase}}secrets.GH_EMAIL{{/mustacheCase}}
     secrets:
-      USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
+      USER_TOKEN: ${{#mustacheCase}}secrets.GH_TOKEN{{/mustacheCase}}
