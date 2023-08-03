@@ -1,0 +1,19 @@
+# For setup instruction, refer to https://github.com/nimblehq/github-actions-workflows/blob/main/.github/workflows/publish_wiki.yml
+name: Publish Wiki
+
+on:
+  push:
+    paths:
+      - .github/wiki/**
+    branches:
+      - develop
+
+jobs:
+  publish:
+    name: Publish Wiki
+    uses: nimblehq/github-actions-workflows/.github/workflows/publish_wiki.yml@0.1.0
+    with:
+      USER_NAME: github-wiki-workflow
+      USER_EMAIL: ${{ secrets.GH_EMAIL }}
+    secrets:
+      USER_TOKEN: ${{ secrets.GH_TOKEN }}

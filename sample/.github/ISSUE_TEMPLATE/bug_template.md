@@ -7,12 +7,12 @@ labels: "type : bug"
 
 ## Issue
 
-Describe the issue you are facing. Show us the implementation: screenshots, gif, etc.
- 
+Describe the issue you are facing. Show us the implementation: screenshots, GIFs, etc.
+
 ## Expected
 
-Describe what should be the correct behaviour.
- 
+Describe what should be the correct behavior.
+
 ## Steps to reproduce
 
 1. 
