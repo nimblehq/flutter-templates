@@ -1,0 +1,97 @@
+name: ios-deploy-production-to-app-store
+on:
+  # Trigger the workflow on push action
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_upload_to_app_store:
+    name: Build And Upload iOS Application To AppStore
+    runs-on: macOS-latest
+    environment: production
+    timeout-minutes: 30
+    env:
+      TEAM_ID: ${{ secrets.TEAM_ID }}
+      FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+      FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+      FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
+      APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
+      APPSTORE_CONNECT_API_KEY_BASE64: ${{ secrets.APPSTORE_CONNECT_API_KEY_BASE64 }}
+      GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
+    steps:
+    - name: Check out
+      uses: actions/checkout@v3
+
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Set up Flutter environment
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+        flutter-version: '3.10.5'
+
+    - name: Generate new project
+      run: |
+        dart pub global activate mason_cli
+        mason get
+        mason make template -c mason-config.json
+        # Move the generated project to the root directory for next steps & cleanup to not affect static code analysis
+        rsync -av --remove-source-files flutter_templates/ ./
+        rm -rf bricks sample
+
+    - name: Get Flutter dependencies
+      run: flutter pub get
+
+    - name: Set up Production env
+      env:
+        ENV: ${{ secrets.ENV }}
+      run: |
+        echo -e ENV >> .env
+
+    - name: Run code generator
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+    - name: Cache Ruby gems
+      uses: actions/cache@v3
+      id: bunlderCache
+      with:
+        path: ios/vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: ${{ runner.os }}-gems-
+
+    - name: Cache Pods
+      uses: actions/cache@v3
+      id: cocoapodCache
+      with:
+        path: ios/Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+        restore-keys: ${{ runner.os }}-pods-
+
+    - name: Bundle install
+      run: cd ./ios && bundle install
+
+    - name: Pod install
+      run: cd ./ios && pod install
+
+    - name: Update fastlane
+      run: cd ./ios && bundle update fastlane
+
+    - name: Update plugins
+      run: cd ./ios && bundle exec fastlane update_plugins
+
+    - name: Match AppStore
+      run: cd ./ios && bundle exec fastlane sync_appstore_production_signing
+      env:
+        GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
+
+    - name: Deploy to AppStore
+      run: |
+        cd ./ios && bundle exec fastlane build_and_upload_production_app_store_connect_app

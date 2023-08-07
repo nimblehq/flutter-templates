@@ -15,6 +15,18 @@ class Environments
     ENV['TEAM_ID']
   end
 
+  def self.APP_STORE_KEY_ID
+    ENV['APP_STORE_KEY_ID']
+  end
+
+  def self.APP_STORE_ISSUER_ID
+    ENV['APP_STORE_ISSUER_ID']
+  end
+
+  def self.APPSTORE_CONNECT_API_KEY_BASE64
+    ENV['APPSTORE_CONNECT_API_KEY_BASE64']
+  end
+
   #################
   ### Firebase ###
   #################

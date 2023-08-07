@@ -1,0 +1,88 @@
+name: ios-deploy-to-testflight
+on:
+  # Trigger the workflow on push action
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_upload_to_testflight:
+    name: Build And Upload iOS Application To TestFlight
+    runs-on: macOS-latest
+    timeout-minutes: 30
+    env:
+      TEAM_ID: ${{#mustacheCase}}secrets.TEAM_ID{{/mustacheCase}}
+      FASTLANE_USER: ${{#mustacheCase}}secrets.FASTLANE_USER{{/mustacheCase}}
+      FASTLANE_PASSWORD: ${{#mustacheCase}}secrets.FASTLANE_PASSWORD{{/mustacheCase}}
+      FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{#mustacheCase}}secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD{{/mustacheCase}}
+      FASTLANE_SESSION: ${{#mustacheCase}}secrets.FASTLANE_SESSION{{/mustacheCase}}
+      MATCH_PASSWORD: ${{#mustacheCase}}secrets.MATCH_PASSWORD{{/mustacheCase}}
+      KEYCHAIN_PASSWORD: ${{#mustacheCase}}secrets.KEYCHAIN_PASSWORD{{/mustacheCase}}
+      APP_STORE_KEY_ID: ${{#mustacheCase}}secrets.APP_STORE_KEY_ID{{/mustacheCase}}
+      APP_STORE_ISSUER_ID: ${{#mustacheCase}}secrets.APP_STORE_ISSUER_ID{{/mustacheCase}}
+      APPSTORE_CONNECT_API_KEY_BASE64: ${{#mustacheCase}}secrets.APPSTORE_CONNECT_API_KEY_BASE64{{/mustacheCase}}
+      GITHUB_RUN_NUMBER: ${{#mustacheCase}}secrets.GITHUB_RUN_NUMBER{{/mustacheCase}}
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Set up Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.10.5'
+
+      - name: Generate new project
+        run: |
+          dart pub global activate mason_cli
+          mason get
+          mason make template -c mason-config.json
+          # Move the generated project to the root directory for next steps & cleanup to not affect static code analysis
+          rsync -av --remove-source-files flutter_templates/ ./
+          rm -rf bricks sample
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Set up Production env
+        env:
+          ENV: ${{ secrets.ENV }}
+        run: |
+          echo -e ENV >> .env
+
+      - name: Run code generator
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Cache Ruby gems
+        uses: actions/cache@v3
+        id: bunlderCache
+        with:
+          path: ios/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+
+      - name: Cache Pods
+        uses: actions/cache@v3
+        id: cocoapodCache
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: ${{ runner.os }}-pods-
+
+      - name: Bundle install
+        run: cd ./ios && bundle install
+
+      - name: Pod install
+        run: cd ./ios && pod install
+
+      - name: Match AppStore
+        run: cd ./ios && bundle exec fastlane sync_appstore_production_signing
+
+      - name: Deploy to TestFlight
+        run: |
+          cd ./ios && bundle exec fastlane build_and_upload_testflight_production_app
