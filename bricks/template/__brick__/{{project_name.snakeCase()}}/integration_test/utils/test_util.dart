@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:{{project_name.snakeCase()}}/main.dart';
+import 'package:{{project_name.snakeCase()}}/app/screens/home/home_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class TestUtil {
