@@ -1,4 +1,4 @@
-import 'package:sample/api/exception/network_exceptions.dart';
+import 'package:sample/domain/exceptions/network_exceptions.dart';
 import 'package:sample/api/repository/credential_repository.dart';
 import 'package:sample/usecases/base/base_use_case.dart';
 import 'package:sample/model/user.dart';

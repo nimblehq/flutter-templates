@@ -1,5 +1,5 @@
 import 'package:{{project_name.snakeCase()}}/data/datasources/remote/api_service.dart';
-import 'package:{{project_name.snakeCase()}}/core/errors/network_exceptions.dart';
+import 'package:{{project_name.snakeCase()}}/domain/exceptions/network_exceptions.dart';
 import 'package:{{project_name.snakeCase()}}/domain/models/user.dart';
 import 'package:{{project_name.snakeCase()}}/domain/repositories/credential_repository.dart';
 import 'package:injectable/injectable.dart';

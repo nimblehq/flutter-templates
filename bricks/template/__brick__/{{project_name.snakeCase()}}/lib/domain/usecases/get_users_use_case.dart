@@ -1,4 +1,4 @@
-import 'package:{{project_name.snakeCase()}}/core/errors/network_exceptions.dart';
+import 'package:{{project_name.snakeCase()}}/domain/exceptions/network_exceptions.dart';
 import 'package:{{project_name.snakeCase()}}/domain/repositories/credential_repository.dart';
 import 'package:{{project_name.snakeCase()}}/domain/usecases/base/base_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/domain/models/user.dart';
