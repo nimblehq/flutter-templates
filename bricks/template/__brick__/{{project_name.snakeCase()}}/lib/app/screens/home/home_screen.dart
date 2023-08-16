@@ -5,7 +5,7 @@ import 'package:{{project_name.snakeCase()}}/main.dart';
 import 'package:flutter_config/flutter_config.dart';
 
 final homeViewModelProvider =
-StateNotifierProvider.autoDispose<HomeViewModel, HomeViewState>((ref) {
+    StateNotifierProvider.autoDispose<HomeViewModel, HomeViewState>((ref) {
   return HomeViewModel(
     getIt.get<GetUsersUseCase>(),
   );
