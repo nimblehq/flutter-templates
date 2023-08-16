@@ -1,4 +1,4 @@
-import 'package:sample/api/api_service.dart';
+import 'package:sample/data/remote/datasources/api_service.dart';
 import 'package:{{project_name.snakeCase()}}/domain/exceptions/network_exceptions.dart';
 import 'package:sample/model/user.dart';
 import 'package:injectable/injectable.dart';

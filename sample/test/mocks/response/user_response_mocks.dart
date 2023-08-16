@@ -1,4 +1,4 @@
-import 'package:sample/api/response/user_response.dart';
+import 'package:sample/data/remote/models/responses/user_response.dart';
 
 class UserResponseMocks {
   static UserResponse mock() {

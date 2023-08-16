@@ -5,7 +5,7 @@ import 'package:sample/usecases/user/get_users_use_case.dart';
 import 'package:sample/model/user.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
-import '../../mocks/response/user_response_mocks.dart';
+import '../../mocks/data/remote/models/responses/user_response_mocks.dart';
 
 void main() {
   group('GetUsersUseCase', () {

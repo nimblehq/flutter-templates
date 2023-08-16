@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:{{project_name.snakeCase()}}/data/datasources/remote/response/user_response.dart';
+import 'package:{{project_name.snakeCase()}}/data/remote/models/responses/user_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_service.g.dart';

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:sample/api/response/user_response.dart';
+import 'package:sample/data/remote/models/responses/user_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_service.g.dart';

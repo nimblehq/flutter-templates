@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:sample/api/api_service.dart';
+import 'package:sample/data/remote/datasources/api_service.dart';
 import 'package:sample/api/repository/credential_repository.dart';
 import 'package:sample/usecases/user/get_users_use_case.dart';
 import 'package:mockito/annotations.dart';

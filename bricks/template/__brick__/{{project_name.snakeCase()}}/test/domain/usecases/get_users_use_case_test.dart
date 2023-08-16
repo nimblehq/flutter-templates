@@ -4,7 +4,7 @@ import 'package:{{project_name.snakeCase()}}/domain/usecases/base/base_use_case.
 import 'package:{{project_name.snakeCase()}}/domain/usecases/get_users_use_case.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
-import '../../mocks/response/user_response_mocks.dart';
+import '../../mocks/data/remote/models/responses/user_response_mocks.dart';
 
 void main() {
   group('GetUsersUseCase', () {
