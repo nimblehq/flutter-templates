@@ -1,4 +1,4 @@
-name: ios-deploy-production-to-testflight
+name: ios-deploy-to-app-store
 on:
   # Trigger the workflow on push action
   push:
@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  build_and_upload_to_testflight:
-    name: Build And Upload iOS Application To TestFlight
+  build_and_upload_to_app_store:
+    name: Build And Upload iOS Application To AppStore
     runs-on: macOS-latest
     environment: production
     timeout-minutes: 30
@@ -92,6 +92,6 @@ jobs:
       env:
         GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
 
-    - name: Deploy to TestFlight
+    - name: Deploy to AppStore
       run: |
-        cd ./ios && bundle exec fastlane build_and_upload_testflight_production_app
+        cd ./ios && bundle exec fastlane build_and_upload_production_app_store_connect_app
