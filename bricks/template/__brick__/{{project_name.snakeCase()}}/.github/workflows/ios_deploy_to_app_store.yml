@@ -30,7 +30,7 @@ jobs:
     - name: Install SSH key
       uses: webfactory/ssh-agent@v0.7.0
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-private-key: ${{#mustacheCase}}secrets.SSH_PRIVATE_KEY{{/mustacheCase}}
 
     - name: Set up Flutter environment
       uses: subosito/flutter-action@v2
