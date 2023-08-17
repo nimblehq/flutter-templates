@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:{{project_name.snakeCase()}}/di/di.dart';
 import 'package:{{project_name.snakeCase()}}/gen/assets.gen.dart';
-import 'package:{{project_name.snakeCase()}}/app/resources/app_colors.dart';
 import 'package:{{project_name.snakeCase()}}/app/screens/home/home_screen.dart';
 
 void main() async {

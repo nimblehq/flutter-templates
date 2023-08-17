@@ -2,7 +2,15 @@ import 'package:{{project_name.snakeCase()}}/app/screens/home/home_view_model.da
 import 'package:{{project_name.snakeCase()}}/app/screens/home/home_view_state.dart';
 import 'package:{{project_name.snakeCase()}}/domain/usecases/get_users_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/main.dart';
+import 'package:{{project_name.snakeCase()}}/di/di.dart';
+import 'package:{{project_name.snakeCase()}}/gen/assets.gen.dart';
+import 'package:{{project_name.snakeCase()}}/app/resources/app_colors.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeViewState>((ref) {
@@ -15,7 +23,7 @@ class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
