@@ -46,6 +46,17 @@ jobs:
         run: |
           echo -e "$ENV" > .env.staging
 
+            - name: Get PR information
+        uses: 8BitJonny/gh-get-current-pr@2.2.0
+        id: PR
+
+      - name: Generate release notes
+        id: generate-release-notes
+        env:
+          PR_TITLE: ${{ steps.PR.outputs.pr_title }}
+        run: |
+          echo "RELEASE_NOTE_CONTENT=$PR_TITLE" >> $GITHUB_ENV
+
       - name: Run code generator
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 

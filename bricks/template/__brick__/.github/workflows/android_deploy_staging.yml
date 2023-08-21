@@ -43,10 +43,15 @@ jobs:
       - name: Build Android apk
         run: flutter build apk --flavor staging --debug --build-number $GITHUB_RUN_NUMBER
 
+      - name: Get PR information
+        uses: 8BitJonny/gh-get-current-pr@2.2.0
+        id: PR
+
       - name: Deploy Android Staging to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
         with:
           appId: ${{#mustacheCase}}vars.FIREBASE_ANDROID_APP_ID{{/mustacheCase}}
           serviceCredentialsFileContent: ${{#mustacheCase}}secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON{{/mustacheCase}}
           groups: ${{#mustacheCase}}vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS{{/mustacheCase}}
+          releaseNotes: ${{#mustacheCase}}steps.PR.outputs.pr_title{{/mustacheCase}}
           file: build/app/outputs/flutter-apk/app-staging-debug.apk

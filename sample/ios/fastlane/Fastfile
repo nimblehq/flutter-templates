@@ -211,7 +211,7 @@ platform :ios do
       product_name: options[:product_name],
       firebase_app_id: options[:firebase_app_id],
       tester_groups: options[:tester_groups],
-      notes: ""
+      notes: Environments.RELEASE_NOTE_CONTENT
     )
   end
 end
