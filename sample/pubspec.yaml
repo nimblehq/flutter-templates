@@ -46,6 +46,7 @@ dependencies:
   package_info_plus: ^4.0.0
   permission_handler: ^10.2.0
   retrofit: ^4.0.1
+  flutter_secure_storage: ^8.0.0
 
 dev_dependencies:
   build_runner: ^2.4.4
