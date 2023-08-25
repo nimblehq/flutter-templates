@@ -9,6 +9,7 @@ jobs:
   build_and_upload_staging_app_to_firebase:
     name: Build And Upload iOS Staging Application To Firebase
     runs-on: macOS-latest
+    environment: staging
     env:
       TEAM_ID: ${{#mustacheCase}}secrets.TEAM_ID{{/mustacheCase}}
       FASTLANE_USER: ${{#mustacheCase}}secrets.FASTLANE_USER{{/mustacheCase}}
@@ -18,7 +19,7 @@ jobs:
       MATCH_PASSWORD: ${{#mustacheCase}}secrets.MATCH_PASSWORD{{/mustacheCase}}
       KEYCHAIN_PASSWORD: ${{#mustacheCase}}secrets.KEYCHAIN_PASSWORD{{/mustacheCase}}
       FIREBASE_CLI_TOKEN: ${{#mustacheCase}}secrets.FIREBASE_CLI_TOKEN{{/mustacheCase}}
-      FIREBASE_APP_ID_STAGING: ${{#mustacheCase}}secrets.FIREBASE_IOS_APP_ID_STAGING{{/mustacheCase}}
+      FIREBASE_APP_ID: ${{#mustacheCase}}vars.FIREBASE_IOS_APP_ID{{/mustacheCase}}
       FIREBASE_DISTRIBUTION_TESTER_GROUPS: ${{#mustacheCase}}vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS{{/mustacheCase}}
       GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER
     steps:
@@ -41,9 +42,9 @@ jobs:
 
       - name: Set up .env.staging
         env:
-          ENV_STAGING: ${{#mustacheCase}}secrets.ENV_STAGING{{/mustacheCase}}
+          ENV: ${{#mustacheCase}}secrets.ENV{{/mustacheCase}}
         run: |
-          echo $ENV_STAGING > .env.staging
+          echo "$ENV" > .env.staging
 
       - name: Run code generator
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
