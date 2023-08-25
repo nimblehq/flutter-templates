@@ -1,5 +1,6 @@
 import 'package:sample/domain/exceptions/network_exceptions.dart';
-import 'package:sample/api/repository/credential_repository.dart';
+import 'package:sample/domain/repositories/credential_repository.dart';
+import 'package:sample/data/repositories/credential_repository_impl.dart';
 import 'package:sample/data/remote/models/responses/user_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sample/main.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sample/main.dart';
 
 class TestUtil {
   /// This is useful when we test the whole app with the real configs(styling,

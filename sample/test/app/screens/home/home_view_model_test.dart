@@ -1,13 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sample/usecases/base/base_use_case.dart';
-import 'package:sample/home_view_model.dart';
-import 'package:sample/main.dart';
-import 'package:sample/model/user.dart';
+import 'package:sample/app/screens/home/home_view_model.dart';
+import 'package:sample/domain/usecases/base/base_use_case.dart';
+import 'package:sample/app/screens/home/home_screen.dart';
 
-import '../mocks/generate_mocks.mocks.dart';
-import '../mocks/data/remote/models/responses/user_response_mocks.dart';
+import '../../../mocks/generate_mocks.mocks.dart';
+import '../../../mocks/data/remote/models/responses/user_response_mocks.dart';
 
 void main() {
   group("HomeViewModelTest", () {
@@ -30,7 +29,7 @@ void main() {
 
     test('When calling get user list successfully, it returns correctly',
         () async {
-      final expectedResult = [User.fromUserResponse(UserResponseMocks.mock())];
+      final expectedResult = [UserResponseMocks.mock().toUser()];
       when(mockGetUsersUseCase.call())
           .thenAnswer((_) async => Success(expectedResult));
 
