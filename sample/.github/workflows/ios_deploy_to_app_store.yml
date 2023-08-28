@@ -52,7 +52,7 @@ jobs:
 
     - name: Set up Production env
       env:
-        ENV: ${{ secrets.ENV }}
+        ENV: $
       run: |
         echo -e ENV >> .env
 
@@ -64,16 +64,16 @@ jobs:
       id: bunlderCache
       with:
         path: ios/vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: ${{ runner.os }}-gems-
+        key: $-gems-$
+        restore-keys: $-gems-
 
     - name: Cache Pods
       uses: actions/cache@v3
       id: cocoapodCache
       with:
         path: ios/Pods
-        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-        restore-keys: ${{ runner.os }}-pods-
+        key: $-pods-$
+        restore-keys: $-pods-
 
     - name: Bundle install
       run: cd ./ios && bundle install
@@ -81,17 +81,9 @@ jobs:
     - name: Pod install
       run: cd ./ios && pod install
 
-    - name: Update fastlane
-      run: cd ./ios && bundle update fastlane
-
-    - name: Update plugins
-      run: cd ./ios && bundle exec fastlane update_plugins
-
     - name: Match AppStore
       run: cd ./ios && bundle exec fastlane sync_appstore_production_signing
-      env:
-        GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
 
     - name: Deploy to AppStore
       run: |
-          cd ./ios && bundle exec fastlane build_and_upload_production_app_store_connect_app
+        cd ./ios && bundle exec fastlane build_and_upload_production_app_store_connect_app

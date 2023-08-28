@@ -84,6 +84,7 @@ platform :ios do
   desc 'Build and upload Production app to Test Flight'
   lane :build_and_upload_testflight_production_app do
     set_app_version
+    bump_build
     builder.build_app_store(
       Constants.SCHEME_NAME_PRODUCTION,
       Constants.PRODUCT_NAME_PRODUCTION,
@@ -114,7 +115,6 @@ platform :ios do
       Constants.BUNDLE_ID_STAGING,
       false
     )
-    set_connect_api_key
     upload_build_to_app_store_connect
   end
 
@@ -125,6 +125,28 @@ platform :ios do
       bundle_identifier: Constants.BUNDLE_ID_STAGING
     )
   end
+
+  desc 'Build and upload Production app to App Store Connect'
+    lane :build_and_upload_production_app_store_connect_app do
+      set_app_version
+      bump_build
+      builder.build_app_store(
+        Constants.SCHEME_NAME_PRODUCTION,
+        Constants.PRODUCT_NAME_PRODUCTION,
+        Constants.BUNDLE_ID_PRODUCTION,
+        false
+      )
+      set_connect_api_key
+      upload_build_to_production_app_store_connect
+    end
+
+    desc 'upload production build to App Store Connect'
+    private_lane :upload_build_to_production_app_store_connect do
+      distribution_manager.upload_to_app_store_connect(
+        product_name: Constants.PRODUCT_NAME_PRODUCTION,
+        bundle_identifier: Constants.BUNDLE_ID_PRODUCTION
+      )
+    end
 
   # Firebase
   desc 'Build and upload Staging app to Firebase'
