@@ -38,15 +38,6 @@ jobs:
           channel: 'stable'
           flutter-version: '3.10.5'
 
-      - name: Generate new project
-        run: |
-        dart pub global activate mason_cli
-        mason get
-        mason make template -c mason-config.json
-        # Move the generated project to the root directory for next steps & cleanup to not affect static code analysis
-        rsync -av --remove-source-files flutter_templates/ ./
-        rm -rf bricks sample
-
       - name: Get Flutter dependencies
         run: flutter pub get
 
@@ -64,16 +55,16 @@ jobs:
         id: bunlderCache
         with:
           path: ios/vendor/bundle
-          key: $-gems-$
-          restore-keys: $-gems-
+          key: ${{  runner.os  }}-gems-${{  hashFiles('**/Gemfile.lock')  }}
+          restore-keys: ${{  runner.os  }}-gems-
 
       - name: Cache Pods
         uses: actions/cache@v3
         id: cocoapodCache
         with:
           path: ios/Pods
-          key: $-pods-$
-          restore-keys: $-pods-
+          key: ${{  runner.os  }}-pods-${{  hashFiles('**/Podfile.lock')  }}
+          restore-keys: ${{  runner.os  }}-pods-
 
       - name: Bundle install
         run: cd ./ios && bundle install
@@ -81,8 +72,16 @@ jobs:
       - name: Pod install
         run: cd ./ios && pod install
 
+      - name: Update fastlane
+        run: cd ./ios && bundle update fastlane
+
+      - name: Update plugins
+        run: cd ./ios && bundle exec fastlane update_plugins
+
       - name: Match AppStore
         run: cd ./ios && bundle exec fastlane sync_appstore_production_signing
+        env:
+          GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER
 
       - name: Deploy to TestFlight
         run: |
