@@ -22,7 +22,7 @@ jobs:
       APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
       APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
       APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
-      GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
+      GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER
     steps:
     - name: Check out
       uses: actions/checkout@v3
@@ -90,7 +90,7 @@ jobs:
     - name: Match AppStore
       run: cd ./ios && bundle exec fastlane sync_appstore_production_signing
       env:
-        GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
+        GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER
 
     - name: Deploy to TestFlight
       run: |
