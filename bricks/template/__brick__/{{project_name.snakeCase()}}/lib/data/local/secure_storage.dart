@@ -8,7 +8,7 @@ abstract class SecureStorage {
 
   Future<void> storeAccessToken(String accessToken);
 
-  Future<void> clearAllStorage();
+  Future<void> clearAll();
 }
 
 @Singleton(as: SecureStorage)
@@ -26,7 +26,7 @@ class SecureStorageImpl extends SecureStorage {
   }
 
   @override
-  Future<void> clearAllStorage() {
+  Future<void> clearAll() {
     return _storage.deleteAll();
   }
 }

@@ -36,6 +36,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^2.3.6
+  flutter_secure_storage: ^9.0.0
   flutter_svg: ^2.0.7
   freezed_annotation: ^2.2.0
   get_it: ^7.6.0
@@ -45,7 +46,6 @@ dependencies:
   json_annotation: ^4.8.1
   package_info_plus: ^4.0.0{{#add_permission_handler}}{{{ _pubspec_dependencyyaml }}}{{/add_permission_handler}}
   retrofit: ^4.0.1
-  flutter_secure_storage: ^8.0.0
 
 dev_dependencies:
   build_runner: ^2.4.4
