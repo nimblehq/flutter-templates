@@ -52,7 +52,7 @@ jobs:
 
       - name: Set up Production env
         env:
-          ENV: ${{ secrets.ENV }}
+          ENV: ${{#mustacheCase}} secrets.ENV {{/mustacheCase}}
         run: |
           echo -e "$ENV" >> .env
 

@@ -1,4 +1,4 @@
-name: ios-deploy-to-app-store
+name: ios-deploy-production-to-app-store
 on:
   # Trigger the workflow on push action
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_and_upload_to_app_store:
-    name: Build And Upload iOS Application To AppStore
+    name: Build And Upload iOS Application Production To AppStore
     runs-on: macOS-latest
     environment: production
     timeout-minutes: 30
