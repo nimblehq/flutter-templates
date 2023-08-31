@@ -23,8 +23,8 @@ class Environments
     ENV['FIREBASE_CLI_TOKEN']
   end
 
-  def self.FIREBASE_APP_ID_STAGING
-    ENV['FIREBASE_APP_ID_STAGING']
+  def self.FIREBASE_APP_ID
+    ENV['FIREBASE_APP_ID']
   end
 
   def self.FIREBASE_TESTER_GROUPS
