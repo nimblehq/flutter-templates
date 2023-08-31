@@ -54,7 +54,7 @@ jobs:
         env:
           ENV: ${{ secrets.ENV }}
         run: |
-          echo -e ENV >> .env
+          echo -e "$ENV" >> .env
 
       - name: Run code generator
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
