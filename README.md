@@ -9,6 +9,7 @@ All the templates can be used to kick off a new Flutter project quickly.
 - [Pre-set environments](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#setup): `Staging` and `Production`. Environment variables are supplied through `.env` files through [flutter_config](https://pub.dev/packages/flutter_config).
 - Dependency Injection (DI), State Management, and Navigating with [get_it](https://pub.dev/packages/get_it), [flutter_riverpod](https://pub.dev/packages/flutter_riverpod), and [go_router](https://pub.dev/packages/go_router).
 - Networking with [dio](https://pub.dev/packages/dio) and [retrofit](https://pub.dev/packages/retrofit), JSON serializing with [json_serializable](https://pub.dev/packages/json_serializable).
+- Integrated local [secure storage](https://pub.dev/packages/flutter_secure_storage).
 - [Localization](https://docs.flutter.dev/accessibility-and-localization/internationalization) integrated in [3 initial languages](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D/lib/l10n).
 - [Testing](https://docs.flutter.dev/testing)-ready (unit, integration, and widget testing), [production and deployment](https://docs.flutter.dev/deployment)-ready (to Firebase, Play Store, TestFlight, and AppStore).
 - Built-in [GitHub templates & CI/CD workflows](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D/.github) integrated with GitHub Actions to perform static code analysis, test, build and deploy app builds to app distribution services or app stores.
