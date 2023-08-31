@@ -24,7 +24,7 @@ class Environments
   end
 
   def self.APPSTORE_CONNECT_API_KEY_BASE64
-    ENV['APPSTORE_CONNECT_API_KEY_BASE64']
+    ENV['APP_STORE_CONNECT_API_KEY_BASE64']
   end
 
   #################

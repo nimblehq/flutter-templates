@@ -1,4 +1,4 @@
-name: ios-deploy-to-testflight
+name: ios-deploy-production-to-testflight
 on:
   # Trigger the workflow on push action
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_and_upload_to_testflight:
-    name: Build And Upload iOS Application To TestFlight
+    name: Build And Upload iOS Application Production To TestFlight
     runs-on: macOS-latest
     environment: production
     timeout-minutes: 30
