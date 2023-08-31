@@ -21,7 +21,7 @@ jobs:
       KEYCHAIN_PASSWORD: ${{#mustacheCase}}secrets.KEYCHAIN_PASSWORD{{/mustacheCase}}
       APP_STORE_KEY_ID: ${{#mustacheCase}}secrets.APP_STORE_KEY_ID{{/mustacheCase}}
       APP_STORE_ISSUER_ID: ${{#mustacheCase}}secrets.APP_STORE_ISSUER_ID{{/mustacheCase}}
-      APPSTORE_CONNECT_API_KEY_BASE64: ${{#mustacheCase}}secrets.APPSTORE_CONNECT_API_KEY_BASE64{{/mustacheCase}}
+      APP_STORE_CONNECT_API_KEY_BASE64: ${{#mustacheCase}}secrets.APP_STORE_CONNECT_API_KEY_BASE64{{/mustacheCase}}
       GITHUB_RUN_NUMBER: ${{#mustacheCase}}secrets.GITHUB_RUN_NUMBER{{/mustacheCase}}
     steps:
     - name: Check out

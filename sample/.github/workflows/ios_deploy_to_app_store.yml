@@ -21,7 +21,7 @@ jobs:
       KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
       APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
       APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
-      APPSTORE_CONNECT_API_KEY_BASE64: ${{ secrets.APPSTORE_CONNECT_API_KEY_BASE64 }}
+      APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
       GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
     steps:
     - name: Check out

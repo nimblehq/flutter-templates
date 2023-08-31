@@ -23,7 +23,7 @@ class Environments
     ENV['APP_STORE_ISSUER_ID']
   end
 
-  def self.APPSTORE_CONNECT_API_KEY_BASE64
+  def self.APP_STORE_CONNECT_API_KEY_BASE64
     ENV['APP_STORE_CONNECT_API_KEY_BASE64']
   end
 
