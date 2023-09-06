@@ -37,7 +37,7 @@ jobs:
         env:
           ENV: ${{#mustacheCase}}secrets.ENV{{/mustacheCase}}
         run: |
-          echo "$ENV" > .env
+          echo -e "$ENV" > .env
 
       - name: Set up release signing configs
         env:

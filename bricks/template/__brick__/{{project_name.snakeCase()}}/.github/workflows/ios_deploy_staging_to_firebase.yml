@@ -44,7 +44,7 @@ jobs:
         env:
           ENV: ${{#mustacheCase}}secrets.ENV{{/mustacheCase}}
         run: |
-          echo "$ENV" > .env.staging
+          echo -e "$ENV" > .env.staging
 
       - name: Run code generator
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
