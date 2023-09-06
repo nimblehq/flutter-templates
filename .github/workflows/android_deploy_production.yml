@@ -9,6 +9,7 @@ jobs:
   build_and_deploy_android:
     name: Build & Deploy Android
     runs-on: ubuntu-latest
+    environment: production
     timeout-minutes: 30
     steps:
       - name: Check out
@@ -43,9 +44,9 @@ jobs:
 
       - name: Set up .env
         env:
-          ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
+          ENV: ${{ secrets.ENV }}
         run: |
-          echo $ENV_PRODUCTION > .env
+          echo -e "$ENV" > .env
 
       # App Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
       - name: Build Android apk
@@ -54,7 +55,7 @@ jobs:
       - name: Deploy Android Production to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
         with:
-          appId: ${{ secrets.FIREBASE_ANDROID_APP_ID_PRODUCTION }}
+          appId: ${{ vars.FIREBASE_ANDROID_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
           groups: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
           file: build/app/outputs/flutter-apk/app-production-debug.apk

@@ -9,6 +9,7 @@ jobs:
   build_and_deploy_android:
     name: Build & Deploy Android
     runs-on: ubuntu-latest
+    environment: staging
     timeout-minutes: 30
     steps:
       - name: Check out
@@ -34,9 +35,9 @@ jobs:
 
       - name: Set up .env.staging
         env:
-          ENV_STAGING: ${{#mustacheCase}}secrets.ENV_STAGING{{/mustacheCase}}
+          ENV: ${{#mustacheCase}}secrets.ENV{{/mustacheCase}}
         run: |
-          echo $ENV_STAGING > .env.staging
+          echo -e "$ENV" > .env.staging
 
       # App Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
       - name: Build Android apk
@@ -45,7 +46,7 @@ jobs:
       - name: Deploy Android Staging to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
         with:
-          appId: ${{#mustacheCase}}secrets.FIREBASE_ANDROID_APP_ID_STAGING{{/mustacheCase}}
+          appId: ${{#mustacheCase}}vars.FIREBASE_ANDROID_APP_ID{{/mustacheCase}}
           serviceCredentialsFileContent: ${{#mustacheCase}}secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON{{/mustacheCase}}
           groups: ${{#mustacheCase}}vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS{{/mustacheCase}}
           file: build/app/outputs/flutter-apk/app-staging-debug.apk

@@ -10,7 +10,7 @@
   - A new app on Play Store.
 
 - Add these variables as the secrets of CI:
-  - **ENV_PRODUCTION**: the production .env configuration file content.
+  - **ENV**: the production .env configuration file content.
   - **GOOGLE_PLAY_SERVICE_ACCOUNT_JSON**: the json file content of the Play Store's Service Account for app publishing. Please check out [how to create the Service Account](https://support.staffbase.com/hc/en-us/articles/360018569579-Preparing-Automated-Publishing-for-Google-Play-Store).
 
 ### Resources
