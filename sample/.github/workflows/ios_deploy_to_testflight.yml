@@ -43,7 +43,7 @@ jobs:
 
       - name: Set up Production env
         env:
-          ENV: ${{  secrets.ENV  }}
+          ENV: ${{ secrets.ENV }}
         run: |
           echo -e "$ENV" >> .env
 
@@ -55,16 +55,16 @@ jobs:
         id: bunlderCache
         with:
           path: ios/vendor/bundle
-          key: ${{  runner.os  }}-gems-${{  hashFiles('**/Gemfile.lock')  }}
-          restore-keys: ${{  runner.os  }}-gems-
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
 
       - name: Cache Pods
         uses: actions/cache@v3
         id: cocoapodCache
         with:
           path: ios/Pods
-          key: ${{  runner.os  }}-pods-${{  hashFiles('**/Podfile.lock')  }}
-          restore-keys: ${{  runner.os  }}-pods-
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: ${{ runner.os }}-pods-
 
       - name: Bundle install
         run: cd ./ios && bundle install
