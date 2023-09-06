@@ -56,7 +56,7 @@ jobs:
         with:
           path: ios/vendor/bundle
           key: ${{#mustacheCase}}runner.os{{/mustacheCase}}-gems-${{#mustacheCase}}hashFiles('**/Gemfile.lock'){{/mustacheCase}}
-          restore-keys:  ${{#mustacheCase}}runner.os{{/mustacheCase}}-gems-
+          restore-keys: ${{#mustacheCase}}runner.os{{/mustacheCase}}-gems-
 
       - name: Cache Pods
         uses: actions/cache@v3
