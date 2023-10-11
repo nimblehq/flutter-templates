@@ -11,7 +11,7 @@ Future<void> run(HookContext context) async {
   final exclusions = [
     // we should not delete .git
     Directory.current.path + '/.git',
-    // the bricks folder can be delete at post_gen only
+    // the bricks folder can be deleted at post_gen only
     Directory.current.path + '/bricks',
   ];
   await deleteFileSystemEntities(entities, exclusions: exclusions);
@@ -50,7 +50,7 @@ Future<void> deleteFileSystemEntities(
   List<String> exclusions = const [],
 }) async {
   entities.forEach((entity) {
-    if (!exclusions.contains(entity.path)) {
+    if (entity.existsSync() && !exclusions.contains(entity.path)) {
       print('Delete ' + entity.path);
       if (entity is File) {
         entity.deleteSync();
