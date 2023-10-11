@@ -7,14 +7,17 @@ import 'bundles/permission_handler_bundle.dart';
 Future<void> run(HookContext context) async {
   // Clean up the output folder, even at the root, to have only the final generated project in the end
   print("> Clean up the output folder (pre): " + Directory.current.path);
-  final entities = Directory.current.listSync(recursive: false);
   final exclusions = [
     // we should not delete .git
     Directory.current.path + '/.git',
     // the bricks folder can be deleted at post_gen only
     Directory.current.path + '/bricks',
   ];
-  await deleteFileSystemEntities(entities, exclusions: exclusions);
+  final entities = Directory.current
+      .listSync(recursive: false)
+      .where((entity) => !exclusions.contains(entity.path))
+      .toList();
+  await deleteFileSystemEntities(entities);
 
   try {
     final additionalVars = {};
@@ -45,12 +48,9 @@ Future<Map<String, dynamic>> addPermissionHandlerVariables() async {
   return vars;
 }
 
-Future<void> deleteFileSystemEntities(
-  List<FileSystemEntity> entities, {
-  List<String> exclusions = const [],
-}) async {
+Future<void> deleteFileSystemEntities(List<FileSystemEntity> entities) async {
   entities.forEach((entity) {
-    if (entity.existsSync() && !exclusions.contains(entity.path)) {
+    if (entity.existsSync()) {
       print('Delete ' + entity.path);
       if (entity is File) {
         entity.deleteSync();
