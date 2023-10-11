@@ -33,7 +33,7 @@ Before using the template, ensure that you have installed the following prerequi
 
 Follow these steps to set up a new project from the template:
 
-1. Clone or download this repository to your local machine.
+1. Use [Use this template](https://github.com/new?template_name=flutter-templates&template_owner=nimblehq) feature to create your new project repository or clone this template repository to your local machine.
 
 2. Fetch all required bricks by running the command:
 
@@ -47,11 +47,16 @@ Follow these steps to set up a new project from the template:
 
     `$ mason make template -c mason-config.json` to provide necessary inputs via a JSON file, e.g., [mason-config.json](mason-config.json) for the sample project.
 
-Once the project is generated at `/{project_name}`, please refer to the [Getting Started](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#getting-started) documentation to make it ready for development.
+Once the project is generated, please refer to the [Getting Started](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#getting-started) documentation to make it ready for development.
 
 That's it! You have now set up a new Flutter project using the template 🎉
 
 > **Note**
+>
+> The script generates all project files to the current working folder as default and cleans up all template stuff in the end. Run it with [Custom Output Directory](https://github.com/felangel/mason/tree/master/packages/mason_cli#custom-output-directory) to set a custom output folder and keep the template stuff to rerun.
+>
+> `$ mason make template -c mason-config.json -o my_flutter_project`
+>
 > You can find detailed information on `make` command options and usage in the [Mason documentation](https://github.com/felangel/mason/tree/master/packages/mason_cli#overview).
 
 ## Documentation
