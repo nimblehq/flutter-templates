@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 
 import 'bundles/permission_handler_bundle.dart';
+import 'hooks_util.dart';
 
 Future<void> run(HookContext context) async {
   // Clean up the output folder, even at the root, to have only the final generated project in the end
@@ -46,17 +47,4 @@ Future<Map<String, dynamic>> addPermissionHandlerVariables() async {
     }
   });
   return vars;
-}
-
-Future<void> deleteFileSystemEntities(List<FileSystemEntity> entities) async {
-  entities.forEach((entity) {
-    if (entity.existsSync()) {
-      print('Delete ' + entity.path);
-      if (entity is File) {
-        entity.deleteSync();
-      } else if (entity is Directory) {
-        entity.deleteSync(recursive: true);
-      }
-    }
-  });
 }

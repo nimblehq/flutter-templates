@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 
 import 'bundles/permission_handler_bundle.dart';
-import 'pre_gen.dart';
+import 'hooks_util.dart';
 
 Future<void> run(HookContext context) async {
   try {
