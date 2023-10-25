@@ -39,9 +39,17 @@ jobs:
         run: |
           echo -e "$ENV" > .env
 
+      - name: Set up release signing configs
+        env:
+          ANDROID_RELEASE_KEYSTORE_BASE64: ${{#mustacheCase}}secrets.ANDROID_RELEASE_KEYSTORE_BASE64{{/mustacheCase}}
+          ANDROID_SIGNING_PROPERTIES: ${{#mustacheCase}}secrets.ANDROID_SIGNING_PROPERTIES{{/mustacheCase}}
+        run: |
+          echo $ANDROID_RELEASE_KEYSTORE_BASE64 | base64 --decode > android/config/release.keystore
+          echo "$ANDROID_SIGNING_PROPERTIES" > android/signing.properties
+
       # App Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
       - name: Build Android apk
-        run: flutter build apk --flavor production --debug --build-number $GITHUB_RUN_NUMBER
+        run: flutter build apk --flavor production --release --build-number $GITHUB_RUN_NUMBER
 
       - name: Deploy Android Production to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
@@ -49,4 +57,4 @@ jobs:
           appId: ${{#mustacheCase}}vars.FIREBASE_ANDROID_APP_ID{{/mustacheCase}}
           serviceCredentialsFileContent: ${{#mustacheCase}}secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON{{/mustacheCase}}
           groups: ${{#mustacheCase}}vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS{{/mustacheCase}}
-          file: build/app/outputs/flutter-apk/app-production-debug.apk
+          file: build/app/outputs/flutter-apk/app-production-release.apk
