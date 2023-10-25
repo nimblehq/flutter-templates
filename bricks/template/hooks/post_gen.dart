@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 
 import 'bundles/permission_handler_bundle.dart';
+import 'hooks_util.dart';
 
 Future<void> run(HookContext context) async {
   try {
@@ -10,6 +11,13 @@ Future<void> run(HookContext context) async {
   } catch (e) {
     context.logger.err(e.toString());
   }
+
+  // Clean up the output folder, even at the root, to have only the final generated project in the end
+  print("> Clean up the output folder (post): " + Directory.current.path);
+  final List<FileSystemEntity> entities = [
+    Directory(Directory.current.path + '/bricks'),
+  ];
+  await deleteFileSystemEntities(entities);
 }
 
 Future<void> generateBricks(HookContext context) async {

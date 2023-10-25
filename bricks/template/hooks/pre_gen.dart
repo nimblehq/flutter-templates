@@ -1,8 +1,25 @@
+import 'dart:io';
+
 import 'package:mason/mason.dart';
 
 import 'bundles/permission_handler_bundle.dart';
+import 'hooks_util.dart';
 
 Future<void> run(HookContext context) async {
+  // Clean up the output folder, even at the root, to have only the final generated project in the end
+  print("> Clean up the output folder (pre): " + Directory.current.path);
+  final exclusions = [
+    // we should not delete .git
+    Directory.current.path + '/.git',
+    // the bricks folder can be deleted at post_gen only
+    Directory.current.path + '/bricks',
+  ];
+  final entities = Directory.current
+      .listSync(recursive: false)
+      .where((entity) => !exclusions.contains(entity.path))
+      .toList();
+  await deleteFileSystemEntities(entities);
+
   try {
     final additionalVars = {};
     if (context.vars['add_permission_handler'] == true) {
