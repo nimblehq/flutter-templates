@@ -4,14 +4,14 @@ First off, thanks for taking the time to contribute! 🎉
 
 Read our [Code of Conduct](./CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
 
-Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions.
+Please make sure to read the relevant section before making your contribution. It will make it much easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions.
 
-Use the table of contents icon <img src="/contributing/images/table-of-contents.png" width="25" height="25" /> on the top left corner of this document to get to a specific section of this guide quickly.
+Use the table of contents icon <img src="/.github/images/table-of-contents.png" width="25" height="25" /> on the top left corner of this document to get to a specific section of this guide quickly.
 
 > And if you like the project, but just don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
 > - Star the project
 > - Tweet about it
-> - Refer this project in your project's readme
+> - Refer to this project in your project's readme
 > - Mention the project at local meetups and tell your friends/colleagues
 
 ## Code of Conduct
@@ -38,13 +38,13 @@ The repository contains three main files/directories:
 
 Before you ask a question, it is best to search for existing [Issues](https://github.com/nimblehq/flutter-templates/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
 
-If you then still feel the need to ask a question and need clarification, we recommend the following:
+If you still feel the need to ask a question and need clarification, we recommend the following:
 
 - Open a [Discussion](https://github.com/nimblehq/flutter-templates/discussions/new?category=q-a).
 - Provide as much context as you can about what you're running into.
 - Provide the project version and platform info (OS, Flutter version, etc), depending on what seems relevant.
 
-We will then take care of the issue as soon as possible.
+We will then analyze and plan for it.
 
 ## I Want To Contribute
 
@@ -52,12 +52,12 @@ We will then take care of the issue as soon as possible.
 
 #### Before Submitting a Bug Report
 
-A good bug report shouldn't leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.
+A good bug report shouldn't leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information, and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.
 
 - Make sure that you are using the latest version.
-- Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the [README](https://github.com/nimblehq/flutter-templates/blob/main/README.md). If you are looking for support, you might want to check [this section](#i-have-a-question)).
+- Determine if your bug is really a bug and not an error on your side, e.g., using incompatible environment components/versions (Make sure that you have read the [README](https://github.com/nimblehq/flutter-templates/blob/main/README.md). If you are looking for support, you might want to check [this section](#i-have-a-question)).
 - To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/nimblehq/flutter-templates/issues?q=is%3Aissue+label%3A%22type+%3A+bug%22+).
-- Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
+- Also, make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
 - Collect information about the bug:
   - Stack trace (Traceback)
   - OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
@@ -67,19 +67,14 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 
 #### How Do I Submit a Good Bug Report?
 
-> You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to <dev@nimblehq.co>.
+> You must never report security related issues, vulnerabilities, or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to <dev@nimblehq.co>.
 
 We use GitHub issues to track bugs and errors. If you run into an issue with the project:
 
 - Open a [Bug Report's Issue](https://github.com/nimblehq/flutter-templates/issues/new?assignees=&labels=type+%3A+bug&projects=&template=bug_template.md&title=Fix%3A+).
 - Explain the behavior you would expect and the actual behavior.
-- Please provide as much context as possible and describe the *reproduction steps* that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports you should isolate the problem and create a reduced test case.
+- Please provide as much context as possible and describe the *reproduction steps* that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports, you should isolate the problem and create a reduced test case.
 - Provide the information you collected in the previous section.
-
-Once it's filed:
-
-- The repository's maintainer will mark the issue as `triage` and try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for further information. Bugs with the `triage` label will not be addressed until they are reproduced.
-- If the team is able to reproduce the issue, the `triage` label will be removed, and the issue will be left to be [implemented by someone](#your-first-code-contribution).
 
 ### Your First Code Contribution
 
@@ -89,16 +84,20 @@ If you're not sure where to start contributing to Flutter Templates, browse thro
 
 Please follow these steps to have your contribution considered by the maintainers:
 
-- Follow the styleguides
-- After you submit your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing <details><summary>What if the status checks are failing?</summary>If a status check is failing, and you believe that the failure is unrelated to your change, please leave a comment on the pull request explaining why you believe the failure is unrelated. A maintainer will re-run the status check for you. If we conclude that the failure was a false positive, then we will open an issue to track that problem with our status check suite.</details>
+- Follow the [Flutter convention & style guides](https://nimblehq.co/compass/development/code-conventions/flutter/).
+- After submitting your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing <details><summary>What if the status checks are failing?</summary>If a status check is failing, and you believe that the failure is unrelated to your change, please leave a comment on the pull request explaining why you believe the failure is unrelated. If we conclude that the failure was a false positive, then we will open an issue to track that problem with our status check suite.</details>
 
 While the prerequisites above must be satisfied prior to having your pull request reviewed, the reviewer(s) may ask you to complete additional design work, tests, or other changes before your pull request can be ultimately accepted.
 
-## Styleguides
+## Style guides
 ### Git Branch Management
 
-Checkout our [Branch Management](https://nimblehq.co/compass/development/version-control/branch-management/) for more details about the branch formatting, naming, etc.
+Check out our [Branch Management](https://nimblehq.co/compass/development/version-control/branch-management/) for more details about the branch formatting, naming, etc.
 
 ### Git Commit Messages
 
-Checkout our [Committing Code](https://nimblehq.co/compass/development/version-control/committing-code/) for more details about the commit message formatting, structure, etc.
+Check out our [Committing Code](https://nimblehq.co/compass/development/version-control/committing-code/) for more details about the commit message formatting, structure, etc.
+
+### Code Conventions
+
+Check out our [Flutter convention](https://nimblehq.co/compass/development/code-conventions/flutter/) for more details about the code convention and style guides.
