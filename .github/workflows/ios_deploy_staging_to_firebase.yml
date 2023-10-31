@@ -1,4 +1,4 @@
-name: ios-deploy-to-staging
+name: iOS - Deploy Staging build to Firebase
 on:
   # Trigger the workflow on push action
   push:
@@ -6,8 +6,8 @@ on:
       - develop
 
 jobs:
-  build_and_upload_staging_app_to_firebase:
-    name: Build And Upload iOS Staging Application To Firebase
+  build_and_deploy_ios:
+    name: iOS - Deploy Staging build to Firebase
     runs-on: macOS-latest
     environment: staging
     env:
@@ -42,9 +42,6 @@ jobs:
           dart pub global activate mason_cli
           mason get
           mason make template -c mason-config.json
-          # Move the generated project to the root directory for next steps & cleanup to not affect static code analysis
-          rsync -av --remove-source-files flutter_templates/ ./
-          rm -rf bricks sample
 
       - name: Get Flutter dependencies
         run: flutter pub get

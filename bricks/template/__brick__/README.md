@@ -12,11 +12,17 @@
 ### Setup
 
 - Create these `.env` files in the root directory according to the flavors and add the required
-environment variables. The example environment variable is in `.env.sample`.
+environment variables. The example file is `.env.sample`.
 
   - Staging: `.env.staging`
 
   - Production: `.env`
+
+- To make the Android release build,
+
+  - put the `release.keystore` at the `android/config` folder,
+
+  - create the `signing.properties` file to provide keystore credentials in the `android` folder. The example file is `signing.properties.sample`.
 
 ### Run
 

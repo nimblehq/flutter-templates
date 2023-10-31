@@ -25,9 +25,6 @@ jobs:
           dart pub global activate mason_cli
           mason get
           mason make template -c mason-config.json
-          # Move the generated project to the root directory for next steps & cleanup to not affect static code analysis
-          rsync -av --remove-source-files flutter_templates/ ./
-          rm -rf bricks sample
 
       - name: Get Flutter dependencies
         run: flutter pub get
@@ -53,6 +50,8 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Set up Flutter environment
         uses: subosito/flutter-action@v2
@@ -114,11 +113,11 @@ jobs:
           field: project_name
           value: sample
 
-      - name: Generate the new sample project
+      - name: Generate the new "sample" project
         run: |
           dart pub global activate mason_cli
           mason get
-          mason make template -c mason-config.json
+          mason make template -c mason-config.json -o sample
 
       - id: changes
         name: Check for changes in the sample project

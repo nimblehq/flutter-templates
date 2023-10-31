@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_and_deploy_android:
-    name: Build & Deploy Android
+    name: Android - Deploy Production build to Firebase
     runs-on: ubuntu-latest
     environment: production
     timeout-minutes: 30
@@ -32,9 +32,6 @@ jobs:
           dart pub global activate mason_cli
           mason get
           mason make template -c mason-config.json
-          # Move the generated project to the root directory for next steps & cleanup to not affect static code analysis
-          rsync -av --remove-source-files flutter_templates/ ./
-          rm -rf bricks sample
 
       - name: Get Flutter dependencies
         run: flutter pub get
@@ -48,9 +45,17 @@ jobs:
         run: |
           echo -e "$ENV" > .env
 
+      - name: Set up release signing configs
+        env:
+          ANDROID_RELEASE_KEYSTORE_BASE64: ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}
+          ANDROID_SIGNING_PROPERTIES: ${{ secrets.ANDROID_SIGNING_PROPERTIES }}
+        run: |
+          echo $ANDROID_RELEASE_KEYSTORE_BASE64 | base64 --decode > android/config/release.keystore
+          echo "$ANDROID_SIGNING_PROPERTIES" > android/signing.properties
+
       # App Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
       - name: Build Android apk
-        run: flutter build apk --flavor production --debug --build-number $GITHUB_RUN_NUMBER
+        run: flutter build apk --flavor production --release --build-number $GITHUB_RUN_NUMBER
 
       - name: Deploy Android Production to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
@@ -58,4 +63,4 @@ jobs:
           appId: ${{ vars.FIREBASE_ANDROID_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
           groups: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
-          file: build/app/outputs/flutter-apk/app-production-debug.apk
+          file: build/app/outputs/flutter-apk/app-production-release.apk
