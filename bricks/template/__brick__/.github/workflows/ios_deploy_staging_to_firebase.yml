@@ -46,9 +46,25 @@ jobs:
         run: |
           echo -e "$ENV" > .env.staging
 
-      - name: Get PR information
-        uses: 8BitJonny/gh-get-current-pr@2.2.0
-        id: PR
+      - name: Find HEAD commit
+        id: head
+        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Limit changelog to the latest pull request only
+        uses: jossef/action-set-json-field@v2
+        with:
+          file: .github/workflows/configs/changelog-config.json
+          field: max_pull_requests
+          value: 1
+
+      - name: Build changelog on "develop"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          configuration: ".github/workflows/configs/changelog-config.json"
+          # Listing PRs from the last tag to the HEAD commit
+          toTag: ${{#mustacheCase}}steps.head.outputs.sha{{/mustacheCase}}
+          token: ${{#mustacheCase}}secrets.GITHUB_TOKEN{{/mustacheCase}}
 
       - name: Run code generator
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
@@ -64,6 +80,6 @@ jobs:
 
       - name: Deploy to Firebase
         env:
-          RELEASE_NOTE_CONTENT: ${{ steps.PR.outputs.pr_title }}
+          RELEASE_NOTE_CONTENT:${{#mustacheCase}}steps.changelog.outputs.changelog{{/mustacheCase}}
         run: |
           cd ./ios && bundle exec fastlane build_and_upload_staging_app

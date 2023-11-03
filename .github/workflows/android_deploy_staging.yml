@@ -49,9 +49,25 @@ jobs:
       - name: Build Android apk
         run: flutter build apk --flavor staging --debug --build-number $GITHUB_RUN_NUMBER
 
-      - name: Get PR information
-        uses: 8BitJonny/gh-get-current-pr@2.2.0
-        id: PR
+      - name: Find HEAD commit
+        id: head
+        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Limit changelog to the latest pull request only
+        uses: jossef/action-set-json-field@v2
+        with:
+          file: .github/workflows/configs/changelog-config.json
+          field: max_pull_requests
+          value: 1
+
+      - name: Build changelog on "develop"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          configuration: ".github/workflows/configs/changelog-config.json"
+          # Listing PRs from the last tag to the HEAD commit
+          toTag: ${{ steps.head.outputs.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy Android Staging to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
@@ -59,5 +75,5 @@ jobs:
           appId: ${{ vars.FIREBASE_ANDROID_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
           groups: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
-          releaseNotes: ${{ steps.PR.outputs.pr_title }}
+          releaseNotes: ${{ steps.changelog.outputs.changelog }}
           file: build/app/outputs/flutter-apk/app-staging-debug.apk
