@@ -64,6 +64,6 @@ jobs:
 
       - name: Deploy to Firebase
         env:
-          RELEASE_NOTE_CONTENT: ${{ steps.PR.outputs.pr_title }}
+          RELEASE_NOTE_CONTENT:${{#mustacheCase}}steps.PR.outputs.pr_title{{/mustacheCase}}
         run: |
           cd ./ios && bundle exec fastlane build_and_upload_staging_app

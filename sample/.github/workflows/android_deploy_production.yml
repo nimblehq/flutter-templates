@@ -62,4 +62,4 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
           groups: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
           releaseNotes: ${{ steps.PR.outputs.pr_body }}
-          file: build/app/outputs/flutter-apk/app-production-debug.apk
+          file: build/app/outputs/flutter-apk/app-production-release.apk
