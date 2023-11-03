@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test-lucas
 
 jobs:
   build_and_deploy_android:
@@ -15,57 +16,21 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
 
-      - name: Set up Java JDK
-        uses: actions/setup-java@v3
+      - name: Find HEAD commit
+        id: head
+        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Build changelog on "main"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v4
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          configuration: ".github/workflows/changelog-config.json"
+          # Listing PRs from the last tag to the HEAD commit
+          toTag: ${{ steps.head.outputs.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Flutter environment
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: '3.10.5'
-
-      - name: Generate new project
+      - name: Print release notes
         run: |
-          dart pub global activate mason_cli
-          mason get
-          mason make template -c mason-config.json
-
-      - name: Get Flutter dependencies
-        run: flutter pub get
-
-      - name: Run code generator
-        run: flutter packages pub run build_runner build --delete-conflicting-outputs
-
-      - name: Set up .env
-        env:
-          ENV: ${{ secrets.ENV }}
-        run: |
-          echo -e "$ENV" > .env
-
-      - name: Set up release signing configs
-        env:
-          ANDROID_RELEASE_KEYSTORE_BASE64: ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}
-          ANDROID_SIGNING_PROPERTIES: ${{ secrets.ANDROID_SIGNING_PROPERTIES }}
-        run: |
-          echo $ANDROID_RELEASE_KEYSTORE_BASE64 | base64 --decode > android/config/release.keystore
-          echo "$ANDROID_SIGNING_PROPERTIES" > android/signing.properties
-
-      # App Bundle requires Firebase connected to Play Store to upload https://appdistribution.page.link/KPoa
-      - name: Build Android apk
-        run: flutter build apk --flavor production --release --build-number $GITHUB_RUN_NUMBER
-
-      - name: Get PR information
-        uses: 8BitJonny/gh-get-current-pr@2.2.0
-        id: PR
-
-      - name: Deploy Android Production to Firebase
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
-        with:
-          appId: ${{ vars.FIREBASE_ANDROID_APP_ID }}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
-          groups: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
-          releaseNotes: ${{ steps.PR.outputs.pr_body }}
-          file: build/app/outputs/flutter-apk/app-production-release.apk
+          echo categorized_prs ${{ steps.changelog.outputs.categorized_prs }}
+          echo uncategorized_prs ${{ steps.changelog.outputs.uncategorized_prs }}
+          echo "${{ steps.changelog.outputs.changelog }}"

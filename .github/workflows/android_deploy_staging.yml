@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - develop
-      - chore/198-test-merge-1
+      - test-lucas
 
 jobs:
   build_and_deploy_android:
@@ -16,10 +16,21 @@ jobs:
       - name: Check out
         uses: actions/checkout@v3
 
-      - name: Get PR information
-        uses: 8BitJonny/gh-get-current-pr@2.2.0
-        id: PR
+      - name: Find HEAD commit
+        id: head
+        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Build changelog on "develop"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          configuration: ".github/workflows/changelog-config.json"
+          # Listing PRs from the last tag to the HEAD commit
+          toTag: ${{ steps.head.outputs.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print release notes
         run: |
-          echo ${{ steps.PR.outputs.pr_body }}
+          echo categorized_prs ${{ steps.changelog.outputs.categorized_prs }}
+          echo uncategorized_prs ${{ steps.changelog.outputs.uncategorized_prs }}
+          echo "${{ steps.changelog.outputs.changelog }}"
