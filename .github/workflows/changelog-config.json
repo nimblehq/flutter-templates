@@ -27,5 +27,6 @@
                 "type : release"
             ]
         }
-    ]
+    ],
+    "max_pull_requests": 200
 }
