@@ -57,9 +57,18 @@ jobs:
       - name: Build Android apk
         run: flutter build apk --flavor production --release --build-number $GITHUB_RUN_NUMBER
 
-      - name: Build Changelog
-        id: build_changelog
+      - name: Find HEAD commit
+        id: head
+        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Build changelog on "main"
+        id: changelog
         uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          configuration: ".github/workflows/changelog-config.json"
+          # Listing PRs from the last tag to the HEAD commit
+          toTag: ${{ steps.head.outputs.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy Android Production to Firebase
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
@@ -67,5 +76,5 @@ jobs:
           appId: ${{ vars.FIREBASE_ANDROID_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
           groups: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
-          releaseNotes: ${{ steps.build_changelog.outputs.changelog }}
+          releaseNotes: ${{ steps.changelog.outputs.changelog }}
           file: build/app/outputs/flutter-apk/app-production-release.apk
