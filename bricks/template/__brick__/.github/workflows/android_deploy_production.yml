@@ -59,7 +59,7 @@ jobs:
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v4
         with:
-          configuration: ".github/workflows/changelog-config.json"
+          configuration: ".github/workflows/configs/changelog-config.json"
           # Listing PRs from the last tag to the HEAD commit
           toTag: ${{#mustacheCase}}steps.head.outputs.sha{{/mustacheCase}}
           token: ${{#mustacheCase}}secrets.GITHUB_TOKEN{{/mustacheCase}}
