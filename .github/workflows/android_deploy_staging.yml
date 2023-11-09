@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - chore/198-test-release-notes
 
 jobs:
   build_and_deploy_android:
