@@ -50,7 +50,7 @@ jobs:
       - name: Limit changelog to the latest pull request only
         uses: jossef/action-set-json-field@v2
         with:
-          file: .github/workflows/changelog-config.json
+          file: .github/workflows/configs/changelog-config.json
           field: max_pull_requests
           value: 1
 
