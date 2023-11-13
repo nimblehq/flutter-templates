@@ -40,7 +40,7 @@ jobs:
         run: npm install -g danger
 
       - name: Activate Danger Dart
-        run: pub global activate danger_dart
+        run: dart pub global activate danger_dart
 
       - name: Run danger ci
         run: danger_dart ci
