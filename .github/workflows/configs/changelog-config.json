@@ -1,0 +1,32 @@
+{
+  "categories": [
+    {
+      "title": "## ✨ Features",
+      "labels": [
+        "type : feature"
+      ]
+    },
+    {
+      "title": "## 🐛 Bug fixes",
+      "labels": [
+        "type : bug"
+      ]
+    },
+    {
+      "title": "## 🧹 Chores",
+      "labels": [
+        "type : chore"
+      ]
+    },
+    {
+      "title": "## Others",
+      "exclude_labels": [
+        "type : feature",
+        "type : bug",
+        "type : chore",
+        "type : release"
+      ]
+    }
+  ],
+  "max_pull_requests": 200
+}

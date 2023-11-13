@@ -44,6 +44,10 @@ class Environments
   end
 
   def self.GITHUB_RUN_NUMBER
-    ENV["GITHUB_RUN_NUMBER"]
+    ENV['GITHUB_RUN_NUMBER']
+  end
+
+  def self.RELEASE_NOTE_CONTENT
+    ENV['RELEASE_NOTE_CONTENT']
   end
 end
