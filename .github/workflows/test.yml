@@ -38,6 +38,11 @@ jobs:
       - name: Statically analyze the Dart code for any errors
         run: flutter analyze .
 
+      - name: Run danger ci
+        run: danger_dart ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run widget tests, unit tests
         run: flutter test --machine --coverage
 
