@@ -6,19 +6,19 @@ All the templates can be used to kick off a new Flutter project quickly.
 
 - Supports __Android__ and __iOS__ platforms *(Web and Desktop are not yet supported)*.
 - [__Clean Architecture__](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) with `MVVM` and pre-built foundational components.
-- [Pre-set environments](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#setup): `Staging` and `Production`. Environment variables are supplied through `.env` files through [flutter_config](https://pub.dev/packages/flutter_config).
+- [Pre-set environments](bricks/template/__brick__#setup): `Staging` and `Production`. Environment variables are supplied through `.env` files through [flutter_config](https://pub.dev/packages/flutter_config).
 - Dependency Injection (DI), State Management, and Navigating with [get_it](https://pub.dev/packages/get_it), [flutter_riverpod](https://pub.dev/packages/flutter_riverpod), and [go_router](https://pub.dev/packages/go_router).
 - Networking with [dio](https://pub.dev/packages/dio) and [retrofit](https://pub.dev/packages/retrofit), JSON serializing with [json_serializable](https://pub.dev/packages/json_serializable).
 - Integrated local [secure storage](https://pub.dev/packages/flutter_secure_storage).
-- [Localization](https://docs.flutter.dev/accessibility-and-localization/internationalization) integrated in [3 initial languages](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D/lib/l10n).
+- [Localization](https://docs.flutter.dev/accessibility-and-localization/internationalization) integrated in [3 initial languages](bricks/template/__brick__/lib/l10n).
 - [Testing](https://docs.flutter.dev/testing)-ready (unit, integration, and widget testing), [production and deployment](https://docs.flutter.dev/deployment)-ready (to Firebase, Play Store, TestFlight, and AppStore).
-- Built-in [GitHub templates & CI/CD workflows](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D/.github) integrated with GitHub Actions to perform static code analysis, test, build and deploy app builds to app distribution services or app stores.
+- Built-in [GitHub templates & CI/CD workflows](bricks/template/__brick__/.github) integrated with GitHub Actions to perform static code analysis, test, build and deploy app builds to app distribution services or app stores.
 
 ### Optional (enable by [generator command parameters](#set-up-a-new-project))
 
 - Specify the default [JSON field renaming format with json_serializable](https://pub.dev/packages/json_serializable#build-configuration) between support values: none, kebab, snake, and pascal.
 - Integrate permissions requesting & checking with [permission_handler](https://pub.dev/packages/permission_handler) and its necessary basic setup.
-- [Code coverage integration](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D/codecov.yml) by `Codecov`.
+- [Code coverage integration](bricks/template/__brick__/codecov.yml) by `Codecov`.
 
 ## Use the template
 
@@ -47,7 +47,7 @@ Follow these steps to set up a new project from the template:
 
     `$ mason make template -c mason-config.json` to provide necessary inputs via a JSON file, e.g., [mason-config.json](mason-config.json) for the sample project.
 
-Once the project is generated, please refer to the [Getting Started](bricks/template/__brick__/%7B%7Bproject_name.snakeCase()%7D%7D#getting-started) documentation to make it ready for development.
+Once the project is generated, please refer to the [Getting Started](bricks/template/__brick__#getting-started) documentation to make it ready for development.
 
 That's it! You have now set up a new Flutter project using the template 🎉
 
