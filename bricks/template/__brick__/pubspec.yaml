@@ -60,6 +60,7 @@ dev_dependencies:
   json_serializable: ^6.6.2
   mockito: ^5.4.0
   retrofit_generator: ^7.0.0
+  danger_core:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
