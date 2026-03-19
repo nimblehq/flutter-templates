@@ -30,7 +30,7 @@ void main() {
 
     test("When getting user list failed, it returns NetworkExceptions error",
         () async {
-      when(mockApiService.getUsers()).thenThrow(MockDioError());
+      when(mockApiService.getUsers()).thenThrow(MockDioException());
 
       expect(
         () => repository.getUsers(),

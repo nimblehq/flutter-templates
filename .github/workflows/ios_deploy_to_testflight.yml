@@ -36,13 +36,12 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.10.5'
+          flutter-version: '3.24.3'
 
-      - name: Generate new project
+      - name: Set up project
         run: |
-          dart pub global activate mason_cli
-          mason get
-          mason make template -c mason-config.json
+          cp -r sample/* .
+          cp -r sample/.* . 2>/dev/null || true
 
       - name: Get Flutter dependencies
         run: flutter pub get

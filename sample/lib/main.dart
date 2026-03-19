@@ -22,7 +22,7 @@ const routePathRootScreen = '/';
 const routePathSecondScreen = 'second';
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  MyApp({super.key});
 
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
@@ -59,9 +59,7 @@ class MyApp extends StatelessWidget {
 }
 
 class SecondScreen extends StatelessWidget {
-  const SecondScreen({
-    Key? key,
-  }) : super(key: key);
+  const SecondScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

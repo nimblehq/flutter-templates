@@ -1,13 +1,11 @@
 name: CI
 on:
-  # Trigger the workflow on push or pull request,
-  # but push action is only for the feature branch
   pull_request:
     types: [ opened, synchronize, reopened ]
 
 jobs:
-  test:
-    name: Template initializing scripts test
+  validate_sample:
+    name: Validate sample project
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -18,118 +16,36 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.10.5'
+          flutter-version: '3.24.3'
 
-      - name: Generate new project
+      - name: Check for spec drift
         run: |
-          dart pub global activate mason_cli
-          mason get
-          mason make template -c mason-config.json
+          SAMPLE_CHANGED=$(git diff --name-only origin/develop...HEAD -- sample/ | wc -l)
+          SPECS_CHANGED=$(git diff --name-only origin/develop...HEAD -- specs/ | wc -l)
+          if [ "$SAMPLE_CHANGED" -gt 0 ] && [ "$SPECS_CHANGED" -eq 0 ]; then
+            echo "::warning::sample/ changed but specs/ was not updated. Please review if specs need updating."
+          fi
 
-      - name: Get Flutter dependencies
-        run: flutter pub get
+      - name: Layer 1 — Structural validation
+        run: bash specs/validation/validate_structure.sh sample
 
-      - name: Run code generator
-        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      - name: Layer 2a — Get Flutter dependencies
+        run: cd sample && flutter pub get
 
-      - name: Check for any formatting issues in the code
-        run: dart format --set-exit-if-changed .
+      - name: Layer 2b — Run code generator
+        run: cd sample && flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      - name: Statically analyze the Dart code for any errors
-        run: flutter analyze .
+      - name: Layer 2c — Check formatting
+        run: cd sample && dart format --set-exit-if-changed .
 
-      - name: Run widget tests, unit tests
-        run: flutter test --machine --coverage
+      - name: Layer 2d — Static analysis
+        run: cd sample && flutter analyze .
 
-  generate_mason_bundle:
-    # The job generate_mason_bundle identify that the job test must complete successfully
-    # before this generate_mason_bundle job will run
-    needs: test
-    name: Generate Mason bundle
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Set up Flutter environment
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: '3.10.5'
-
-      - name: Install Mason CLI
+      - name: Layer 3 — Architecture invariants
         run: |
-          dart pub global activate mason_cli
-          mason get
+          cp specs/validation/invariant_architecture_test.dart sample/test/
+          cd sample && flutter test test/invariant_architecture_test.dart
+          rm -f test/invariant_architecture_test.dart
 
-      - name: Generate Mason bundle
-        run: |
-          mason bundle bricks/permission_handler -t dart -o bricks/template/hooks/bundles
-
-      - id: changes
-        name: Check for changes in the Mason bricks
-        run: |
-          count=$(git status bricks --porcelain | wc -l)
-          echo "count=$count" >> $GITHUB_OUTPUT
-
-      - name: Commit & push the Mason bundle changes
-        if: steps.changes.outputs.count > 0
-        run: |
-          git config user.name team-nimblehq
-          git config user.email bot@nimblehq.co
-          git add bricks
-          git commit -m "[Chore] Generate Mason bundle"
-          git push
-
-  generate_sample_project:
-    # The job generate_sample_project identify that the job generate_mason_bundle must complete successfully
-    # before this generate_sample_project job will run
-    needs: generate_mason_bundle
-    name: Generate the sample project
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Check out
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Set up Flutter environment
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: '3.10.5'
-
-      - name: Remove the old sample project
-        run: |
-          rm -rf sample
-
-      - name: Set the project name "sample"
-        uses: jossef/action-set-json-field@v2.1
-        with:
-          file: mason-config.json
-          field: project_name
-          value: sample
-
-      - name: Generate the new "sample" project
-        run: |
-          dart pub global activate mason_cli
-          mason get
-          mason make template -c mason-config.json -o sample
-
-      - id: changes
-        name: Check for changes in the sample project
-        run: |
-          count=$(git status sample --porcelain | wc -l)
-          echo "count=$count" >> $GITHUB_OUTPUT
-
-      - name: Commit & push the sample project changes
-        if: steps.changes.outputs.count > 0
-        run: |
-          git config user.name team-nimblehq
-          git config user.email bot@nimblehq.co
-          git add sample
-          git commit -m "[Chore] Generate & update sample project"
-          git push
+      - name: Layer 3b — Run tests
+        run: cd sample && flutter test --coverage

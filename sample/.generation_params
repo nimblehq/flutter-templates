@@ -1,0 +1,7 @@
+project_name=sample
+package_name=co.nimblehq.flutter.template
+app_name=Flutter Templates
+app_version=0.1.0
+build_number=1
+json_field_rename=snake
+add_permission_handler=false

@@ -8,6 +8,16 @@
 *.iml
 .idea/*
 
-# Mason
-mason-lock.json
-.mason/
+# Generated projects (created by AI generation, not source of truth)
+*_project/
+*_app/
+
+# Build artifacts
+coverage/
+build/
+.dart_tool/
+
+# Flutter/Dart generated files (in case they leak to root)
+*.g.dart
+*.freezed.dart
+*.mocks.dart

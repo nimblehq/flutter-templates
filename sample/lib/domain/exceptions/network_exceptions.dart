@@ -47,25 +47,25 @@ class NetworkExceptions with _$NetworkExceptions {
     if (error is Exception) {
       try {
         NetworkExceptions networkExceptions;
-        if (error is DioError) {
+        if (error is DioException) {
           switch (error.type) {
-            case DioErrorType.cancel:
+            case DioExceptionType.cancel:
               networkExceptions = const NetworkExceptions.requestCancelled();
               break;
-            case DioErrorType.connectionTimeout:
+            case DioExceptionType.connectionTimeout:
               networkExceptions = const NetworkExceptions.requestTimeout();
               break;
-            case DioErrorType.unknown:
+            case DioExceptionType.unknown:
               networkExceptions =
                   const NetworkExceptions.noInternetConnection();
               break;
-            case DioErrorType.receiveTimeout:
+            case DioExceptionType.receiveTimeout:
               networkExceptions = const NetworkExceptions.receiveTimeout();
               break;
-            case DioErrorType.sendTimeout:
+            case DioExceptionType.sendTimeout:
               networkExceptions = const NetworkExceptions.sendTimeout();
               break;
-            case DioErrorType.badResponse:
+            case DioExceptionType.badResponse:
               switch (error.response?.statusCode) {
                 case 400:
                   networkExceptions = const NetworkExceptions.badRequest();
