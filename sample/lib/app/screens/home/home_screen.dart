@@ -9,15 +9,13 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sample/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeViewState>((ref) {
-  return HomeViewModel(
-    getIt.get<GetUsersUseCase>(),
-  );
-});
+      return HomeViewModel(getIt.get<GetUsersUseCase>());
+    });
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -38,12 +36,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: FutureBuilder<PackageInfo>(
-            future: PackageInfo.fromPlatform(),
-            builder: (context, snapshot) {
-              return snapshot.hasData
-                  ? Text(snapshot.data?.appName ?? "")
-                  : const SizedBox.shrink();
-            }),
+          future: PackageInfo.fromPlatform(),
+          builder: (context, snapshot) {
+            return snapshot.hasData
+                ? Text(snapshot.data?.appName ?? "")
+                : const SizedBox.shrink();
+          },
+        ),
       ),
       body: Center(
         child: Column(
@@ -57,10 +56,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Assets.svg.flutterLogo.svg(
-              width: 32,
-              height: 32,
-            ),
+            Assets.svg.flutterLogo.svg(width: 32, height: 32),
             const SizedBox(height: 24),
             Text(AppLocalizations.of(context)!.hello),
             Text(

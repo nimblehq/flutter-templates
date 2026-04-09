@@ -23,7 +23,7 @@ class AppInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     final statusCode = err.response?.statusCode;
     if ((statusCode == HttpStatus.forbidden ||
             statusCode == HttpStatus.unauthorized) &&
@@ -35,7 +35,7 @@ class AppInterceptor extends Interceptor {
   }
 
   Future<void> _doRefreshToken(
-    DioError err,
+    DioException err,
     ErrorInterceptorHandler handler,
   ) async {
     try {
@@ -59,7 +59,7 @@ class AppInterceptor extends Interceptor {
       //    handler.next(err);
       //  }
     } catch (exception) {
-      if (exception is DioError) {
+      if (exception is DioException) {
         handler.next(exception);
       } else {
         handler.next(err);

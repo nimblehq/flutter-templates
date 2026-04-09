@@ -2,6 +2,7 @@ import 'package:{{project_name.snakeCase()}}/domain/exceptions/network_exception
 import 'package:{{project_name.snakeCase()}}/domain/repositories/credential_repository.dart';
 import 'package:{{project_name.snakeCase()}}/data/repositories/credential_repository_impl.dart';
 import 'package:{{project_name.snakeCase()}}/data/remote/models/responses/user_response.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -30,7 +31,11 @@ void main() {
 
     test("When getting user list failed, it returns NetworkExceptions error",
         () async {
-      when(mockApiService.getUsers()).thenThrow(MockDioError());
+      when(mockApiService.getUsers()).thenThrow(
+        DioException(
+          requestOptions: RequestOptions(path: '/users'),
+        ),
+      );
 
       expect(
         () => repository.getUsers(),

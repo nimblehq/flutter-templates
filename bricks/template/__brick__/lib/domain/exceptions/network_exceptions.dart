@@ -43,29 +43,29 @@ class NetworkExceptions with _$NetworkExceptions {
 
   const factory NetworkExceptions.unexpectedError() = UnexpectedError;
 
-  static NetworkExceptions fromDioException(error) {
+  static NetworkExceptions fromDioException(Object error) {
     if (error is Exception) {
       try {
         NetworkExceptions networkExceptions;
-        if (error is DioError) {
+        if (error is DioException) {
           switch (error.type) {
-            case DioErrorType.cancel:
+            case DioExceptionType.cancel:
               networkExceptions = const NetworkExceptions.requestCancelled();
               break;
-            case DioErrorType.connectionTimeout:
+            case DioExceptionType.connectionTimeout:
               networkExceptions = const NetworkExceptions.requestTimeout();
               break;
-            case DioErrorType.unknown:
+            case DioExceptionType.unknown:
               networkExceptions =
                   const NetworkExceptions.noInternetConnection();
               break;
-            case DioErrorType.receiveTimeout:
+            case DioExceptionType.receiveTimeout:
               networkExceptions = const NetworkExceptions.receiveTimeout();
               break;
-            case DioErrorType.sendTimeout:
+            case DioExceptionType.sendTimeout:
               networkExceptions = const NetworkExceptions.sendTimeout();
               break;
-            case DioErrorType.badResponse:
+            case DioExceptionType.badResponse:
               switch (error.response?.statusCode) {
                 case 400:
                   networkExceptions = const NetworkExceptions.badRequest();
@@ -103,7 +103,8 @@ class NetworkExceptions with _$NetworkExceptions {
                   );
               }
               break;
-            default:
+            case DioExceptionType.badCertificate:
+            case DioExceptionType.connectionError:
               networkExceptions = const NetworkExceptions.unexpectedError();
               break;
           }

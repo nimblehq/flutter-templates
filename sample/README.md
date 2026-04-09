@@ -4,8 +4,10 @@
 
 ## Prerequisite
 
-- Flutter 3.10.5
+- Flutter 3.38.10
 - Flutter version manager (recommend): [fvm](https://fvm.app/)
+
+This project needs **Dart 3.8+**. If `flutter pub get` reports Dart **3.7.x** or an SDK constraint error, switch to Flutter **3.38.10** (e.g. `fvm use 3.38.10`) and run `fvm flutter pub get` again.
 
 ## Getting Started
 

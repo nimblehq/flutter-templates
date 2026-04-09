@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sample/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_config/flutter_config.dart';
@@ -11,18 +11,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
   await configureInjection();
-  runApp(
-    ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  runApp(ProviderScope(child: MyApp()));
 }
 
 const routePathRootScreen = '/';
 const routePathSecondScreen = 'second';
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  MyApp({super.key});
 
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
@@ -59,16 +55,10 @@ class MyApp extends StatelessWidget {
 }
 
 class SecondScreen extends StatelessWidget {
-  const SecondScreen({
-    Key? key,
-  }) : super(key: key);
+  const SecondScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Second Screen"),
-      ),
-    );
+    return Scaffold(appBar: AppBar(title: const Text("Second Screen")));
   }
 }

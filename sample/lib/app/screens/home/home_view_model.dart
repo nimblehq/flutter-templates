@@ -8,9 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class HomeViewModel extends StateNotifier<HomeViewState> {
   final GetUsersUseCase _getUsersUseCase;
 
-  HomeViewModel(
-    this._getUsersUseCase,
-  ) : super(const HomeViewState.init());
+  HomeViewModel(this._getUsersUseCase) : super(const HomeViewState.init());
 
   final StreamController<List<User>> _usersStream = StreamController();
 

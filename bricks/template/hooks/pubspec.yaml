@@ -1,7 +1,8 @@
 name: template_hooks
 
 environment:
-  sdk: ">=2.18.4 <3.0.0"
+  # Keep <= Mason CLI's embedded Dart so `mason make` can compile hooks.
+  sdk: ">=3.7.0 <4.0.0"
 
 dependencies:
-  mason: ">=0.1.0-dev.41 <0.1.0"
+  mason: ^0.1.2

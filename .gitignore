@@ -11,3 +11,6 @@
 # Mason
 mason-lock.json
 .mason/
+
+# FVM Version Cache
+.fvm/

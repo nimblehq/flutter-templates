@@ -26,8 +26,16 @@ All the templates can be used to kick off a new Flutter project quickly.
 
 Before using the template, ensure that you have installed the following prerequisites on your system:
 
-- Flutter 3.10.5
-- [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.0-dev.44
+- Flutter 3.38.10
+- [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.2
+
+The generated app and `sample/` require **Dart 3.8+** (this Flutter release includes Dart 3.10.x). If `flutter pub get` fails with `requires SDK version >=3.8.0` or `The current Dart SDK version is 3.7.x`, your Flutter install is too old. Upgrade to **Flutter 3.38.10** (or newer stable), for example with [FVM](https://fvm.app/):
+
+```bash
+fvm install 3.38.10
+fvm use 3.38.10
+fvm flutter pub get
+```
 
 ### Set up a new project
 
