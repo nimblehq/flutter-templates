@@ -11,6 +11,7 @@
 # Generated projects (created by AI generation, not source of truth)
 *_project/
 *_app/
+output/
 
 # Build artifacts
 coverage/

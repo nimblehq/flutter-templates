@@ -33,6 +33,7 @@ When generating a new project, provide these parameters to the AI:
 ### Prerequisites
 
 - Flutter SDK (>= 3.5.0)
+- JDK 17 — Android Studio 2024.2+ ships with JDK 21, which breaks the bundled Gradle 7.5. In Android Studio: `Settings → Build Tools → Gradle → Gradle JDK` → select a JDK 17 install. Or run `flutter config --jdk-dir=/path/to/jdk-17`.
 - An AI assistant (Claude, ChatGPT, etc.)
 
 ### Steps
@@ -43,35 +44,30 @@ When generating a new project, provide these parameters to the AI:
 
 3. The AI generates a complete Flutter project following the architecture, patterns, and conventions documented in the specs.
 
-4. Validate the generated project:
+4. Verify the generated project builds:
 
     ```bash
-    bash specs/validation/validate_all.sh /path/to/generated/project
+    cd /path/to/generated/project
+    flutter pub get
+    dart run build_runner build --delete-conflicting-outputs
+    flutter analyze
+    flutter test
+    flutter build apk --debug --flavor staging -t lib/main.dart
+    flutter build ios --debug --no-codesign --flavor staging -t lib/main.dart  # macOS only
     ```
 
-5. The validation pipeline checks 4 layers:
-   - **Layer 1:** Structure (directories, files, naming conventions)
-   - **Layer 2:** Static analysis (`pub get`, `build_runner`, `format`, `analyze`)
-   - **Layer 3:** Architecture invariants (import rules, patterns, DI setup)
-   - **Layer 3b:** Tests (unit and widget tests pass)
+    If all pass, the project is ready. The AI handles substitutions correctly in practice (verified by benchmark across multiple models); native Flutter tooling is the gate for correctness.
 
 ### Spec files
 
 | File | Content |
 |------|---------|
-| `specs/architecture.md` | 3-layer rules, UseCase/Result, Repository, ViewModel, error flow |
-| `specs/dependency-injection.md` | GetIt + Injectable setup, modules, providers, interceptors |
-| `specs/networking.md` | Dio + Retrofit, response mapping, token refresh, env config |
-| `specs/project-structure.md` | Directory layout, naming conventions, generated files |
-| `specs/dependencies.md` | Package list with versions, build.yaml, analysis_options |
-| `specs/testing.md` | Mockito patterns, ProviderContainer, integration test utilities |
-| `specs/cicd.md` | Workflows, flavor mapping, Fastlane, codecov |
-| `specs/generation-prompt.md` | Master AI prompt with parameters and substitution map |
-| `specs/validation.md` | Validation pipeline overview |
+| `specs/generation-prompt.md` | AI prompt with parameters, substitution map, and self-check |
+| `specs/architecture-rules.md` | Architecture invariants (layer rules, patterns, conventions) |
 
 ### Golden reference
 
-The `sample/` directory contains a reference project validated by CI. AI output is compared against these patterns.
+The `sample/` directory is the single source of truth. It is continuously validated by CI (`pub get`, `build_runner`, `analyze`, `test`, `flutter build apk`, `flutter build ios`). When `sample/` is green, substituted copies of it will build.
 
 ## Documentation
 
