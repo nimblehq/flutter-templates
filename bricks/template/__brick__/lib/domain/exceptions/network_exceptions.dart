@@ -56,10 +56,9 @@ class NetworkExceptions with _$NetworkExceptions {
               networkExceptions = const NetworkExceptions.requestTimeout();
               break;
             case DioExceptionType.unknown:
-              networkExceptions =
-                  error.error is SocketException
-                      ? const NetworkExceptions.noInternetConnection()
-                      : const NetworkExceptions.unexpectedError();
+              networkExceptions = error.error is SocketException
+                  ? const NetworkExceptions.noInternetConnection()
+                  : const NetworkExceptions.unexpectedError();
               break;
             case DioExceptionType.receiveTimeout:
               networkExceptions = const NetworkExceptions.receiveTimeout();
