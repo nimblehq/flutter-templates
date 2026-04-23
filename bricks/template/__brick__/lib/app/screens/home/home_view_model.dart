@@ -3,7 +3,7 @@ import 'package:{{project_name.snakeCase()}}/app/screens/home/home_view_state.da
 import 'package:{{project_name.snakeCase()}}/domain/usecases/base/base_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/domain/usecases/get_users_use_case.dart';
 import 'package:{{project_name.snakeCase()}}/domain/models/user.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 class HomeViewModel extends StateNotifier<HomeViewState> {
   final GetUsersUseCase _getUsersUseCase;

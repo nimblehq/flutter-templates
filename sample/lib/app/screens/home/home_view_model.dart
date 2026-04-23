@@ -3,7 +3,7 @@ import 'package:sample/app/screens/home/home_view_state.dart';
 import 'package:sample/domain/usecases/base/base_use_case.dart';
 import 'package:sample/domain/usecases/get_users_use_case.dart';
 import 'package:sample/domain/models/user.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 class HomeViewModel extends StateNotifier<HomeViewState> {
   final GetUsersUseCase _getUsersUseCase;

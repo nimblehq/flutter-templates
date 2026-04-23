@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sample/l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sample/main.dart';
@@ -26,11 +26,16 @@ class TestUtil {
   static void _initDependencies() {
     PackageInfo.setMockInitialValues(
       appName: 'Flutter Templates testing',
-      packageName: '',
+      packageName: 'co.nimblehq.flutter.template',
       version: '',
       buildNumber: '',
       buildSignature: '',
     );
-    FlutterConfig.loadValueForTesting({'SECRET': 'This is only for testing'});
+    dotenv.loadFromString(
+      envString: [
+        'SECRET=This is only for testing',
+        'REST_API_ENDPOINT=https://example.com',
+      ].join('\n'),
+    );
   }
 }

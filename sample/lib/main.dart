@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:sample/l10n/app_localizations.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sample/l10n/app_localizations.dart';
 import 'package:sample/di/di.dart';
 import 'package:sample/gen/assets.gen.dart';
 import 'package:sample/app/screens/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterConfig.loadEnvVariables();
+  final packageInfo = await PackageInfo.fromPlatform();
+  final envFile =
+      packageInfo.packageName.endsWith('.staging') ? '.env.staging' : '.env';
+  await dotenv.load(fileName: envFile);
   await configureInjection();
   runApp(ProviderScope(child: MyApp()));
 }
@@ -40,6 +44,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      routerConfig: _router,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         brightness: Brightness.light,
@@ -47,9 +52,6 @@ class MyApp extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      routeInformationProvider: _router.routeInformationProvider,
-      routeInformationParser: _router.routeInformationParser,
-      routerDelegate: _router.routerDelegate,
     );
   }
 }

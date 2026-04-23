@@ -5,10 +5,11 @@ import 'package:{{project_name.snakeCase()}}/main.dart';
 import 'package:{{project_name.snakeCase()}}/di/di.dart';
 import 'package:{{project_name.snakeCase()}}/gen/assets.gen.dart';
 import 'package:{{project_name.snakeCase()}}/app/resources/app_colors.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:flutter_config/flutter_config.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:{{project_name.snakeCase()}}/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -64,7 +65,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const SizedBox(height: 24),
             Text(AppLocalizations.of(context)!.hello),
             Text(
-              FlutterConfig.get('SECRET'),
+              dotenv.get('SECRET'),
               style: const TextStyle(
                 color: AppColors.nimblePrimaryBlue,
                 fontSize: 24,

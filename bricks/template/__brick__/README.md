@@ -4,20 +4,19 @@
 
 ## Prerequisite
 
-- Flutter 3.38.10
+- Flutter 3.41.6
 - Flutter version manager (recommend): [fvm](https://fvm.app/)
 
-This project needs **Dart 3.8+**. If `flutter pub get` reports Dart **3.7.x** or an SDK constraint error, switch to Flutter **3.38.10** (e.g. `fvm use 3.38.10`) and run `fvm flutter pub get` again.
+This project needs **Dart 3.8+**. If `flutter pub get` reports Dart **3.7.x** or an SDK constraint error, switch to Flutter **3.41.6** (e.g. `fvm use 3.41.6`) and run `fvm flutter pub get` again.
 
 ## Getting Started
 
 ### Setup
 
-- Create these `.env` files in the root directory according to the flavors and add the required
-environment variables. The example file is `.env.sample`.
+- Update the bundled environment files in the root directory with the required
+environment variables for each flavor.
 
   - Staging: `.env.staging`
-
   - Production: `.env`
 
 - To make the Android release build,
