@@ -1,9 +1,8 @@
-# Used by dotenv library to load runtime environment variables.
+# Used by dotenv library to load environment variables.
 /.env
-/.env.*
+/.env.staging
 !/.env
 !/.env.staging
-!/.env.example
 
 # Miscellaneous
 *.class
