@@ -13,7 +13,8 @@ class PermissionWrapperImpl extends PermissionWrapper {
   @override
   Future<bool> requestCameraPermission() {
     return permission_handler.Permission.camera.request().then(
-        (status) => status == permission_handler.PermissionStatus.granted);
+      (status) => status == permission_handler.PermissionStatus.granted,
+    );
   }
 
   @override

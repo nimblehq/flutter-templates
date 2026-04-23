@@ -6,7 +6,7 @@ All the templates can be used to kick off a new Flutter project quickly.
 
 - Supports __Android__ and __iOS__ platforms *(Web and Desktop are not yet supported)*.
 - [__Clean Architecture__](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) with `MVVM` and pre-built foundational components.
-- [Pre-set environments](bricks/template/__brick__#setup): `Staging` and `Production`. Environment variables are supplied through `.env` files through [flutter_config](https://pub.dev/packages/flutter_config).
+- [Pre-set environments](bricks/template/__brick__#setup): `Staging` and `Production`. Environment variables are loaded from bundled `.env` files with [flutter_dotenv](https://pub.dev/packages/flutter_dotenv).
 - Dependency Injection (DI), State Management, and Navigating with [get_it](https://pub.dev/packages/get_it), [flutter_riverpod](https://pub.dev/packages/flutter_riverpod), and [go_router](https://pub.dev/packages/go_router).
 - Networking with [dio](https://pub.dev/packages/dio) and [retrofit](https://pub.dev/packages/retrofit), JSON serializing with [json_serializable](https://pub.dev/packages/json_serializable).
 - Integrated local [secure storage](https://pub.dev/packages/flutter_secure_storage).
@@ -26,8 +26,16 @@ All the templates can be used to kick off a new Flutter project quickly.
 
 Before using the template, ensure that you have installed the following prerequisites on your system:
 
-- Flutter 3.10.5
-- [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.0-dev.44
+- Flutter 3.41.6
+- [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.2
+
+The generated app and `sample/` require **Dart 3.8+**. If `flutter pub get` fails with `requires SDK version >=3.8.0` or `The current Dart SDK version is 3.7.x`, your Flutter install is too old. Upgrade to **Flutter 3.41.6** (or newer stable), for example with [FVM](https://fvm.app/):
+
+```bash
+fvm install 3.41.6
+fvm use 3.41.6
+fvm flutter pub get
+```
 
 ### Set up a new project
 

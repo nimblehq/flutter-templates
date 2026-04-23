@@ -17,19 +17,18 @@ class DioProvider {
 
   Dio _createDio({bool requireAuthenticate = false}) {
     final dio = Dio();
-    final appInterceptor = AppInterceptor(
-      requireAuthenticate,
-      dio,
-    );
+    final appInterceptor = AppInterceptor(requireAuthenticate, dio);
     final interceptors = <Interceptor>[];
     interceptors.add(appInterceptor);
     if (!kReleaseMode) {
-      interceptors.add(LogInterceptor(
-        request: true,
-        responseBody: true,
-        requestBody: true,
-        requestHeader: true,
-      ));
+      interceptors.add(
+        LogInterceptor(
+          request: true,
+          responseBody: true,
+          requestBody: true,
+          requestHeader: true,
+        ),
+      );
     }
 
     return dio

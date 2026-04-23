@@ -16,14 +16,16 @@ void main() {
       getUsersUseCase = GetUsersUseCase(mockRepository);
     });
 
-    test('When getting users successfully, it returns Success result',
-        () async {
-      final expectedResult = [UserResponseMocks.mock().toUser()];
-      when(mockRepository.getUsers()).thenAnswer((_) async => expectedResult);
-      final result = await getUsersUseCase.call();
+    test(
+      'When getting users successfully, it returns Success result',
+      () async {
+        final expectedResult = [UserResponseMocks.mock().toUser()];
+        when(mockRepository.getUsers()).thenAnswer((_) async => expectedResult);
+        final result = await getUsersUseCase.call();
 
-      expect(result, isA<Success>());
-      expect((result as Success).value, expectedResult);
-    });
+        expect(result, isA<Success>());
+        expect((result as Success).value, expectedResult);
+      },
+    );
   });
 }

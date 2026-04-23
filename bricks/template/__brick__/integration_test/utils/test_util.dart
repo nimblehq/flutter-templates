@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:{{project_name.snakeCase()}}/l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:{{project_name.snakeCase()}}/main.dart';
 
@@ -25,11 +25,17 @@ class TestUtil {
 
   static void _initDependencies() {
     PackageInfo.setMockInitialValues(
-        appName: '{{app_name.titleCase()}} testing',
-        packageName: '',
-        version: '',
-        buildNumber: '',
-        buildSignature: '');
-    FlutterConfig.loadValueForTesting({'SECRET': 'This is only for testing'});
+      appName: '{{app_name.titleCase()}} testing',
+      packageName: '{{package_name.dotCase()}}',
+      version: '',
+      buildNumber: '',
+      buildSignature: '',
+    );
+    dotenv.loadFromString(
+      envString: [
+        'SAMPLE_CONFIG=This is only for testing',
+        'REST_API_ENDPOINT=https://example.com',
+      ].join('\n'),
+    );
   }
 }

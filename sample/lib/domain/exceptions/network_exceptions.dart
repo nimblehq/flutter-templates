@@ -43,29 +43,30 @@ class NetworkExceptions with _$NetworkExceptions {
 
   const factory NetworkExceptions.unexpectedError() = UnexpectedError;
 
-  static NetworkExceptions fromDioException(error) {
+  static NetworkExceptions fromDioException(Object error) {
     if (error is Exception) {
       try {
         NetworkExceptions networkExceptions;
-        if (error is DioError) {
+        if (error is DioException) {
           switch (error.type) {
-            case DioErrorType.cancel:
+            case DioExceptionType.cancel:
               networkExceptions = const NetworkExceptions.requestCancelled();
               break;
-            case DioErrorType.connectionTimeout:
+            case DioExceptionType.connectionTimeout:
               networkExceptions = const NetworkExceptions.requestTimeout();
               break;
-            case DioErrorType.unknown:
-              networkExceptions =
-                  const NetworkExceptions.noInternetConnection();
+            case DioExceptionType.unknown:
+              networkExceptions = error.error is SocketException
+                  ? const NetworkExceptions.noInternetConnection()
+                  : const NetworkExceptions.unexpectedError();
               break;
-            case DioErrorType.receiveTimeout:
+            case DioExceptionType.receiveTimeout:
               networkExceptions = const NetworkExceptions.receiveTimeout();
               break;
-            case DioErrorType.sendTimeout:
+            case DioExceptionType.sendTimeout:
               networkExceptions = const NetworkExceptions.sendTimeout();
               break;
-            case DioErrorType.badResponse:
+            case DioExceptionType.badResponse:
               switch (error.response?.statusCode) {
                 case 400:
                   networkExceptions = const NetworkExceptions.badRequest();
@@ -79,8 +80,9 @@ class NetworkExceptions with _$NetworkExceptions {
                       const NetworkExceptions.unauthorisedRequest();
                   break;
                 case 404:
-                  networkExceptions =
-                      const NetworkExceptions.notFound("Not found");
+                  networkExceptions = const NetworkExceptions.notFound(
+                    "Not found",
+                  );
                   break;
                 case 409:
                   networkExceptions = const NetworkExceptions.conflict();
@@ -103,8 +105,12 @@ class NetworkExceptions with _$NetworkExceptions {
                   );
               }
               break;
-            default:
+            case DioExceptionType.badCertificate:
               networkExceptions = const NetworkExceptions.unexpectedError();
+              break;
+            case DioExceptionType.connectionError:
+              networkExceptions =
+                  const NetworkExceptions.noInternetConnection();
               break;
           }
         } else if (error is SocketException) {
@@ -129,43 +135,62 @@ class NetworkExceptions with _$NetworkExceptions {
 
   static String getErrorMessage(NetworkExceptions networkExceptions) {
     var errorMessage = "";
-    networkExceptions.when(notImplemented: () {
-      errorMessage = "Not Implemented";
-    }, requestCancelled: () {
-      errorMessage = "Request Cancelled";
-    }, internalServerError: () {
-      errorMessage = "Internal Server Error";
-    }, notFound: (String reason) {
-      errorMessage = reason;
-    }, serviceUnavailable: () {
-      errorMessage = "Service unavailable";
-    }, methodNotAllowed: () {
-      errorMessage = "Method not allowed";
-    }, badRequest: () {
-      errorMessage = "Bad request";
-    }, unauthorisedRequest: () {
-      errorMessage = "Unauthorised request";
-    }, unexpectedError: () {
-      errorMessage = "Unexpected error occurred";
-    }, requestTimeout: () {
-      errorMessage = "Connection request timeout";
-    }, noInternetConnection: () {
-      errorMessage = "No internet connection";
-    }, conflict: () {
-      errorMessage = "Error due to a conflict";
-    }, sendTimeout: () {
-      errorMessage = "Send timeout in connection with API server";
-    }, receiveTimeout: () {
-      errorMessage = "Receive timeout in connection with API server";
-    }, unableToProcess: () {
-      errorMessage = "Unable to process the data";
-    }, defaultError: (String error) {
-      errorMessage = error;
-    }, formatException: () {
-      errorMessage = "Unexpected error occurred";
-    }, notAcceptable: () {
-      errorMessage = "Not acceptable";
-    });
+    networkExceptions.when(
+      notImplemented: () {
+        errorMessage = "Not Implemented";
+      },
+      requestCancelled: () {
+        errorMessage = "Request Cancelled";
+      },
+      internalServerError: () {
+        errorMessage = "Internal Server Error";
+      },
+      notFound: (String reason) {
+        errorMessage = reason;
+      },
+      serviceUnavailable: () {
+        errorMessage = "Service unavailable";
+      },
+      methodNotAllowed: () {
+        errorMessage = "Method not allowed";
+      },
+      badRequest: () {
+        errorMessage = "Bad request";
+      },
+      unauthorisedRequest: () {
+        errorMessage = "Unauthorised request";
+      },
+      unexpectedError: () {
+        errorMessage = "Unexpected error occurred";
+      },
+      requestTimeout: () {
+        errorMessage = "Connection request timeout";
+      },
+      noInternetConnection: () {
+        errorMessage = "No internet connection";
+      },
+      conflict: () {
+        errorMessage = "Error due to a conflict";
+      },
+      sendTimeout: () {
+        errorMessage = "Send timeout in connection with API server";
+      },
+      receiveTimeout: () {
+        errorMessage = "Receive timeout in connection with API server";
+      },
+      unableToProcess: () {
+        errorMessage = "Unable to process the data";
+      },
+      defaultError: (String error) {
+        errorMessage = error;
+      },
+      formatException: () {
+        errorMessage = "Unexpected error occurred";
+      },
+      notAcceptable: () {
+        errorMessage = "Not acceptable";
+      },
+    );
     return errorMessage;
   }
 }

@@ -1,6 +1,8 @@
 # Used by dotenv library to load environment variables.
-.env
-.env.staging
+/.env
+/.env.staging
+!/.env
+!/.env.staging
 
 # Miscellaneous
 *.class
@@ -31,8 +33,6 @@ migrate_working_dir/
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
-**/ios/.envfile
-**/ios/Flutter/tmp.xcconfig
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -40,6 +40,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+/android/build/
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -61,3 +62,5 @@ app.*.map.json
 *.config.dart
 *.freezed.dart
 *.mocks.dart
+lib/l10n/app_localizations.dart
+lib/l10n/app_localizations_*.dart

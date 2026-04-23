@@ -32,10 +32,10 @@ jobs:
           ssh-private-key: ${{#mustacheCase}}secrets.SSH_PRIVATE_KEY{{/mustacheCase}}
 
       - name: Set up Flutter environment
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.10.5'
+          flutter-version: '3.41.6'
 
       - name: Get Flutter dependencies
         run: flutter pub get

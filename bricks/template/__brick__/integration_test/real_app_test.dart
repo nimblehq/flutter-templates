@@ -11,8 +11,10 @@ void main() {
     await tester.pumpWidget(TestUtil.pumpWidgetWithRealApp('/'));
     await tester.pumpAndSettle();
 
-    expect(find.widgetWithText(AppBar, '{{app_name.titleCase()}} testing'),
-        findsOneWidget);
+    expect(
+      find.widgetWithText(AppBar, '{{app_name.titleCase()}} testing'),
+      findsOneWidget,
+    );
     expect(find.text('This is only for testing'), findsOneWidget);
   });
 }

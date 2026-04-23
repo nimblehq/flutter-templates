@@ -7,9 +7,6 @@ import 'package:injectable/injectable.dart';
 abstract class NetworkModule {
   @Singleton(as: BaseApiService)
   ApiService provideApiService(DioProvider dioProvider) {
-    return ApiService(
-      dioProvider.getDio(),
-      baseUrl: Env.restApiEndpoint,
-    );
+    return ApiService(dioProvider.getDio(), baseUrl: Env.restApiEndpoint);
   }
 }

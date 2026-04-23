@@ -14,9 +14,11 @@ class GetUsersUseCase extends NoParamsUseCase<List<User>> {
   Future<Result<List<User>>> call() async {
     return _credentialRepository
         .getUsers()
-        .then((value) =>
-            Success(value) as Result<List<User>>) // ignore: unnecessary_cast
+        .then(
+          (value) => Success(value) as Result<List<User>>,
+        ) // ignore: unnecessary_cast
         .onError<NetworkExceptions>(
-            (err, stackTrace) => Failed(UseCaseException(err)));
+          (err, stackTrace) => Failed(UseCaseException(err)),
+        );
   }
 }
