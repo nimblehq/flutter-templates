@@ -3,11 +3,7 @@ import 'package:{{project_name.snakeCase()}}/domain/repositories/credential_repo
 import 'package:{{project_name.snakeCase()}}/domain/usecases/get_users_use_case.dart';
 import 'package:mockito/annotations.dart';
 
-@GenerateMocks([
-  ApiService,
-  CredentialRepository,
-  GetUsersUseCase,
-])
+@GenerateMocks([ApiService, CredentialRepository, GetUsersUseCase])
 void main() {
   // empty class to generate mock repository classes
 }

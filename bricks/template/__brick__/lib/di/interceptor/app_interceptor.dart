@@ -6,14 +6,13 @@ class AppInterceptor extends Interceptor {
   final bool _requireAuthenticate;
   final Dio _dio;
 
-  AppInterceptor(
-    this._requireAuthenticate,
-    this._dio,
-  );
+  AppInterceptor(this._requireAuthenticate, this._dio);
 
   @override
   Future onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     if (_requireAuthenticate) {
       // TODO header authorization here
       // options.headers
@@ -47,13 +46,15 @@ class AppInterceptor extends Interceptor {
 
       // Create request with new access token
       final options = Options(
-          method: err.requestOptions.method,
-          headers: err.requestOptions.headers);
+        method: err.requestOptions.method,
+        headers: err.requestOptions.headers,
+      );
       final newRequest = await _dio.request(
-          "${err.requestOptions.baseUrl}${err.requestOptions.path}",
-          options: options,
-          data: err.requestOptions.data,
-          queryParameters: err.requestOptions.queryParameters);
+        "${err.requestOptions.baseUrl}${err.requestOptions.path}",
+        options: options,
+        data: err.requestOptions.data,
+        queryParameters: err.requestOptions.queryParameters,
+      );
       handler.resolve(newRequest);
       //  } else {
       //    handler.next(err);

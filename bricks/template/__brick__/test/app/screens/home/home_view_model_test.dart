@@ -19,25 +19,29 @@ void main() {
 
       container = ProviderContainer(
         overrides: [
-          homeViewModelProvider.overrideWith((ref) => HomeViewModel(
-                mockGetUsersUseCase,
-              )),
+          homeViewModelProvider.overrideWith(
+            (ref) => HomeViewModel(mockGetUsersUseCase),
+          ),
         ],
       );
       addTearDown(container.dispose);
     });
 
-    test('When calling get user list successfully, it returns correctly',
-        () async {
-      final expectedResult = [UserResponseMocks.mock().toUser()];
-      when(mockGetUsersUseCase.call())
-          .thenAnswer((_) async => Success(expectedResult));
+    test(
+      'When calling get user list successfully, it returns correctly',
+      () async {
+        final expectedResult = [UserResponseMocks.mock().toUser()];
+        when(
+          mockGetUsersUseCase.call(),
+        ).thenAnswer((_) async => Success(expectedResult));
 
-      final usersStream =
-          container.read(homeViewModelProvider.notifier).usersStream;
-      expect(usersStream, emitsInOrder([expectedResult]));
+        final usersStream = container
+            .read(homeViewModelProvider.notifier)
+            .usersStream;
+        expect(usersStream, emitsInOrder([expectedResult]));
 
-      container.read(homeViewModelProvider.notifier).getUsers();
-    });
+        container.read(homeViewModelProvider.notifier).getUsers();
+      },
+    );
   });
 }

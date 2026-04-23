@@ -9,12 +9,15 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('My Home Page widget', (WidgetTester tester) async {
-    await tester
-        .pumpWidget(TestUtil.pumpWidgetWithShellApp(const HomeScreen()));
+    await tester.pumpWidget(
+      TestUtil.pumpWidgetWithShellApp(const HomeScreen()),
+    );
     await tester.pumpAndSettle();
 
-    expect(find.widgetWithText(AppBar, '{{app_name.titleCase()}} testing'),
-        findsOneWidget);
+    expect(
+      find.widgetWithText(AppBar, '{{app_name.titleCase()}} testing'),
+      findsOneWidget,
+    );
     expect(find.text('This is only for testing'), findsOneWidget);
   });
 }

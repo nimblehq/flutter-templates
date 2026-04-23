@@ -11,15 +11,12 @@ import 'package:{{project_name.snakeCase()}}/app/screens/home/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final packageInfo = await PackageInfo.fromPlatform();
-  final envFile =
-      packageInfo.packageName.endsWith('.staging') ? '.env.staging' : '.env';
+  final envFile = packageInfo.packageName.endsWith('.staging')
+      ? '.env.staging'
+      : '.env';
   await dotenv.load(fileName: envFile);
   await configureInjection();
-  runApp(
-    ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  runApp(ProviderScope(child: MyApp()));
 }
 
 const routePathRootScreen = '/';
@@ -65,10 +62,6 @@ class SecondScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Second Screen"),
-      ),
-    );
+    return Scaffold(appBar: AppBar(title: const Text("Second Screen")));
   }
 }

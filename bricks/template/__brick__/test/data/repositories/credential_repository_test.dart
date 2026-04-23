@@ -17,30 +17,28 @@ void main() {
       repository = CredentialRepositoryImpl(mockApiService);
     });
     test(
-        "When getting user list successfully, it emits corresponding user list",
-        () async {
-      when(mockApiService.getUsers()).thenAnswer((_) async => [
-            UserResponse('test@email.com', 'test_user'),
-          ]);
+      "When getting user list successfully, it emits corresponding user list",
+      () async {
+        when(mockApiService.getUsers()).thenAnswer(
+          (_) async => [UserResponse('test@email.com', 'test_user')],
+        );
 
-      final result = await repository.getUsers();
-      expect(result.length, 1);
-      expect(result[0].email, 'test@email.com');
-      expect(result[0].username, 'test_user');
-    });
+        final result = await repository.getUsers();
+        expect(result.length, 1);
+        expect(result[0].email, 'test@email.com');
+        expect(result[0].username, 'test_user');
+      },
+    );
 
-    test("When getting user list failed, it returns NetworkExceptions error",
-        () async {
-      when(mockApiService.getUsers()).thenThrow(
-        DioException(
-          requestOptions: RequestOptions(path: '/users'),
-        ),
-      );
+    test(
+      "When getting user list failed, it returns NetworkExceptions error",
+      () async {
+        when(mockApiService.getUsers()).thenThrow(
+          DioException(requestOptions: RequestOptions(path: '/users')),
+        );
 
-      expect(
-        () => repository.getUsers(),
-        throwsA(isA<NetworkExceptions>()),
-      );
-    });
+        expect(() => repository.getUsers(), throwsA(isA<NetworkExceptions>()));
+      },
+    );
   });
 }

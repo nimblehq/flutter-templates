@@ -97,5 +97,9 @@ flutter:
         - asset: assets/fonts/neuzeit.otf
 
 flutter_gen:
+  assets:
+    exclude:
+      - .env
+      - .env.staging
   integrations:
     flutter_svg: true
