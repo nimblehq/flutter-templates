@@ -56,8 +56,9 @@ class NetworkExceptions with _$NetworkExceptions {
               networkExceptions = const NetworkExceptions.requestTimeout();
               break;
             case DioExceptionType.unknown:
-              networkExceptions =
-                  const NetworkExceptions.noInternetConnection();
+              networkExceptions = error.error is SocketException
+                  ? const NetworkExceptions.noInternetConnection()
+                  : const NetworkExceptions.unexpectedError();
               break;
             case DioExceptionType.receiveTimeout:
               networkExceptions = const NetworkExceptions.receiveTimeout();
@@ -106,7 +107,7 @@ class NetworkExceptions with _$NetworkExceptions {
               break;
             case DioExceptionType.badCertificate:
             case DioExceptionType.connectionError:
-              networkExceptions = const NetworkExceptions.unexpectedError();
+              networkExceptions = const NetworkExceptions.noInternetConnection();
               break;
           }
         } else if (error is SocketException) {
