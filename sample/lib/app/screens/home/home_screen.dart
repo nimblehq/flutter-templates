@@ -61,7 +61,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const SizedBox(height: 24),
             Text(AppLocalizations.of(context)!.hello),
             Text(
-              dotenv.get('SECRET'),
+              dotenv.maybeGet('SAMPLE_CONFIG') ??
+                  const String.fromEnvironment(
+                    'SAMPLE_CONFIG',
+                    defaultValue: '',
+                  ),
               style: const TextStyle(
                 color: AppColors.nimblePrimaryBlue,
                 fontSize: 24,

@@ -19,6 +19,8 @@ environment variables for each flavor.
   - Staging: `.env.staging`
   - Production: `.env`
 
+- The bundled `.env` and `.env.staging` values are **public sample config only**. Never place real API keys/tokens/secrets in Flutter assets; keep secrets server-side or in secure runtime delivery. See flutter_dotenv security guidance: https://pub.dev/packages/flutter_dotenv
+
 - To make the Android release build,
 
   - put the `release.keystore` at the `android/config` folder,

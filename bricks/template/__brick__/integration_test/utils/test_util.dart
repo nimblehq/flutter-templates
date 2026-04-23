@@ -33,7 +33,7 @@ class TestUtil {
     );
     dotenv.loadFromString(
       envString: [
-        'SECRET=This is only for testing',
+        'SAMPLE_CONFIG=This is only for testing',
         'REST_API_ENDPOINT=https://example.com',
       ].join('\n'),
     );
