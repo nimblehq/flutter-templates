@@ -106,6 +106,8 @@ class NetworkExceptions with _$NetworkExceptions {
               }
               break;
             case DioExceptionType.badCertificate:
+              networkExceptions = const NetworkExceptions.unexpectedError();
+              break;
             case DioExceptionType.connectionError:
               networkExceptions = const NetworkExceptions.noInternetConnection();
               break;
