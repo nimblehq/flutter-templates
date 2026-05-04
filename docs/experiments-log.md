@@ -371,8 +371,8 @@ Design preserved in the Notion proposal for future reference. Not blocking v1.
 
 - 8 manual sessions: 2 models × 4 cases (perms, apostrophe, longname, norename)
 - Same git-worktree isolation + parked memory dir as previous rounds
-- **Canonical prompt pinned to** `output/benchmark-prompt.md` — no per-session phrasing drift
-- Same edge-case param sets as Experiment 5, byte-identical via `setup-models-bench.sh`
+- **Canonical prompt pinned to** `scripts/benchmark/benchmark-prompt.md` — no per-session phrasing drift
+- Same edge-case param sets as Experiment 5, byte-identical via `scripts/benchmark/setup-models-bench.sh`
 - Verification: full pipeline including `flutter build apk` + `flutter build ios`
 - Codex skipped (different ecosystem, teammates use Claude)
 
