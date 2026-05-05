@@ -10,16 +10,16 @@
 
 ## Task
 
-Generate a Flutter project based on `sample/`. Read every source file in `sample/`, substitute the parameter values wherever they appear, and write the result to a new project directory at the repo root (name it `<project_name>`).
+Generate a Flutter project based on `sample/`. Read every source file in `sample/`, apply the substitutions in the table below, and write the result to a new project directory at the repo root (name it `<project_name>`).
 
 Work file-by-file. Do not ask clarifying questions. Do not add features, comments, or files that do not exist in `sample/`.
 
 ## Parameters
 
 ```
-project_name           = alex_wang
-package_name           = co.alex.wang
-app_name               = Alex Wang
+project_name           = <your_project_name>
+package_name           = <your.package.name>
+app_name               = <Your App Name>
 app_version            = 0.1.0
 build_number           = 1
 json_field_rename      = snake
@@ -30,21 +30,55 @@ add_permission_handler = false
 
 ## Substitutions
 
-Apply these substitutions wherever they appear in any text file in `sample/`. The staging variant must be replaced **before** the base variant — otherwise you will double-substitute.
+Apply these substitutions in any text file in `sample/`. Within each group, the **staging variant must be replaced before the base variant** — otherwise you will double-substitute.
 
-| Find (in `sample/`) | Replace with |
+**Identifiers** — Android namespace, iOS bundle ID, Kotlin path:
+
+| Find | Replace with |
 |---|---|
 | `co.nimblehq.flutter.template.staging` | `<package_name>.staging` |
 | `co.nimblehq.flutter.template` | `<package_name>` |
 | `co/nimblehq/flutter/template` | `<package_name>` with `.` → `/` |
+
+**Display strings** — what the user sees:
+
+| Find | Replace with |
+|---|---|
 | `Flutter Templates Staging` | `<app_name> Staging` |
 | `Flutter Templates` | `<app_name>` |
+
+**Project metadata** — pubspec, imports, plist, repo slug:
+
+| Find | Replace with |
+|---|---|
 | `package:sample/` | `package:<project_name>/` |
 | `name: sample` | `name: <project_name>` |
 | `<string>sample</string>` | `<string><project_name></string>` |
-| `nimblehq/sample` | `nimblehq/<project_name>` with `_` → `-` |
-| `version: 1.14.0+1` | `version: <app_version>+<build_number>` |
+| `nimblehq/sample` | `nimblehq/<project_name>` (with `_` → `-`) |
+
+**Codegen config** — `build.yaml`:
+
+| Find | Replace with |
+|---|---|
 | `field_rename: "snake"` | `field_rename: "<json_field_rename>"` |
+
+### Version (pattern, not literal)
+
+Find the existing `version:` line in `pubspec.yaml` (whatever its current value) and replace with `version: <app_version>+<build_number>`. Do not match the literal `1.14.0+1` — `sample/`'s version may change over time.
+
+### Per-format escaping for `app_name`
+
+If `app_name` contains special characters (`'`, `"`, `&`, `<`, `>`), apply the right escape per file format. Substituting the raw string everywhere will break parsing.
+
+| Format | Files | Rule |
+|---|---|---|
+| Dart strings | `*.dart` | If literal contains `'`, switch the surrounding quotes to `"` (or vice versa). E.g. `'Bob's app'` → `"Bob's app"`. |
+| Android XML resources | `android/**/*.xml` (incl. `gradleResValues` injected by Gradle) | Escape `'` as `\'`, `"` as `\"`, `&` as `&amp;`, `<` as `&lt;`, `>` as `&gt;`. |
+| Ruby | `Podfile`, `fastlane/Constants.rb`, `Fastfile` | Use double-quoted strings, or escape `'` as `\'` inside single-quoted strings. |
+| Xcode pbxproj | `ios/Runner.xcodeproj/project.pbxproj` | Already double-quoted in `sample/`; no escape needed for `'`. Other characters: confirm against the existing format. |
+| Markdown / plist / `.env` / properties | `*.md`, `*.plist`, `.env.*`, `*.properties` | No escape needed. |
+
+If `app_name` is plain alphanumeric + spaces, no escaping is needed in any format.
 
 ## Skip list
 
@@ -72,11 +106,40 @@ When `false`:
 
 When `true`: keep both as-is from `sample/`.
 
-## Architecture rules (must hold in the generated project)
+## Architecture invariants (must hold in the generated project)
 
-- All Dart imports use `package:<project_name>/...` — never relative imports.
+These are not always enforced by `flutter analyze`. Apply them by construction — `sample/` already follows them.
+
+### Layer dependencies
+
+- `lib/domain/` must not import from `package:flutter/...` — domain layer is pure Dart only (Dart core + non-Flutter packages like `meta`, `freezed_annotation`).
 - `lib/domain/` must not import from `lib/data/` or `lib/app/`.
 - `lib/data/` must not import from `lib/app/`.
+- All Dart imports use `package:<project_name>/...` — never relative imports.
+
+### Naming conventions
+
+| File suffix | Location | Purpose |
+|---|---|---|
+| `*_screen.dart` | `lib/app/screens/<name>/` | Screen widget |
+| `*_view_model.dart` | `lib/app/screens/<name>/` | StateNotifier view model |
+| `*_view_state.dart` | `lib/app/screens/<name>/` | Freezed view state |
+| `*_use_case.dart` | `lib/domain/usecases/` | Use case class |
+| `*_repository.dart` | `lib/domain/repositories/` | Abstract repository contract |
+| `*_repository_impl.dart` | `lib/data/repositories/` | Repository implementation |
+| `*_response.dart` | `lib/data/remote/models/responses/` | API response DTO |
+
+Screen directories must only contain files ending with `_screen.dart`, `_view_model.dart`, or `_view_state.dart`.
+
+### What NOT to generate
+
+These files are produced by tooling (`build_runner`, `flutter_gen`) — never write them yourself. Already covered in the Skip list above; calling out here for emphasis:
+
+- `*.g.dart`, `*.freezed.dart`, `*.config.dart`, `*.mocks.dart`
+- `lib/gen/` directory
+
+### Other
+
 - GitHub Actions workflow files: keep `${{ }}` syntax literally. Do not treat it as template syntax.
 
 ## Self-check
@@ -84,7 +147,7 @@ When `true`: keep both as-is from `sample/`.
 After generating every file, run this in the generated project directory:
 
 ```bash
-grep -rn "co\.nimblehq\.flutter\.template\|package:sample/\|nimblehq/sample\|Flutter Templates\|name: sample" . \
+grep -rn "co\.nimblehq\.flutter\.template\|package:sample/\|nimblehq/sample\|Flutter Templates\|name: sample\|<string>sample</string>\|1\.14\.0" . \
   --include='*.dart' --include='*.yaml' --include='*.yml' --include='*.xml' \
   --include='*.gradle' --include='*.rb' --include='*.pbxproj' --include='*.xcscheme' \
   --include='*.plist' --include='*.properties' --include='*.pro' --include='*.md' \
