@@ -1,4 +1,4 @@
-# Proposal: Migrate Flutter Templates from Mason to AI
+# Proposal: Drop Mason — Use `sample/` + AI to Generate Projects
 
 > 💡 **TL;DR**
 >
@@ -43,6 +43,18 @@ Onboarding adds a second tax. New contributors must learn 5 Mason-specific conce
 | Concepts to learn | Mason CLI, Mustache, `brick.yaml`, hooks, bundle regeneration | Paste a markdown file into an AI |
 | New architecture added by | Rewriting the brick with new Mustache vars | Creating a sibling sample (`sample-bloc/`, `sample-riverpod/`) |
 | Custom validation code | N/A | **0 lines** — native `flutter analyze` / `test` / `build` is the gate |
+
+---
+
+## Maintenance effort, task by task
+
+| When you need to… | Mason era | AI era |
+|---|---|---|
+| Bump Flutter SDK | Edit brick → regen bundle → regen sample → verify → commit all 3 | Edit `sample/` like any Flutter project, run verify |
+| Bump a dependency | Same 5-step ritual | `flutter pub upgrade <pkg>` in `sample/` |
+| Switch architectural pattern (e.g. BLoC) | Rewrite brick + new Mustache vars | Create `sample-bloc/` as a sibling sample |
+| Fix a bug in generated projects | Fix in brick → regen → sync sample | Fix in `sample/` |
+| Onboard a new contributor | Learn Mason CLI, Mustache, `brick.yaml`, hooks, bundle regen | Read `sample/` as a normal Flutter project |
 
 ---
 
@@ -132,17 +144,13 @@ The workflow isn't locked to one vendor — teammates can pick whichever AI they
 |---|---|
 | Typed prompted inputs (`mason make` walks you through values) | Spec file has inline constraints; wrong input fails fast |
 | Bundled one-command invocation | Verify step runs native Flutter tooling we'd run anyway |
-| Generation is no longer free (AI tokens cost money) | Default path is Claude Code on existing team subscriptions — $0 marginal. API cost detail below. |
+| Generation is no longer free (AI tokens cost money) | Default path is Claude Code on existing team subscriptions — $0 marginal cost. |
 
 | What we gain | Concrete |
 |---|---|
 | -96% template system size | 6,674 → 241 lines |
 | Entire commit class removed | 42 "Generate bundle" commits to date → 0 going forward |
-| `sample/` becomes a real Flutter project | Open in Android Studio, run the actual app — no Mustache wrappers |
-
-> 💡 **API cost per generation** (~50K input + ~50K output tokens, rough estimates — confirm against current pricing):
-> Claude Code subscription = **$0 marginal** · Haiku ~$0.10/run · Sonnet ~$0.50/run · Opus ~$5/run · ChatGPT Plus web = $0 marginal (slower).
-> If we automate generation in CI later, the cost question becomes "who pays for the API key" — that's a separate decision, not blocking this one.
+| `sample/` becomes a real Flutter project | You can `flutter run sample/` and use the actual app. |
 
 ---
 
@@ -160,15 +168,6 @@ If yes, we'll roll it out via clean follow-up tickets/PRs:
 
 **How to approve the direction:** ✅ on Slack thread
 **How to block / raise concerns:** reply on the Slack thread with the specific issue
-
----
-
-## Likely questions
-
-- **"What about ChatGPT, Gemini, Codex?"** — should work. The prompt is model-agnostic. We benchmarked Claude variants because that's what the team uses; cross-vendor validation is a follow-up.
-- **"What if `sample/` itself doesn't build?"** — CI runs the full build pipeline on `sample/` on every push (`.github/workflows/test.yml`). The single-point-of-failure is well-protected.
-- **"Why isn't generation run in CI?"** — non-deterministic outputs + token cost. CI keeps protecting `sample/`; users run generation locally.
-- **"Show me a generated project."** — see `output/m_runs_models/` (gitignored, local) or run a generation yourself: 5 minutes with the prompt.
 
 ---
 
