@@ -154,6 +154,10 @@ The workflow isn't locked to one vendor — teammates can pick whichever AI they
 
 ---
 
+> 💡 **Scope reminder:** this proposal covers the generation phase only. Out of scope (separate tickets if/after this lands): the optional build-retry harness, additional sample variants (different architectures, library presets like Firebase/Sentry), and Claude Code skills integration.
+
+---
+
 ## Decision needed
 
 This is a **POC**, not a merge candidate. PR #290 exists so you can read the actual code and run it locally — it won't be merged as-is.
