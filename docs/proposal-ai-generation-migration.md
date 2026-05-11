@@ -6,7 +6,9 @@
 >
 > **Headline:** -96% of the code we maintain (6,674 → 241 lines).
 >
-> **Validated across N=15 runs** (3 models × 5 cases each), every run judged against the full pipeline (`pub get`, `build_runner`, `analyze`, `test`, `build apk`, `build ios`).
+> **Validated across N=15 runs** (3 models × 5 cases each), every run judged against the full pipeline (`pub get`, `build_runner`, `analyze`, `test`, `build apk`, `build ios`). Re-validated end-to-end on Opus 4.7 with `/cost`-confirmed token accounting.
+>
+> **Cost:** measured **$1.99/run avg** (~2.4M tokens/run, range $0.81–$3.70 / 0.66M–5.0M tokens) on Opus 4.7 API list price. Subscription cost: **$0 marginal** on Max ($100+) / Team Claude Code plans. Per-run 5h-window usage: **~2% on Max 5×** (measured), **~10% on Pro** (extrapolated).
 >
 > **Recommended:** Claude Opus 4.7 (production), Sonnet 4.6 (cost-sensitive, with one documented apostrophe constraint), **not** Haiku 4.5.
 >
@@ -93,34 +95,23 @@ Per-round detail, methodology, and variance analysis: [`experiments-log.md`](htt
 
 ---
 
-## Why native builds are the safety net
+## When AI gets it wrong
 
-> 💡 The single most important empirical result. Two independent models honestly self-reported "all 4 tests passed" while shipping artifacts that fail `flutter build`. The only thing that caught either was running the actual native build.
+Two independent models self-reported "all tests passed" while shipping artifacts that fail `flutter build`. Only the native build caught them.
 
-### Exhibit A — Haiku's iOS Podfile orphan `]`
-
-Haiku's report claimed: ✅ "Removed entire `GCC_PREPROCESSOR_DEFINITIONS` block from `ios/Podfile`."
-
-Haiku's actual `ios/Podfile`:
+**Haiku's iOS Podfile** (reproduced N=3 runs) — claimed the `GCC_PREPROCESSOR_DEFINITIONS` block was removed, actually left an orphan `]`:
 
 ```ruby
-# ... 11 orphan comment lines from inside the deleted block ...
       # 'PERMISSION_CRITICAL_ALERTS=1'
-      ]                                    ← ORPHAN closing bracket
+      ]                                    ← orphan closing bracket
     end
-  end
-end
 ```
 
-`pod install` fails with `Invalid Podfile file: syntax error, unexpected ']'`. **Reproduced N=3 times across runs.** `flutter build ios` catches it instantly; `flutter test` doesn't.
+`pod install` fails: `Invalid Podfile file: syntax error, unexpected ']'`. `flutter test` doesn't catch it.
 
-### Exhibit B — Sonnet's Android XML apostrophe (one-line summary)
+**Sonnet's Android XML** on `app_name = "Bob's Dashboard"` — fixed Dart strings (single → double quotes), missed the unescaped `'` in Gradle's auto-generated `gradleResValues.xml`. Only `flutter build apk` exposes it.
 
-On `app_name = "Bob's Dashboard"`, Sonnet correctly fixed Dart strings (single → double quotes) but missed the Android resource side. The unescaped `'` in Gradle's auto-generated `gradleResValues.xml` fails AAPT compilation. **Only `flutter build apk` exposes it** — `flutter test` doesn't compile Android resources. Opus handled both Dart and Android XML on the same case.
-
-### The lesson
-
-**Don't trust the AI's self-check. Trust the actual build.** AI generation does not eliminate the "this can ship broken" failure mode — it just shifts which model causes it. Running `flutter build apk && flutter build ios` on every output is the entire reliability story for v1.
+**Lesson:** trust the build, not the self-check. Run `flutter build apk && flutter build ios` on every output.
 
 ---
 
@@ -134,6 +125,51 @@ The workflow isn't locked to one vendor — teammates can pick whichever AI they
 
 ---
 
+
+## Cost & throughput (measured)
+
+We re-ran all 5 Opus 4.7 cases capturing Anthropic's `/cost` accounting before and after each session — three independent measurements per run (`/cost` $, JSONL token extractor, 5h window % delta).
+
+**Summary per case:**
+
+| Case | Total tokens | `/cost` $ | 5h window Δ% (Max 5×) | Build pipeline |
+|---|---:|---:|---:|:---:|
+| baseline | 2.83M | $2.32 | +2% | ✅ 7/7 |
+| perms | 0.66M | $0.81 | +2% | ✅ 7/7 |
+| apostrophe | 5.0M | $3.70 | +3% | ✅ 7/7 |
+| longname | 1.8M | $1.71 | +2% | ✅ 7/7 |
+| norename | 1.47M | $1.39 | +1% | ✅ 7/7 |
+| **Avg** | **2.4M** | **$1.99** | **+2%** | **35/35** |
+
+**Token breakdown per case** (from `/cost` — input / output / cache_write / cache_read):
+
+| Case | Input | Output | Cache write | Cache read | Total |
+|---|---:|---:|---:|---:|---:|
+| baseline | 569 | 14.6k | 88.3k | 2.80M | 2.90M |
+| perms | 526 | 9.1k | 45.1k | 600.7k | 655.4k |
+| apostrophe | 590 | 21.6k | 112.3k | 4.90M | 5.03M |
+| longname | 654 | 12.9k | 88.5k | 1.70M | 1.80M |
+| norename | 539 | 12.0k | 57.7k | 1.40M | 1.47M |
+| **Avg** | **576** | **14.0k** | **78.4k** | **2.28M** | **2.37M** |
+
+Cache reads dominate volume (~95% of tokens) but are priced at 0.1× input rate ($0.50/M for Opus 4.7), so cost is bounded by output and cache writes — not raw token count.
+
+**Headline:** ~$2/run on API list, ~2% of 5h window per run on Max 5×.
+
+| Plan | Price/mo | % of 5h window per run | ~Runs / window |
+|---|---:|---:|---:|
+| Pro | $20 | ~10% (extrapolated) | ~10 |
+| Max 5× | $100 | **~2% (measured)** | ~45 |
+| Max 20× | $200 | ~0.5% (extrapolated) | ~180 |
+| API direct | — | n/a (per-token billing) | unlimited |
+
+> Only Max 5× is measured. Pro and Max 20× are estimates based on Anthropic's plan-tier multipliers — Anthropic doesn't publish exact quotas.
+
+Reproducibility scripts: [`scripts/benchmark/`](https://github.com/nimblehq/flutter-templates/tree/feature/ai-generation-migration/scripts/benchmark) — `setup-opus-bench.sh`, `verify-opus-tokens.sh`, `extract-tokens.py`.
+
+
+---
+
 > 💡 **"Did you consider a build-retry harness?"** Yes. Data didn't justify it for v1 (Opus 5/5, Sonnet 4/5 with one documented constraint). The verify pipeline is already the harness. Design preserved in [`experiments-log.md`](https://github.com/nimblehq/flutter-templates/blob/feature/ai-generation-migration/docs/experiments-log.md) if we change our mind.
 
 ---
@@ -144,7 +180,8 @@ The workflow isn't locked to one vendor — teammates can pick whichever AI they
 |---|---|
 | Typed prompted inputs (`mason make` walks you through values) | Spec file has inline constraints; wrong input fails fast |
 | Bundled one-command invocation | Verify step runs native Flutter tooling we'd run anyway |
-| Generation is no longer free (AI tokens cost money) | Default path is Claude Code on existing team subscriptions — $0 marginal cost. |
+| Generation is no longer free (AI tokens cost money) | **$1.99/run avg** (~2.4M tokens/run) on Opus 4.7 API list, range $0.81–$3.70. **$0 marginal** on Max ($100+) / Team subscriptions; **~10 runs per 5h window on Pro ($20)** (extrapolated). |
+| Deterministic output (Mason: same inputs → byte-identical files every run) | AI is non-deterministic — variance is in style, comments, and file count, not in correctness. `flutter build apk/ios` validates regardless. |
 
 | What we gain | Concrete |
 |---|---|
