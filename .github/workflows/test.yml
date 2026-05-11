@@ -1,135 +1,57 @@
 name: CI
 on:
-  # Trigger the workflow on push or pull request,
-  # but push action is only for the feature branch
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [develop, main]
 
 jobs:
-  test:
-    name: Template initializing scripts test
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+  validate_sample:
+    name: Validate sample project
+    runs-on: macos-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: sample
     steps:
-      - name: Check out
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Set up Flutter environment
-        uses: subosito/flutter-action@v2
+      - uses: actions/setup-java@v4
         with:
-          channel: 'stable'
-          flutter-version: '3.10.5'
+          distribution: temurin
+          java-version: '17'
 
-      - name: Generate new project
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.24.3
+
+      - name: Spec drift check
+        working-directory: .
         run: |
-          dart pub global activate mason_cli
-          mason get
-          mason make template -c mason-config.json
+          SAMPLE_CHANGED=$(git diff --name-only origin/develop...HEAD -- sample/ | wc -l)
+          SPECS_CHANGED=$(git diff --name-only origin/develop...HEAD -- specs/ | wc -l)
+          if [ "$SAMPLE_CHANGED" -gt 0 ] && [ "$SPECS_CHANGED" -eq 0 ]; then
+            echo "::warning::sample/ changed but specs/ was not updated — review if specs/generation-prompt.md still matches."
+          fi
 
-      - name: Get Flutter dependencies
+      - name: Flutter pub get
         run: flutter pub get
 
-      - name: Run code generator
-        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      - name: Build runner (generated code)
+        run: dart run build_runner build --delete-conflicting-outputs
 
-      - name: Check for any formatting issues in the code
+      - name: Format check
         run: dart format --set-exit-if-changed .
 
-      - name: Statically analyze the Dart code for any errors
+      - name: Static analysis
         run: flutter analyze .
 
-      - name: Run widget tests, unit tests
-        run: flutter test --machine --coverage
+      - name: Unit + widget tests
+        run: flutter test
 
-  generate_mason_bundle:
-    # The job generate_mason_bundle identify that the job test must complete successfully
-    # before this generate_mason_bundle job will run
-    needs: test
-    name: Generate Mason bundle
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
+      - name: Build Android APK (staging flavor)
+        run: flutter build apk --debug --flavor staging -t lib/main.dart
 
-      - name: Set up Flutter environment
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: '3.10.5'
-
-      - name: Install Mason CLI
-        run: |
-          dart pub global activate mason_cli
-          mason get
-
-      - name: Generate Mason bundle
-        run: |
-          mason bundle bricks/permission_handler -t dart -o bricks/template/hooks/bundles
-
-      - id: changes
-        name: Check for changes in the Mason bricks
-        run: |
-          count=$(git status bricks --porcelain | wc -l)
-          echo "count=$count" >> $GITHUB_OUTPUT
-
-      - name: Commit & push the Mason bundle changes
-        if: steps.changes.outputs.count > 0
-        run: |
-          git config user.name team-nimblehq
-          git config user.email bot@nimblehq.co
-          git add bricks
-          git commit -m "[Chore] Generate Mason bundle"
-          git push
-
-  generate_sample_project:
-    # The job generate_sample_project identify that the job generate_mason_bundle must complete successfully
-    # before this generate_sample_project job will run
-    needs: generate_mason_bundle
-    name: Generate the sample project
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Check out
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Set up Flutter environment
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: '3.10.5'
-
-      - name: Remove the old sample project
-        run: |
-          rm -rf sample
-
-      - name: Set the project name "sample"
-        uses: jossef/action-set-json-field@v2.1
-        with:
-          file: mason-config.json
-          field: project_name
-          value: sample
-
-      - name: Generate the new "sample" project
-        run: |
-          dart pub global activate mason_cli
-          mason get
-          mason make template -c mason-config.json -o sample
-
-      - id: changes
-        name: Check for changes in the sample project
-        run: |
-          count=$(git status sample --porcelain | wc -l)
-          echo "count=$count" >> $GITHUB_OUTPUT
-
-      - name: Commit & push the sample project changes
-        if: steps.changes.outputs.count > 0
-        run: |
-          git config user.name team-nimblehq
-          git config user.email bot@nimblehq.co
-          git add sample
-          git commit -m "[Chore] Generate & update sample project"
-          git push
+      - name: Build iOS (staging flavor, no codesign)
+        run: flutter build ios --debug --no-codesign --flavor staging -t lib/main.dart

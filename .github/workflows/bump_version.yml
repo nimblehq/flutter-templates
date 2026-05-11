@@ -18,11 +18,8 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set new version
-        uses: jossef/action-set-json-field@v2.1
-        with:
-          file: mason-config.json
-          field: app_version
-          value: ${{ github.event.inputs.newVersion }}
+        run: |
+          sed -i "s/^version: .*/version: ${{ github.event.inputs.newVersion }}/" sample/pubspec.yaml
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4

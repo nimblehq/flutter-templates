@@ -7,7 +7,7 @@ import 'package:mockito/annotations.dart';
 @GenerateMocks([
   ApiService,
   CredentialRepository,
-  DioError,
+  DioException,
   GetUsersUseCase,
 ])
 main() {
